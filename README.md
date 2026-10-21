@@ -22,6 +22,8 @@ Status tersebut berlaku untuk **MVP**, bukan seluruh detail handoff. Lihat [chec
 
 **Untuk tim:** buka [notebook demo beserta outputnya](notebooks/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.
 
+**Laporan progres:** [pekerjaan yang sudah dilakukan, hasil, dan tindak lanjut — 21 Oktober 2026](reports/progress_report_2026-10-21.md).
+
 ## Hasil smoke test
 
 Snapshot 21 Oktober 2026; hasil pada subset, bukan performa target akhir ATC fatigue.

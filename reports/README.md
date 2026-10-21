@@ -1,5 +1,6 @@
 # Laporan penelitian
 
+- [Laporan progres — 21 Oktober 2026](progress_report_2026-10-21.md): rangkuman pekerjaan, hasil nyata, demo, dan prioritas berikutnya untuk tim.
 - [Storage audit](storage_audit.md): filesystem, kapasitas, dan kuota yang belum diketahui.
 - [Environment audit](environment_audit.md): interpreter, CPU/GPU/RAM, dan resource use.
 - [Dataset audit](dataset_audit.md): sumber, akses, ukuran, label, lisensi, dan keputusan.
