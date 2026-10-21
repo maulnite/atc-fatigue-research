@@ -10,7 +10,7 @@ Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Contro
 ![Modalities: Audio + Vision](https://img.shields.io/badge/modalities-audio_%2B_vision-7c3aed?style=flat-square)
 ![Focus: Reproducibility](https://img.shields.io/badge/focus-reproducibility-059669?style=flat-square)
 
-[Visi](#visi-riset) · [Pipeline](#pipeline-yang-direncanakan) · [Dataset](#dataset-dan-batas-klaim) · [Mulai](#mulai-di-sini) · [Roadmap](docs/roadmap.md)
+[Visi](#visi-riset) · [Pipeline](#pipeline-yang-direncanakan) · [Dataset](#dataset-dan-batas-klaim) · [Mulai](#mulai-di-sini) · [Rencana eksekusi](docs/execution-plan.md) · [Roadmap](docs/roadmap.md)
 
 </div>
 

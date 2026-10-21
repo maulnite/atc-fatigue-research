@@ -1,11 +1,13 @@
 # Roadmap penelitian dan implementasi
 
-**Status:** fondasi repo tersedia; milestone eksperimen M0–M7 belum diselesaikan. Status diperbarui setelah output dapat diverifikasi, bukan setelah rencana ditulis.
+**Status:** fondasi repo tersedia; audit storage selesai sebagai bagian dari M0. Milestone eksperimen lainnya belum diselesaikan. Status diperbarui setelah output dapat diverifikasi, bukan setelah rencana ditulis.
+
+Lihat [rencana eksekusi lengkap](execution-plan.md) untuk pekerjaan, dependensi, output, kriteria selesai, dan penanganan akses dataset yang belum pasti.
 
 | Milestone | Fokus | Bukti penyelesaian | Status |
 | :--- | :--- | :--- | :--- |
 | Fondasi | Repo, README, aturan, struktur kerja | Commit awal dan dokumentasi tersedia | Selesai |
-| M0 | Audit environment dan akses dataset | Audit runtime/resource dan `reports/dataset_audit.md` | Belum dimulai |
+| M0 | Audit environment dan akses dataset | Audit runtime/resource dan `reports/dataset_audit.md` | Berjalan: audit storage selesai |
 | M1 | Config, schema, loader, fixture, tests | Pengujian kritis lulus, provenance terjaga | Belum dimulai |
 | M2 | Audio ATCOSIM | Tabel eGeMAPS/MFCC, quality profile, preview; tanpa skor fatigue | Belum dimulai |
 | M3 | Visual MRL dan DROZY | Eye-state score, EAR/blink/PERCLOS dengan timestamp valid | Belum dimulai |
@@ -13,6 +15,7 @@
 | M5 | Audio fatigue jika akses tersedia | Audit IEEE corpus dan benchmark sesuai label asli | Bersyarat |
 | M6 | Laporan dan demo | Notebook Run All, model reload, metrik dan keterbatasan nyata | Belum dimulai |
 | M7 | Rencana pengumpulan data ATC | Draft protokol, sinkronisasi, instrumen, dan kebutuhan izin | Tahap berikutnya |
+| M8 | Benchmark fatigue multimodal ATC asli | Evaluasi unimodal/static/temporal pada pasangan dan label sah | Menunggu data dan protokol |
 
 ## Functional acceptance
 
