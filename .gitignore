@@ -1,0 +1,71 @@
+# Python / local environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.conda/
+.mamba/
+
+# Tools and notebooks
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+.cache/
+.DS_Store
+.idea/
+.vscode/
+
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+/configs/paths.local.yaml
+/configs/*.local.yaml
+
+# Local datasets and derived tables; preserve directory placeholders
+/data/raw/*
+!/data/raw/.gitkeep
+/data/interim/*
+!/data/interim/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+/data/manifests/*
+!/data/manifests/.gitkeep
+
+# Model artifacts and experiment output; add reviewed reports explicitly
+/models/*
+!/models/README.md
+/reports/metrics/*
+!/reports/metrics/.gitkeep
+/reports/figures/*
+!/reports/figures/.gitkeep
+/reports/run_logs/*
+!/reports/run_logs/.gitkeep
+*.log
+*.joblib
+*.pkl
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Media and archives are local by default
+*.wav
+*.flac
+*.mp3
+*.mp4
+*.avi
+*.mkv
+*.zip
+*.tar
+*.tar.gz
+*.7z
