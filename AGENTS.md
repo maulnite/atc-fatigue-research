@@ -39,6 +39,7 @@
 
 - Gunakan `gh-orie` untuk operasi GitHub, dengan akun `maulnite`; jangan gunakan `gh` default.
 - Jangan memasukkan token, rekaman biometrik, dataset, cache fitur, atau model ke Git.
+- Pengguna telah meminta notebook demo beserta outputnya diunggah ke GitHub untuk tim. Pertahankan output tabel/grafik/preview fitur yang sudah ditinjau; jangan mengosongkan output secara otomatis. Ketentuan ini tidak mengizinkan token, media mentah, atau dump dataset/cache penuh ikut Git.
 - Jangan mengubah atau menghapus pekerjaan kontributor lain tanpa izin.
 - Jangan force-push, menghapus repo, atau mengubah pengaturan keamanan tanpa persetujuan.
 - Jangan membuat lisensi proyek atau membagikan data terbatas tanpa keputusan pemilik.

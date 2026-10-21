@@ -20,6 +20,8 @@ Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Contro
 
 Status tersebut berlaku untuk **MVP**, bukan seluruh detail handoff. Lihat [checklist pemenuhan handoff](reports/handoff_coverage.md) untuk bukti, kekurangan, dan pekerjaan bersyarat, serta [pelengkapan teknis](reports/engineering_audit.md) untuk profiling/QC terbaru.
 
+**Untuk tim:** buka [notebook demo beserta outputnya](notebooks/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.
+
 ## Hasil smoke test
 
 Snapshot 21 Oktober 2026; hasil pada subset, bukan performa target akhir ATC fatigue.

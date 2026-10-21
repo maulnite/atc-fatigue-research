@@ -21,7 +21,7 @@ Gap >150 ms tidak diinterpolasi menjadi pengukuran. Coverage minimum 80% menentu
 
 Baseline tetap tanpa hyperparameter search, subject/actor split, majority/mean baseline, dan train-only preprocessing mengurangi beberapa sumber bias; tidak menggantikan validasi eksternal. Inference ablation pada fusion hanya stress test dan bukan bukti missing-modality robustness. Tidak ada GRU/TCN, forecasting fatigue, atau klaim state transition alami dari klip yang disusun sendiri.
 
-Lockfile, source/feature checksums, manifests, model/fold artifacts, dan prediksi tersedia lokal. Git hanya berisi kode, dokumentasi, notebook source tanpa output, serta aggregate figures yang ditinjau. Dataset, credentials, raw media, dan model tidak didistribusikan. HF revision hanya revision Hub yang teramati saat akses; viewer tidak menjamin immutable revision, sehingga checksum audio perlu dipertahankan.
+Lockfile tersedia di Git; source/feature checksums, manifests, model/fold artifacts, dan prediction files tersedia lokal. Git berisi kode, dokumentasi, notebook demo beserta output yang ditinjau sesuai permintaan pengguna, serta aggregate figures. Dataset lengkap, credentials, raw media, dan model tidak didistribusikan. HF revision hanya revision Hub yang teramati saat akses; viewer tidak menjamin immutable revision, sehingga checksum audio perlu dipertahankan.
 
 ## Keputusan berikutnya
 
