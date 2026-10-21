@@ -1,4 +1,4 @@
-"""Research foundation for audio-visual ATC fatigue detection.
+"""Modular public-dataset smoke tools for audio-visual ATC fatigue research.
 
-Feature extraction, training, and evaluation are not implemented yet.
+Public eye-state, sleepiness and emotion tasks do not establish ATC fatigue performance.
 """

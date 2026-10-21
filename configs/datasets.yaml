@@ -1,0 +1,23 @@
+datasets:
+  atcosim:
+    target: null
+    source: https://www.spsc.tugraz.at/databases-and-tools/atcosim-air-traffic-control-simulation-speech-corpus.html
+    local: data/raw/atcosim
+  mrl_eye:
+    target: eye_state
+    source: https://mrl.cs.vsb.cz/eyedataset.html
+    archive: https://mrl.cs.vsb.cz/data/eyedataset/mrlEyes_2018_01.zip
+    local: data/raw/mrl_eye
+  drozy:
+    target: KSS
+    source: https://www.drozy.uliege.be/
+    archive: https://orbi.uliege.be/bitstream/2268/191620/4/DROZY.zip
+    local: data/raw/drozy
+  ravdess:
+    target: emotion
+    source: https://zenodo.org/records/1188976
+    local: data/raw/ravdess
+  ieee_atc_fatigue:
+    target: ATC_fatigue_binary
+    source: https://ieee-dataport.org/documents/air-traffic-controller-radiotelephony-fatigue-corpus
+    local: data/raw/ieee_atc_fatigue

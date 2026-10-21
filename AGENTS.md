@@ -5,7 +5,7 @@
 - Proyek ini adalah deteksi fatigue operator ATC dari audio ATC dan video wajah/mata.
 - Baca `ATC_Fatigue_Research_and_Smoke_Test_Master_Handoff.md` sebelum perubahan signifikan.
 - Komunikasi utama dalam bahasa Indonesia; pertahankan istilah teknis yang relevan.
-- Repo masih pada tahap fondasi. Jangan menyatakan pipeline atau hasil sudah tersedia sebelum diverifikasi.
+- Periksa roadmap dan laporan aktual untuk status implementasi. Smoke test dataset publik tidak membuktikan performa multimodal fatigue ATC.
 
 ## Metodologi
 

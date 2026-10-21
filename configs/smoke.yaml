@@ -1,0 +1,23 @@
+seed: 42
+audio:
+  sample_rate: 16000
+  min_duration_seconds: 0.5
+  silence_rms: 0.00001
+  n_mfcc: 13
+visual:
+  window_ms: 60000
+  max_gap_ms: 150
+  ear_threshold: 0.21
+  blink_min_ms: 50
+  blink_max_ms: 500
+  perclos_min_closure_ms: 500
+  min_coverage: 0.8
+mrl:
+  seed: 42
+  per_subject_per_class: 80
+  image_size: [32, 64]
+  svm_c: 1.0
+  test_fraction: 0.2
+  validation_fraction_of_remaining: 0.2
+runtime:
+  cpu_threads: 4

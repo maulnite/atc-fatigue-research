@@ -1,6 +1,6 @@
 # Dataset dan batas penggunaan
 
-Dokumen ini merangkum rancangan pada master handoff. **Belum ada unduhan atau verifikasi akses/lisensi baru yang dilakukan sebagai bagian dari setup repo.** Angka ukuran dan jumlah sampel sengaja tidak dijadikan janji akses.
+Dokumen ini memetakan peran dataset dari master handoff. Status akses, ukuran, lisensi, serta subset yang benar-benar digunakan sudah dicatat dalam **[dataset audit](../reports/dataset_audit.md)**; lihat laporan tersebut untuk temuan runtime terbaru.
 
 | Dataset | Sumber rujukan | Kegunaan | Batasan utama |
 | :--- | :--- | :--- | :--- |

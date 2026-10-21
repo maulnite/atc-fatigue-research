@@ -1,10 +1,5 @@
 # Konfigurasi
 
-Direktori ini akan menyimpan konfigurasi dataset, ekstraksi fitur, dan eksperimen setelah implementasi dimulai.
+`datasets.yaml` mencatat sumber, target, dan lokasi dataset. `smoke.yaml` menyimpan seed serta parameter audio/visual/MRL. Jangan simpan token atau path privat dalam config yang di-commit.
 
-- Gunakan path relatif terhadap root proyek bila memungkinkan.
-- Pisahkan konfigurasi yang dapat dibagikan dari `paths.local.yaml` yang diabaikan Git.
-- Simpan seed, target, grouping split, fitur/model, serta parameter window secara eksplisit.
-- Jangan menyimpan token atau kredensial di YAML.
-
-Belum ada konfigurasi pipeline yang dapat dieksekusi.
+Gunakan `atc-fatigue --config path/to/config.yaml <command>` untuk config smoke lain. Threshold mata adalah pilihan engineering, belum dikalibrasi sebagai indikator fatigue. Config aktual dicatat pada run output.

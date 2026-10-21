@@ -2,7 +2,7 @@
 
 Disusun 21 Oktober 2026 berdasarkan [master handoff](../ATC_Fatigue_Research_and_Smoke_Test_Master_Handoff.md), [roadmap](roadmap.md), dan [audit storage](../reports/storage_audit.md).
 
-**Status dokumen:** rencana kerja; bukan laporan implementasi atau hasil eksperimen. Repo dan dokumentasi awal sudah tersedia. Audit storage selesai; environment komputasi, akses dataset, dan pipeline belum diaudit/diimplementasikan.
+**Status dokumen:** rencana yang ditulis sebelum implementasi. Progres terkini berada di [roadmap](roadmap.md) dan [laporan smoke test](../reports/smoke_test_report.md); dokumen ini bukan laporan hasil eksperimen.
 
 ## 1. Hasil akhir dan batas fase
 

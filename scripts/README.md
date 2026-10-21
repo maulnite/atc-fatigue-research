@@ -1,5 +1,5 @@
-# CLI scripts
+# Entry points
 
-Entry point CLI akan ditambahkan setelah modul terkait tersedia. Nama `00_environment_check.py` hingga `06_build_report.py` dalam master handoff merupakan rancangan antarmuka.
+CLI utama: `atc-fatigue --help`. Scripts 00–06 adalah wrapper audit environment/dataset, ekstraksi audio, DROZY, training MRL, fusion RAVDESS, dan report builder. `07_build_notebooks.py --execute` membuat dan memvalidasi notebook demo.
 
-Setiap script harus memiliki `--help`, input/output eksplisit, logging, konfigurasi yang dapat diganti, dan exit code yang sesuai. Letakkan logika yang dapat digunakan ulang di `src/atc_fatigue/`.
+Gunakan Python `.venv` dari root proyek. Setiap script memiliki `--help`; parameter aktual mengikuti CLI, bukan contoh antarmuka rancangan dalam handoff. Logika utama berada di `src/atc_fatigue/`.

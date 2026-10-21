@@ -1,7 +1,10 @@
 # Laporan penelitian
 
-Direktori ini akan memuat audit dataset, laporan smoke test, dan batasan penelitian setelah pekerjaan tersebut dieksekusi. **Belum ada hasil eksperimen.**
+- [Storage audit](storage_audit.md): filesystem, kapasitas, dan kuota yang belum diketahui.
+- [Environment audit](environment_audit.md): interpreter, CPU/GPU/RAM, dan resource use.
+- [Dataset audit](dataset_audit.md): sumber, akses, ukuran, label, lisensi, dan keputusan.
+- [Smoke test report](smoke_test_report.md): hasil dari saved run metrics.
 
-`metrics/`, `figures/`, dan `run_logs/` menyimpan output lokal yang diabaikan Git. Ringkasan Markdown yang telah ditinjau dapat di-commit. Jangan memasukkan rekaman, wajah, token, identitas operator, atau path privat dalam report.
+`metrics/`, `figures/`, dan `run_logs/` diabaikan Git. Hanya aggregate figures yang telah ditinjau ditambahkan secara eksplisit. QC gambar mata, media mentah, dan executed notebook outputs tetap lokal.
 
-Laporan wajib membedakan target asli dataset, functional smoke test, hasil ilmiah yang valid, serta hasil paper.
+Eye state, sleepiness, emotion, audio fatigue, dan benchmark fatigue multimodal ATC tetap dibedakan. Hasil sintetis tidak menjadi scientific performance.

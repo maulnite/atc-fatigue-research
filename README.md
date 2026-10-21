@@ -6,7 +6,7 @@
 
 Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Controller.
 
-![Stage: Research setup](https://img.shields.io/badge/stage-research_setup-2563eb?style=flat-square)
+![Stage: Public dataset smoke test](https://img.shields.io/badge/stage-public_dataset_smoke_test-2563eb?style=flat-square)
 ![Modalities: Audio + Vision](https://img.shields.io/badge/modalities-audio_%2B_vision-7c3aed?style=flat-square)
 ![Focus: Reproducibility](https://img.shields.io/badge/focus-reproducibility-059669?style=flat-square)
 
@@ -16,7 +16,20 @@ Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Contro
 
 ---
 
-> **Status saat ini — fondasi repositori.** Dokumentasi, struktur kerja, dan kerangka package sudah tersedia. Ekstraksi fitur, training, evaluasi, dan notebook demo belum diimplementasikan. Belum ada skor model atau benchmark yang dihasilkan proyek ini.
+> **Status — smoke test dataset publik telah dijalankan.** Ekstraksi audio/visual, baseline berlabel asli, paired emotion fusion, model reload, serta lima notebook dengan fresh-kernel Run All tersedia. Benchmark **multimodal ATC fatigue belum terukur**; akses IEEE audio fatigue dan dataset ATC berpasangan masih diperlukan.
+
+## Hasil smoke test
+
+Snapshot 21 Oktober 2026; hasil pada subset, bukan performa target akhir ATC fatigue.
+
+| Eksperimen | Data / evaluasi | Hasil |
+| :--- | :--- | :--- |
+| **Audio ATCOSIM** | 100 utterances / 1 speaker, HF variant | 88 eGeMAPS + 26 MFCC summaries; tanpa fatigue labels |
+| **MRL eye state** | 5.285 images / 37 subjects; holdout 8 subjects | Macro F1 **0,788**, balanced accuracy **0,787**; Dummy F1 0,356 |
+| **DROZY KSS** | 36 tests / 14 subjects; LOSO, test-level regression | Ridge MAE **1,45**; Dummy MAE 2,05 |
+| **RAVDESS emotion** | 128 AV recordings / 8 actors; holdout 2 actors | Fusion Macro F1 **0,455**; audio 0,312; visual 0,280 |
+
+RAVDESS adalah demo kecil dengan demographic shift pada split; DROZY memakai engineering threshold yang belum dikalibrasi. Detail, confusion matrices, dan batas interpretasi: **[laporan hasil](reports/smoke_test_report.md)**. [Panduan run](docs/getting-started.md) · [Notebook demo](notebooks/) · [Dataset audit](reports/dataset_audit.md)
 
 ## Visi riset
 
@@ -60,7 +73,7 @@ Window harus berasal dari **subjek, sesi, dan timeline yang sama**. Modalitas ya
 
 ## Dataset dan batas klaim
 
-Daftar ini mengikuti [master handoff](ATC_Fatigue_Research_and_Smoke_Test_Master_Handoff.md). **Akses, lisensi, ukuran, dan metadata belum diaudit ulang dalam repo ini.**
+Sumber, ukuran, label, lisensi, dan status akses telah diperiksa dalam [dataset audit](reports/dataset_audit.md). Data mentah tidak didistribusikan melalui repo.
 
 | Dataset | Peran yang direncanakan | Target yang boleh dilaporkan |
 | :--- | :--- | :--- |
@@ -68,7 +81,7 @@ Daftar ini mengikuti [master handoff](ATC_Fatigue_Research_and_Smoke_Test_Master
 | **MRL Eye** | Baseline classifier gambar mata | Eye state: open / closed |
 | **DROZY** | Landmark temporal, EAR, blink, PERCLOS | Sleepiness berbasis KSS dengan batasan label per test |
 | **RAVDESS AV** | Demo fusion audio-video yang benar-benar berpasangan | Emotion classification |
-| **IEEE ATC Fatigue Corpus** | Kandidat benchmark audio paling dekat dengan target | Fatigue / non-fatigue, jika akses dan label terverifikasi |
+| **IEEE ATC Fatigue Corpus** | DOI 10.21227/70sz-mj23; download memerlukan login/subscription | Fatigue / non-fatigue, setelah akses sah dan audit label |
 
 **Tidak ada klaim “multimodal ATC fatigue accuracy” sampai tersedia pasangan audio-video ATC dengan ground truth fatigue yang valid.** Menggabungkan ATCOSIM dan DROZY secara acak tidak menghasilkan benchmark tersebut.
 
@@ -78,7 +91,7 @@ Detail sumber dan pemeriksaan yang diperlukan: [panduan dataset](docs/datasets.m
 
 1. Baca [master handoff](ATC_Fatigue_Research_and_Smoke_Test_Master_Handoff.md) dan [aturan agent](AGENTS.md).
 2. Ikuti [panduan setup](docs/getting-started.md) untuk audit environment dan workspace.
-3. Kerjakan milestone awal pada [roadmap](docs/roadmap.md).
+3. Lihat progres dan milestone berikutnya pada [roadmap](docs/roadmap.md).
 4. Catat sumber data, konfigurasi, seed, split, dan hasil nyata setiap eksperimen.
 
 Untuk checkout baru:
@@ -88,7 +101,7 @@ gh-orie repo clone maulnite/atc-fatigue-research
 cd atc-fatigue-research
 ```
 
-Folder kerja sesi saat ini sudah menjadi checkout repo ini; tidak perlu clone ulang. Dependensi audio, visual, dan training akan dipilih setelah audit environment. Belum ada perintah training atau demo yang siap dijalankan.
+Folder kerja sesi saat ini sudah menjadi checkout repo ini; tidak perlu clone ulang. Dependensi dipasang pada `.venv` pribadi dan dikunci di `requirements.lock.txt`. Jalankan setup serta CLI sesuai [panduan reproduksi](docs/getting-started.md).
 
 ## Peta repositori
 
@@ -97,13 +110,14 @@ Folder kerja sesi saat ini sudah menjadi checkout repo ini; tidak perlu clone ul
 ├── README.md                    # Ikhtisar dan pintu masuk proyek
 ├── AGENTS.md                    # Aturan kerja agent untuk proyek ini
 ├── ATC_Fatigue_Research_and_Smoke_Test_Master_Handoff.md
-├── pyproject.toml               # Metadata package; dependensi riset belum dipilih
+├── pyproject.toml               # Package, dependensi, dan CLI atc-fatigue
+├── requirements.lock.txt        # Versi lengkap environment smoke test
 ├── docs/                        # Setup, dataset, dan roadmap
 ├── configs/                     # Konvensi konfigurasi eksperimen
-├── src/atc_fatigue/              # Kerangka package Python
-├── scripts/                     # Tempat entry point CLI mendatang
-├── notebooks/                   # Tempat EDA dan demo yang memanggil modul .py
-├── tests/                       # Rencana pengujian metodologis dan teknis
+├── src/atc_fatigue/              # Loader, audio, visual, fusion, model, evaluasi
+├── scripts/                     # CLI wrappers dan notebook builder
+├── notebooks/                   # Lima demo yang memanggil modul .py
+├── tests/                       # Pengujian guardrails dan fitur
 ├── data/                        # Raw, manifests, interim, processed; lokal
 ├── models/                      # Artefak model; lokal
 └── reports/                     # Audit, metrics, figures, dan run logs

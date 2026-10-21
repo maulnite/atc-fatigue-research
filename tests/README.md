@@ -1,12 +1,7 @@
-# Rencana pengujian
+# Pengujian
 
-Belum ada pengujian pipeline karena implementasi belum dimulai. Tambahkan pengujian bermakna bersama fitur terkait:
+Jalankan `pytest -q` dengan `.venv` dari root proyek. Tests menggunakan fixture sintetis yang terpisah dari scientific benchmark, tanpa download atau GPU.
 
-- EAR, event kedipan, dan PERCLOS berbobot durasi, termasuk timestamp tidak seragam.
-- Audio kosong/pendek, resampling, eGeMAPSv02 88 fitur, dan quality masks.
-- Sample ID unik, batas subject/session, alignment, serta pencegahan future data.
-- Split tanpa overlap subjek/aktor; preprocessing hanya fit pada train.
-- Pemisahan target label dan larangan klaim ilmiah dari pasangan sintetis.
-- Model reload dengan urutan feature schema yang tersimpan.
+Coverage: schema/label guards, split subject/checksum, timestamps, causal sequences, availability masks, archive safety/CRC, parser dataset, ambiguous alignment, EAR, blink events, time-weighted PERCLOS, audio kosong/pendek, resampling, dan eGeMAPSv02 88 fitur.
 
-Fixture sintetis wajib diberi penanda dan tidak digunakan untuk klaim scientific benchmark.
+Reload juga diverifikasi pada holdout eksperimen nyata dan notebook Run All. Jumlah tests tidak menggantikan validasi ilmiah.
