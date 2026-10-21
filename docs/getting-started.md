@@ -67,12 +67,12 @@ Subset 128 AV recordings dari delapan aktor diambil melalui HTTP ranges dengan b
 
 ```bash
 atc-fatigue report
-python scripts/07_build_notebooks.py --execute
+python scripts/09_execute_demo.py
 ```
 
 Builder merangkum canonical run IDs pertama: `mrl_eye_seed42_v1`, `drozy_kss_loso_v1`, `ravdess_emotion_seed42_v1`. Run lain menyimpan metrics sendiri; tidak otomatis menggantikan hasil canonical.
 
-Notebook source di Git tanpa output. Fresh-kernel executed copies/log tersimpan lokal di `reports/run_logs/notebooks/`. Pilih kernel **Python (ATC Fatigue)**. Notebook memerlukan cache fitur/model dan tidak mengunduh atau melatih seluruh pipeline saat Run All.
+Runner 09 membaca notebook saat ini, membuat backup, dan menyimpan output langsung di `notebooks/00`–`04` setelah eksekusi sukses tanpa mengubah isi cell. Source di Git tanpa output; salinan executed/log tersimpan lokal di `reports/run_logs/notebooks/`. Pilih kernel **Python (ATC Fatigue)**. Notebook memerlukan cache fitur/model dan tidak mengunduh atau melatih seluruh pipeline saat Run All. Generator 07 membuat ulang template dan bukan perintah untuk menjalankan notebook yang sudah diedit.
 
 Data, features, models, raw predictions, dan output notebook tetap lokal. Laporan ringkas serta aggregate figures yang telah ditinjau dapat di-commit. MRL adalah eye state, DROZY adalah sleepiness, dan RAVDESS adalah emotion. IEEE fatigue memerlukan akses sah; benchmark paired ATC fatigue belum tersedia.
 
