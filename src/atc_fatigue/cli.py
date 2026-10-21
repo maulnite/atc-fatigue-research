@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import time
 from pathlib import Path
 
 from atc_fatigue.utils.runtime import configure_runtime
@@ -17,13 +18,22 @@ def audio_run(manifest_path, config, output):
     from atc_fatigue.io.validation import read_table, validate_manifest
     from atc_fatigue.utils.runtime import checksum, write_json
 
+    started = time.perf_counter()
     manifest = validate_manifest(read_table(manifest_path))
     rows, failures = [], []
     for count, row in enumerate(manifest.to_dict("records"), 1):
         try:
             if checksum(row["original_path"]) != row["source_checksum"]:
                 raise ValueError("Source changed since manifest creation")
-            rows.append({**row, **extract_file(row["original_path"], config["audio"])})
+            feature_start = time.perf_counter()
+            extracted = extract_file(row["original_path"], config["audio"])
+            rows.append(
+                {
+                    **row,
+                    **extracted,
+                    "audio_processing_seconds": time.perf_counter() - feature_start,
+                }
+            )
         except Exception as exc:
             failures.append({"sample_id": row["sample_id"], "error_type": type(exc).__name__})
         if count % 25 == 0:
@@ -44,6 +54,12 @@ def audio_run(manifest_path, config, output):
             "egemaps_columns": sum(c.startswith("egemaps__") for c in result.columns),
             "mfcc_columns": sum(c.startswith("mfcc_") for c in result.columns),
             "audio_config": config["audio"],
+            "pipeline_seconds_before_summary_write": time.perf_counter() - started,
+            "per_sample_processing_seconds": {
+                "median": float(result.audio_processing_seconds.median()),
+                "p95": float(result.audio_processing_seconds.quantile(0.95)),
+                "scope": "file_read_resample_and_features; excludes source_checksum_verification",
+            },
         },
     )
     return result

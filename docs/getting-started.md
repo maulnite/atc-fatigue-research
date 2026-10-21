@@ -75,3 +75,11 @@ Builder merangkum canonical run IDs pertama: `mrl_eye_seed42_v1`, `drozy_kss_los
 Notebook source di Git tanpa output. Fresh-kernel executed copies/log tersimpan lokal di `reports/run_logs/notebooks/`. Pilih kernel **Python (ATC Fatigue)**. Notebook memerlukan cache fitur/model dan tidak mengunduh atau melatih seluruh pipeline saat Run All.
 
 Data, features, models, raw predictions, dan output notebook tetap lokal. Laporan ringkas serta aggregate figures yang telah ditinjau dapat di-commit. MRL adalah eye state, DROZY adalah sleepiness, dan RAVDESS adalah emotion. IEEE fatigue memerlukan akses sah; benchmark paired ATC fatigue belum tersedia.
+
+## Profiling dan QC tambahan
+
+```bash
+python scripts/08_engineering_audit.py --output reports/metrics/engineering_rerun
+```
+
+Menggunakan data/model lokal dan original splits, tanpa download atau tuning. Pengukuran meliputi seluruh subset audio/MRL serta contoh test/fold/clip yang disebutkan dalam laporan; jangan menafsirkannya sebagai runtime seluruh DROZY/RAVDESS atau validasi real-time. Lihat [checklist handoff](../reports/handoff_coverage.md) untuk batas scope pekerjaan yang sudah selesai.

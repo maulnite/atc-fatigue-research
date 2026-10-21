@@ -64,8 +64,43 @@ def validate_timestamps(timestamps_ms):
 
 
 def ensure_no_future_data(feature_end_ms, prediction_ms):
-    if np.any(np.asarray(feature_end_ms) > np.asarray(prediction_ms)):
+    features = np.asarray(feature_end_ms, dtype=float)
+    predictions = np.asarray(prediction_ms, dtype=float)
+    if not np.isfinite(features).all() or not np.isfinite(predictions).all():
+        raise ValueError("Prediction and feature times must be finite")
+    if np.any(features > predictions):
         raise ValueError("Features use future information")
+
+
+def validate_causal_label_availability(frame):
+    """Validate labels used as online inputs, never silently fill/interpolate labels.
+
+    Offline retrospective ground truth needs its own declared protocol. Its
+    collection time may be after the target interval; this guard is not applied
+    to offline KSS supervision or interpreted as a generic label-alignment rule.
+    """
+    required = {
+        "prediction_ms",
+        "feature_end_ms",
+        "label_available_ms",
+        "subject_id",
+        "session_id",
+        "label_subject_id",
+        "label_session_id",
+    }
+    if missing := required - set(frame):
+        raise ValueError(f"Missing causal-label fields: {sorted(missing)}")
+    if frame.empty or frame[list(required)].isna().any().any():
+        raise ValueError("Causal label provenance and timestamps must be non-null")
+    for name in ("subject_id", "session_id"):
+        if frame[name].astype(str).str.strip().eq("").any():
+            raise ValueError("Causal label identifiers must be non-empty")
+        if not frame[name].eq(frame["label_" + name]).all():
+            raise ValueError("Label belongs to a different subject/session")
+    ensure_no_future_data(frame.feature_end_ms, frame.prediction_ms)
+    available = frame.label_available_ms.to_numpy(float)
+    if not np.isfinite(available).all() or np.any(available > frame.prediction_ms.to_numpy(float)):
+        raise ValueError("Label was not available at the prediction time")
 
 
 def read_table(path):

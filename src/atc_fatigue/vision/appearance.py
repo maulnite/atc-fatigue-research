@@ -7,12 +7,15 @@ from skimage.transform import resize
 
 
 def appearance_features(path, samples_per_second=2):
+    if not np.isfinite(samples_per_second) or samples_per_second <= 0:
+        raise ValueError("Sampling frequency must be finite and positive")
     cv2.setNumThreads(2)
     cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     if cascade.empty():
         raise RuntimeError("Face cascade unavailable")
     capture = cv2.VideoCapture(str(path))
     if not capture.isOpened():
+        capture.release()
         raise ValueError("Cannot decode video")
     fps = capture.get(cv2.CAP_PROP_FPS)
     count = capture.get(cv2.CAP_PROP_FRAME_COUNT)
@@ -20,9 +23,10 @@ def appearance_features(path, samples_per_second=2):
         capture.release()
         raise ValueError("Video has invalid duration metadata")
     duration_ms = count / fps * 1000
-    vectors, sampled = [], 0
+    vectors, sampled, requested = [], 0, 0
     try:
         for stamp in np.arange(0, duration_ms, 1000 / samples_per_second):
+            requested += 1
             capture.set(cv2.CAP_PROP_POS_MSEC, float(stamp))
             ok, image = capture.read()
             if not ok:
@@ -55,9 +59,12 @@ def appearance_features(path, samples_per_second=2):
         {
             "video_available": bool(vectors),
             "sampled_frames": sampled,
+            "requested_frames": requested,
+            "decode_failure_count": requested - sampled,
             "face_detection_rate": len(vectors) / sampled if sampled else 0,
+            "video_quality": "ok" if vectors else "no_face" if sampled else "decode_failed",
             "video_duration_ms": duration_ms,
-            "visual_feature_version": "sampled-face-hog-2fps-v1",
+            "visual_feature_version": f"sampled-face-hog-{samples_per_second:g}fps-v1",
             "blink_measurement_valid": False,
         }
     )
