@@ -21,6 +21,148 @@ from atc_fatigue.utils.runtime import checksum
 from atc_fatigue.vision.appearance import appearance_features
 
 
+def temporal_audio_representations(signal: np.ndarray, source_rate: int, config: dict) -> dict:
+    """Actual mono/resampled signal and spectral representations with canonical MFCC defaults.
+
+    Arrays can reveal source media: keep them local and never publish them merely
+    because they are transformed. FFT=2048, hop=512 and 128 Mel bands match the
+    installed librosa defaults used by the original feature extractor.
+    """
+    import librosa
+    from atc_fatigue.audio.features import resample
+
+    source = np.asarray(signal)
+    if source.ndim not in {1, 2} or not np.isfinite(source).all():
+        raise ValueError("Finite mono or samples-by-channels audio required")
+    mono = source.mean(axis=1) if source.ndim == 2 else source
+    prepared = resample(mono, source_rate, config["sample_rate"]).astype(np.float32)
+    stft = librosa.stft(prepared, n_fft=2048, hop_length=512)
+    mel = librosa.feature.melspectrogram(y=prepared, sr=config["sample_rate"],
+                                       n_fft=2048, hop_length=512, n_mels=128)
+    mfcc = librosa.feature.mfcc(y=prepared, sr=config["sample_rate"], n_mfcc=config["n_mfcc"])
+    return {"prepared_signal": prepared, "stft_db": librosa.amplitude_to_db(np.abs(stft), ref=np.max),
+            "log_mel_db": librosa.power_to_db(mel, ref=np.max), "mfcc": mfcc,
+            "sample_rate": config["sample_rate"], "hop_length": 512, "n_fft": 2048}
+
+
+def private_media_enabled() -> bool:
+    """Explicit local opt-in only; this never grants permission to publish source media."""
+    import os
+
+    value = os.environ.get("ATC_NOTEBOOK_PRIVATE_MEDIA", "0")
+    if value not in {"0", "1"}:
+        raise ValueError("ATC_NOTEBOOK_PRIVATE_MEDIA must be 0 or 1")
+    return value == "1"
+
+
+def parse_predi_filename(name: str) -> dict:
+    """Parse publisher-defined participant/date/task/device/label fields, not inferred fatigue."""
+    import re
+    from datetime import datetime
+
+    match = re.fullmatch(r"Predi-COVID_(\d+)_(\d{14})_([12])_([^_]+)_([WM])_([01])\.wav", name)
+    if not match:
+        raise ValueError("Unexpected Predi-COVID filename schema")
+    subject, stamp, task, device, sex, label = match.groups()
+    datetime.strptime(stamp, "%Y%m%d%H%M%S")
+    return {"subject_id": subject, "session_id": f"{subject}_{stamp[:8]}",
+            "recording_timestamp": stamp, "audio_task": int(task), "source_format": device,
+            "sex_metadata": sex, "target_value": int(label)}
+
+
+def parse_cogbeacon_session(name: str) -> dict:
+    """Collapse day suffix b into the same source participant ID, preventing cross-day leakage."""
+    import re
+
+    match = re.fullmatch(r"user_(\d+)(b?)_([vta])_([mo])", name)
+    if not match:
+        raise ValueError("Unexpected CogBeacon session schema")
+    subject, day, stimulus, variant = match.groups()
+    return {"subject_id": subject, "session_id": name, "day_suffix": day or "first",
+            "stimulus": stimulus, "variant": variant}
+
+
+def cumulative_event_increments(values) -> np.ndarray:
+    """Native button counts → increments per task round; no fatigue/non-fatigue propagation."""
+    values = np.asarray(values, dtype=float)
+    if values.ndim != 1 or not len(values) or not np.isfinite(values).all():
+        raise ValueError("Cumulative event counts must be a nonempty finite vector")
+    if (values < 0).any() or not np.equal(values, np.floor(values)).all() or (np.diff(values) < 0).any():
+        raise ValueError("Cumulative button counts must be nonnegative nondecreasing integers")
+    return np.diff(np.r_[0, values]).astype(int)
+
+
+def audit_cogbeacon(root: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
+    """Inspect all local NPZ schemas and join native round IDs, without inventing time labels.
+
+    The published 2-FPS acquisition and round-local frame IDs do not provide a
+    verified absolute timestamp series. No blink duration, PERCLOS, binary fatigue
+    class, or supervised model is produced by this descriptive audit.
+    """
+    root = Path(root)
+    sessions, rounds, issues = [], [], []
+    for report in sorted((root / "fatigue_self_report").glob("*.csv")):
+        meta = parse_cogbeacon_session(report.stem)
+        counts = np.loadtxt(report, ndmin=1)
+        increments = cumulative_event_increments(counts)
+        performance_paths = list((root / "user_performance").glob(report.stem + "_*.csv"))
+        if len(performance_paths) != 1:
+            raise ValueError("CogBeacon session requires one matching performance CSV")
+        performance = pd.read_csv(performance_paths[0], sep="\t")
+        performance.columns = performance.columns.str.strip()
+        aligned = len(performance) == len(counts) and np.array_equal(performance.Round, np.arange(1, len(counts)+1))
+        if not aligned:
+            issues.append({"session_id": report.stem, "reason": "round_alignment_unverified"})
+        frame_counts, invalid, frame_total = {}, 0, 0
+        for path in (root / "face_keypoints" / report.stem).glob("*.npz"):
+            tokens = path.stem.split("_")
+            if len(tokens) != 3 or not all(x.isdigit() for x in tokens):
+                raise ValueError("Unrecognized round-local landmark filename")
+            native_round = int(tokens[1])
+            frame_counts[native_round] = frame_counts.get(native_round, 0) + 1
+            frame_total += 1
+            with np.load(path, allow_pickle=False) as archive:
+                vector = archive["arr_0"]
+                invalid += int(vector.shape != (140,) or not np.isfinite(vector).all())
+        if aligned:
+            for index, row in performance.iterrows():
+                rounds.append({**meta, "round_id": int(row.Round), "cumulative_reports": int(counts[index]),
+                               "event_increments": int(increments[index]), "response_seconds": float(row.Time),
+                               "correct": str(row.Response).lower() == "true",
+                               "landmark_records": frame_counts.get(int(row.Round), 0)})
+        sessions.append({**meta, "sample_id": report.stem, "dataset_id": "cogbeacon",
+                         "target_name": None, "target_value": None, "is_synthetic_pair": False,
+                         "label_source": "native_cumulative_button_counts_per_round; no_window_class",
+                         "source_checksum": checksum(report), "performance_checksum": checksum(performance_paths[0]),
+                         "rounds": len(counts), "button_presses": int(counts[-1]),
+                         "event_rounds": int((increments > 0).sum()), "landmark_records": frame_total,
+                         "invalid_landmark_records": invalid, "round_alignment_verified": aligned})
+    frame, round_frame = pd.DataFrame(sessions), pd.DataFrame(rounds)
+    if frame.empty:
+        raise FileNotFoundError("CogBeacon local audit data unavailable; see docs/datasets.md")
+    summary = {"observed_sessions": len(frame), "observed_numeric_source_ids": int(frame.subject_id.nunique()),
+               "documented_sessions": 76, "documented_participants": 19,
+               "rounds": len(round_frame), "button_presses": int(frame.button_presses.sum()),
+               "event_rounds": int(frame.event_rounds.sum()), "landmark_records": int(frame.landmark_records.sum()),
+               "invalid_landmark_records": int(frame.invalid_landmark_records.sum()), "issues": issues,
+               "nominal_landmark_fps": 2, "verified_absolute_timestamps": False,
+               "supervised_fatigue_labels_validated": False,
+               "count_discrepancy": "current archive has 77 sessions / 20 numeric IDs; source documentation says 76 / 19"}
+    return frame, round_frame, summary
+
+
+def actor_metric_table(predictions: pd.DataFrame, labels: list[int]) -> pd.DataFrame:
+    """Descriptive actor-level variation; clips within actors are never resampled as independent."""
+    from atc_fatigue.models.baselines import classification_metrics
+
+    rows = []
+    for (model, actor), group in predictions.groupby(["model", "subject_id"]):
+        result = classification_metrics(group.truth, group.prediction, labels)
+        rows.append({"model": model, "subject_id": str(actor), "recordings": len(group),
+                     **{k: result[k] for k in ["macro_f1", "balanced_accuracy", "accuracy"]}})
+    return pd.DataFrame(rows)
+
+
 def local_manifest(path: str, target: str | None) -> pd.DataFrame:
     """Verify all local sources against the original manifest; never download missing data."""
     source = safe_path(Path.cwd(), path)

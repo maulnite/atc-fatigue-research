@@ -1,0 +1,145 @@
+{
+  "audit_date_utc": "2026-10-22",
+  "scope": "incremental enhancement of existing notebook-first v3; no raw media published",
+  "predi_covid": {
+    "access": "open; successful authorized subset download",
+    "record": "https://zenodo.org/records/5937844",
+    "repository": "https://github.com/LIHVOICE/Predi_COVID_Fatigue_Vocal_Biomarker",
+    "paper": "https://doi.org/10.1136/bmjopen-2022-062463",
+    "data_license": "CC BY 4.0",
+    "code_license": "no LICENSE identified in inspected repository; no upstream code copied",
+    "remote_wav_count": 3544,
+    "remote_participants": 296,
+    "remote_bytes": 4703486784,
+    "remote_recording_labels": {
+      "0": 2444,
+      "1": 1100
+    },
+    "remote_participants_with_varying_labels": 99,
+    "subset": {
+      "recordings": 207,
+      "participants": 120,
+      "bytes": 354438570,
+      "label_counts": {
+        "0": 121,
+        "1": 86
+      },
+      "recordings_per_participant": {
+        "2": 87,
+        "1": 33
+      },
+      "participants_with_varying_labels": 14,
+      "selection": "np.random.default_rng(42);120 of sorted296 participant IDs;reading task1;max2 earliest;label-blind",
+      "all_md5_publisher_verified": true,
+      "all_sha256_recorded": true,
+      "download_budget_bytes": 402653184,
+      "manifest_sha256": "fbae66d2f0615873ccc4fbaf71ee5fcf7c0d7d9a6ce44144447da546902c4c49"
+    },
+    "target": "clinical_fatigue_binary",
+    "label_definition": {
+      "0": "I feel well",
+      "1": "I am fatigued OR I do not feel well"
+    },
+    "annotation_resolution": "same-day clinical self-report, not within-utterance fatigue",
+    "split": "fixed seed42 subject-disjoint three-way; repeat days stay within participant; no tuning on test",
+    "potential_confounders": [
+      "COVID illness",
+      "demographics",
+      "device and original3gp/m4a",
+      "language",
+      "recording day",
+      "reading protocol"
+    ],
+    "missing_metadata": [
+      "per-recording language",
+      "precise label-response timestamp relative to recording",
+      "objective occupational fatigue ground truth"
+    ],
+    "domain_gap": "clinical COVID speech is not radio ATC / occupational fatigue",
+    "publication": "safe aggregate only; no WAV, full feature/label table, participant identifiers or models in Git",
+    "verified_run_id": "20261022T133521652181Z_seed42_d98d66",
+    "qc": {
+      "recordings": 207,
+      "quality_ok": 207,
+      "finite_feature_cells_fraction": 1.0,
+      "clipping_fraction_max": 0.0,
+      "source_rates_hz": [
+        8000,
+        44100
+      ],
+      "source_channels": [
+        1
+      ],
+      "split_recordings": {
+        "train": 129,
+        "validation": 36,
+        "test": 42
+      },
+      "split_participants": {
+        "train": 76,
+        "validation": 20,
+        "test": 24
+      },
+      "subject_overlap": 0,
+      "checksum_overlap": 0
+    }
+  },
+  "cogbeacon": {
+    "access": "successful public GitHub archive download; EEG not downloaded",
+    "repository": "https://github.com/MikeMpapa/CogBeacon-MultiModal_Dataset_for_Cognitive_Fatigue",
+    "paper": "https://www.mdpi.com/2227-7080/7/2/46",
+    "rights": "MIT LICENSE explicitly software; article describes data-sharing approval/IRB2019-0253; no automatic biometric redistribution assumption",
+    "verified_archive_git_blobs": true,
+    "local_audit": {
+      "observed_sessions": 77,
+      "observed_numeric_source_ids": 20,
+      "documented_sessions": 76,
+      "documented_participants": 19,
+      "rounds": 6972,
+      "button_presses": 79,
+      "event_rounds": 79,
+      "landmark_records": 68118,
+      "invalid_landmark_records": 0,
+      "issues": [],
+      "nominal_landmark_fps": 2,
+      "verified_absolute_timestamps": false,
+      "supervised_fatigue_labels_validated": false,
+      "count_discrepancy": "current archive has 77 sessions / 20 numeric IDs; source documentation says 76 / 19"
+    },
+    "annotation": "native cumulative button count per task round; not binary frame/window fatigue",
+    "identity": "b suffix is second day of same numeric source ID",
+    "time_alignment": "round IDs align; local frame index resets; verified absolute timestamps unavailable; response Time not a synchronization clock",
+    "target_valid_for_supervised_learning": false,
+    "training_status": "deliberately not run; no invented scores",
+    "sampling_limitation": "nominal2FPS insufficient for blink duration/PERCLOS claims",
+    "publication": "aggregate event/coverage charts only; no landmark coordinates or raw biometrics in Git",
+    "potential_confounders": [
+      "stimulus modality",
+      "task variant",
+      "learning effects",
+      "day",
+      "subjective reporting threshold"
+    ],
+    "archives": [
+      {
+        "filename": "face_keypoints.tar.xz",
+        "bytes": 5469980,
+        "git_blob_sha": "82f349bd1e6e189961140267b54fa434baccc250",
+        "sha256": "9d620cfc88501b8361b37f88821a73107d463c197f6355c081530a7a71a244aa"
+      },
+      {
+        "filename": "fatigue_self_report.tar.xz",
+        "bytes": 1516,
+        "git_blob_sha": "267293793269f9452c36edf33e2649e181889ade",
+        "sha256": "95fa83de1a3e96f82b31c8ee43cb3d1fefde42ac4a5f43ae365aecbe01e8eb78"
+      },
+      {
+        "filename": "user_performance.tar.xz",
+        "bytes": 38508,
+        "git_blob_sha": "6c1793dcef97e41dd718d5b5845654db8f5d74d2",
+        "sha256": "46733c9879c88ebd75a47a1024e6260b4a105f72125ce17fbf48d30d389bce13"
+      }
+    ],
+    "verified_run_id": "20261022T133828759667Z_seed42_6cfc97"
+  }
+}

@@ -1,4 +1,226 @@
-# Notebook-first v3 — hasil implementasi dan validasi
+# Notebook-first v3 — enhancement incremental terverifikasi
+
+Pembaruan **22 Oktober 2026 (UTC)** pada branch `feat/notebook-first-v3`, untuk [PR #1](https://github.com/maulnite/atc-fatigue-research/pull/1).
+**Tetap tepat tiga notebook utama** pada `notebooks/v3/`. Tidak ada versi/folder baru, merge ke main, penghapusan hasil lama atau perubahan shared environment.
+Bagian awal ini adalah status enhancement terbaru; snapshot implementasi awal dipertahankan utuh setelah pemisah di bawah.
+
+## Implemented and verified
+
+| Notebook yang diperbarui langsung | Cells / code | Grafik publik |
+| :--- | ---: | ---: |
+| [01_audio_analysis.ipynb](../notebooks/v3/01_audio_analysis.ipynb) | 42 / 26 | 14 |
+| [02_visual_analysis.ipynb](../notebooks/v3/02_visual_analysis.ipynb) | 48 / 33 | 21 |
+| [03_multimodal_fusion.ipynb](../notebooks/v3/03_multimodal_fusion.ipynb) | 39 / 24 | 15 |
+
+Total **50 grafik publik + 4 grafik ATCOSIM asli lokal**, dengan tema audio biru, visual ungu, fusion teal dan baseline abu-abu.
+Seluruh 35 grafik sebelumnya tetap relevan dan dipertahankan; tambahan 15 grafik publik memperluas analisis.
+Grafik memiliki *Yang terlihat / Artinya / Perlu diingat* dan jejak run. Diagram konseptual dan ilustrasi sintetis tidak dipakai sebagai data training.
+
+- **Audio:** metadata/dtype/kanal/kualitas WAV aktual, waveform sebelum/sesudah mono-resampling, STFT, log-Mel, MFCC temporal,
+  bukti kecocokan MFCC dengan extractor canonical, serta pemetaan 88 eGeMAPS + 26 MFCC = 114 fitur per utterance.
+  Empat representasi sumber hanya aktif melalui opt-in lokal; salinan publik mempertahankan ilustrasi sintetis berlabel.
+  Ditambahkan audit, EDA, QC, subject split, training Dummy/Logistic/Linear SVM dan error analysis Predi-COVID.
+- **Visual:** seluruh MRL/DROZY tetap tersedia, ditambah zoom dua kandidat closure selesai paling awal berdurasi 50–500 ms,
+  threshold, timestamp/durasi, serta penanganan gap/invalid. CogBeacon dianalisis deskriptif dari seluruh NPZ/CSV,
+  tanpa mengubah counter tombol menjadi label frame fatigue.
+- **Fusion:** audit setiap aktor/split/demografi/kelas/support; rasio dimensi fitur terhadap 64 recording train;
+  precision/recall/F1/support, error per aktor, delapan contoh test pertama yang dipilih deterministik,
+  LOAO actor-independent delapan fold dengan 32 checkpoint, variasi/delta per aktor dan confusion matrix pooled.
+  Benchmark historis serta inference masking ablation tetap dipertahankan.
+
+![DROZY: dua kandidat blink selesai paling awal sesuai aturan durasi; belum validasi fisiologis manual.](figures/notebook_v3/ear_event_zoom__20261022T133744544508Z_seed42_0e3eaa.png)
+
+**Interpretasi:** DROZY: dua kandidat blink selesai paling awal sesuai aturan durasi; belum validasi fisiologis manual. Sumber run `20261022T133744544508Z_seed42_0e3eaa`.
+
+## Hasil aktual Predi-COVID: sinyal klinis masih lemah
+
+[Zenodo](https://zenodo.org/records/5937844) terbuka CC BY 4.0; data dapat diunduh dengan sah.
+Subset berizin **207 WAV / 120 peserta**, seed 42, membaca teks saja, maksimal dua rekaman paling awal per peserta,
+tanpa seleksi berdasarkan label atau skor model. Payload audio **338,02 MiB**, di bawah batas izin 384 MiB / workspace tambahan 1 GiB.
+Seluruh MD5 penerbit dan SHA-256 diverifikasi. Semua 207 quality flags `ok`, 114 fitur finite, clipping terukur 0.
+Sumber mono 8/44,1 kHz; durasi 18.866–49.922 detik.
+Resampling tidak menghapus device/domain confound.
+
+Label 0 berisi **121 rekaman** dan label 1 **86**. Sebanyak 87 peserta memiliki dua rekaman, 33 satu rekaman,
+dan 14 peserta menunjukkan perubahan label dalam subset. Label adalah keadaan klinis hari yang sama:
+well versus **fatigued atau unwell**, sesuai [publikasi](https://doi.org/10.1136/bmjopen-2022-062463).
+Tidak identik dengan occupational fatigue, dan tidak melabeli perubahan di dalam ujaran.
+
+Split tetap: **129 rekaman / 76 peserta train**,
+**36 / 20 validation**,
+**42 / 24 test**. Semua hari seorang peserta tetap bersama;
+overlap subjek/checksum lintas split nol. Test memiliki 24 label well dan 18 fatigue/unwell.
+Median/scaler di-fit hanya pada train. C=1, class weight balanced, seed dan algoritma ditetapkan sebelum evaluasi;
+validation ditampilkan tetapi tidak dipakai tuning.
+
+| Model | Test Macro F1 | Balanced accuracy | Accuracy |
+| :--- | ---: | ---: | ---: |
+| dummy_majority | 0.3636 | 0.5000 | 0.5714 |
+| logistic_c1 | 0.4857 | 0.4861 | 0.5000 |
+| linear_svm_c1 | 0.5258 | 0.5278 | 0.5476 |
+
+Logistic memiliki recall well **0,5833**, fatigue/unwell **0,3889**, matrix `[[14,10],[11,7]]`.
+Linear SVM memiliki recall well **0,6667**, fatigue/unwell **0,3889**; Dummy tidak pernah memprediksi kelas 1.
+Karena itu kenaikan Macro F1 perlu dibaca bersama balanced accuracy yang masih dekat 0,5, bahkan Logistic di bawah Dummy.
+Hasil belum mendukung biomarker kuat atau generalisasi ke ATC. Error seluruh 24 peserta dan strata perangkat/demografi ditampilkan;
+tidak ada clip-level confidence interval atau pemilihan contoh berdasarkan skor terbaik.
+
+Confound belum teratasi: COVID/penyakit, demografi, bahasa, perangkat, hari, dan protokol membaca.
+Bahasa per recording serta timestamp respons label terhadap recording tidak lengkap pada metadata yang digunakan.
+Lihat [audit dataset](fatigue_dataset_audit.json) dan [dokumentasi sumber](../docs/datasets.md).
+
+![Predi-COVID: Macro F1 perlu dibaca bersama balanced accuracy yang dekat 0,5; 42 recording /24 peserta test.](figures/notebook_v3/predi_model_comparison__20261022T133521652181Z_seed42_d98d66.png)
+
+**Interpretasi:** Predi-COVID: Macro F1 perlu dibaca bersama balanced accuracy yang dekat 0,5; 42 recording /24 peserta test. Sumber run `20261022T133521652181Z_seed42_d98d66`.
+
+## Hasil aktual CogBeacon: deskriptif, tanpa classifier
+
+Tiga arsip kecil GitHub berhasil diperoleh dan Git blob SHA diverifikasi; EEG tidak diunduh.
+Audit penuh: **77 sesi / 20 ID numerik, 68.118 NPZ, 6.972 ronde, 79 tekan pada 79 ronde**.
+Semua NPZ memiliki 140 angka finite menurut schema audit; alignment ronde label/performa valid.
+Sumber [README](https://github.com/MikeMpapa/CogBeacon-MultiModal_Dataset_for_Cognitive_Fatigue)
+dan [paper](https://www.mdpi.com/2227-7080/7/2/46) menyebut 76 sesi / 19 peserta.
+Perbedaan ini belum terselesaikan; 20 ID numerik tidak diklaim sebagai 20 peserta terverifikasi.
+
+Akhiran `b` adalah hari kedua orang yang sama. CSV target berupa **counter tombol kumulatif per ronde**;
+selisih counter memberi event baru, tetapi tidak ada event bukan kelas non-fatigue.
+Indeks frame reset per ronde, clock absolut belum terverifikasi, dan `Time` adalah respons tugas.
+Nominal **2 FPS tidak mendukung blink duration/PERCLOS**. Tidak ada fatigue classifier atau skor palsu.
+MIT pada LICENSE menyebut software dan paper menyatakan persetujuan berbagi data; output publik hanya agregat,
+tidak mencakup koordinat wajah atau redistribusi biometrik.
+
+## RAVDESS: fusion belum konsisten mengungguli audio
+
+Split historis tetap **64 / 32 / 32** recording dari **4 / 2 / 2** aktor, train male-only dan evaluasi female-only
+menurut kategori metadata sumber. Tiap aktor 16 klip; test historis hanya **4 klip per emotion**.
+Fitur audio 114, visual 3.528, fusion 3.644: rasio terhadap 64 training recording = **1,781 / 55,125 / 56,938**.
+Dimensi tinggi terhadap contoh menambah risiko overfitting; standardisasi/regularisasi tidak menambah aktor baru.
+
+LOAO menahan satu dari delapan aktor, melatih pada tujuh aktor/112 klip, menguji 16 klip.
+Setiap fold memiliki delapan emotion, kedua kelompok metadata pada train, dan zero actor overlap train/test.
+Dummy dan tiga model Logistic C=1 memakai fold dan populasi identik, preprocessing train-only, tanpa test tuning.
+Ini **exploratory/sensitivity analysis** karena seluruh aktor pernah dipakai dalam pengembangan.
+
+| Model | Historis: Macro F1 / 32 klip, 2 aktor | LOAO exploratory: pooled Macro F1 / 128 klip, 8 aktor |
+| :--- | ---: | ---: |
+| dummy_majority | 0.0278 | 0.0278 |
+| audio_only | 0.3116 | 0.5452 |
+| visual_only | 0.2797 | 0.4071 |
+| audio_visual | 0.4549 | 0.4268 |
+
+**Jawaban:** fusion unggul pada split historis, tetapi LOAO memberi audio-only lebih tinggi daripada fusion.
+Fusion hanya melampaui audio pada **2/8 aktor**, dan visual pada **4/8**.
+Macro F1 fusion per aktor: mean **0.3731**, SD **0.1487**,
+rentang **0.1806–0.5798**.
+Audio per aktor: mean **0.4972**, rentang **0.3440–0.6923**.
+Variasi ini deskriptif; tidak ada bootstrap klip yang menganggap rekaman aktor sama independen, CI atau klaim signifikansi.
+
+Skor historis dan LOAO menggunakan populasi/ukuran training berbeda; selisih keduanya bukan efek peningkatan metode.
+Keunggulan fusion tidak boleh digeneralisasi dari split lama. HOG 2 FPS adalah appearance, target emotion,
+dan masking saat inference bukan training robust terhadap modality hilang. **Fatigue ATC tetap belum diukur.**
+
+![RAVDESS LOAO exploratory: seluruh delapan aktor ditampilkan, bukan contoh aktor terbaik.](figures/notebook_v3/loao_actor_variation__20261022T132032729881Z_seed42_20a3fa.png)
+
+**Interpretasi:** RAVDESS LOAO exploratory: seluruh delapan aktor ditampilkan, bukan contoh aktor terbaik. Sumber run `20261022T132032729881Z_seed42_20a3fa`.
+
+## Run FULL terpilih dan provenance
+
+| Eksperimen | Run ID completed | Target | Baris / ID subjek |
+| :--- | :--- | :--- | ---: |
+| `atcosim_audio` | `20261022T133504291481Z_seed42_84e529` | N/A — deskriptif | 100 / 1 |
+| `predi_covid_fatigue` | `20261022T133521652181Z_seed42_d98d66` | clinical_fatigue_binary | 207 / 120 |
+| `mrl_eye_state` | `20261022T133730709109Z_seed42_1a323e` | eye_state | 5285 / 37 |
+| `drozy_kss` | `20261022T133744544508Z_seed42_0e3eaa` | KSS | 36 / 14 |
+| `cogbeacon_audit` | `20261022T133828759667Z_seed42_6cfc97` | N/A — deskriptif | 77 / 20 |
+| `ravdess_emotion` | `20261022T131839829341Z_seed42_49ba0e` | emotion | 128 / 8 |
+| `ravdess_emotion_loao` | `20261022T132032729881Z_seed42_20a3fa` | emotion | 128 / 8 |
+
+Setiap run baru menyimpan config, environment, checksum kode/input, hash source notebook, feature schema,
+split/fold, model, prediksi, metrik, QC, grafik/captions, log dan integrity hashes.
+Predi-COVID mencatat protokol fixed-model; LOAO mencatat parent feature run dan baseline historis.
+CogBeacon memiliki audit/arsip checksum dan tidak memiliki model supervised.
+Manifest mencatat `git_dirty=true` dan base commit `22f5472c4561c36e14f5740629d5e6cccc57fbdd`;
+checksum kode serta source cells merekam perubahan aktual sebelum commit final, bukan menganggap base commit memuat enhancement.
+
+## Fresh-kernel execution dan validasi
+
+| Notebook | FULL session UTC | Durasi (s) | Grafik |
+| :--- | :--- | ---: | :--- |
+| 03_multimodal_fusion.ipynb | `20261022T131734Z_20fbda` | 122.636 | 15 lokal / 15 publik |
+| 01_audio_analysis.ipynb | `20261022T133502Z_994582` | 145.293 | 18 lokal / 14 publik |
+| 02_visual_analysis.ipynb | `20261022T133502Z_994582` | 63.376 | 21 lokal / 21 publik |
+
+| Notebook | DEMO publik session UTC | Durasi (s) | Grafik publik |
+| :--- | :--- | ---: | ---: |
+| 01_audio_analysis.ipynb | `20261022T133933Z_77a229` | 10.742 | 14 |
+| 02_visual_analysis.ipynb | `20261022T133933Z_77a229` | 13.312 | 21 |
+| 03_multimodal_fusion.ipynb | `20261022T133933Z_77a229` | 14.282 | 15 |
+
+Seluruh eksekusi akhir passed dan tidak memiliki output error; source cells konsisten dengan FULL terpilih.
+FULL menghitung fitur dan training nyata sesuai subset lokal berizin; DEMO memakai cache tervalidasi dan inference checkpoint sungguhan.
+Empat grafik audio asli diuji melalui FULL privat dan DEMO privat, lalu seluruh output cell private-media dibuang dari salinan publik saja.
+Sumber audio aktual tetap diproses pada default DEMO untuk metadata/fitur; plot sumber hanya lokal.
+
+- **71 tests passed**, Ruff dan pip check lulus; 14 deprecation warnings dependensi plotting pytest dipertahankan tanpa mengubah shared environment.
+- **69 checkpoint direplay**, prediksi dan metrik utama/confusion matrices dihitung ulang dan cocok: 2 MRL + 28 KSS + 4 RAVDESS historis + 32 LOAO + 3 Predi-COVID.
+- Split subject/actor-disjoint, checksum duplikat lintas split, target/label publisher, train-only preprocessing, source hashes dan artifact integrity diperiksa.
+- Metrik MRL/KSS/RAVDESS historis direproduksi hingga toleransi 1e-12; semua hasil canonical/checkpoint lama utuh.
+- **1.367 berkas pre-enhancement identik checksum**, termasuk completed runs, model, manifest/cache, canonical metrics dan lima notebook legacy.
+- Seluruh **50 grafik publik + 4 grafik privat** diperiksa secara visual: keterbacaan, label/satuan, skala, legend, colorbar, dan interpretasi.
+  Review memperbaiki legend klinis yang sempat terbawa dari helper MRL, posisi legend EAR/aktor, judul panel QC dan footer.
+- Pemeriksaan MIME, HTML/media, source paths dan tagged private outputs lulus. Hanya PNG/tabel agregat yang sudah ditinjau dipublikasikan.
+
+Dua eksekusi perantara gagal dan evidence-nya dipertahankan: satu source-hash guard menolak perubahan source saat proses berjalan,
+satu audio run berhenti sebelum training karena indentasi cell. Keduanya diperbaiki dan dijalankan ulang ke direktori baru;
+runner kini memeriksa sintaks sebelum eksperimen mahal. Tidak ada skor dari percobaan gagal yang dipakai sebagai hasil.
+
+## Implemented but not executed
+
+Jalur utama ketiga notebook dan tujuh jenis run sudah dieksekusi.
+Utility persiapan `12_prepare_predi_subset.py` diuji untuk reproduksi pemilihan label-blind,
+tetapi jalur unduhan dari checkout kosong melalui utility tersebut belum diulang: unduhan aktual dilakukan sekali dengan downloader berlog dan batas yang disetujui.
+Unduhan ulang tidak diperlukan untuk memvalidasi eksperimen yang memakai seluruh WAV terverifikasi.
+
+## Not implemented / blocked
+
+- Classifier CogBeacon: definisi label window, clock absolut dan discrepancy peserta belum tervalidasi; sengaja tidak dipaksakan.
+- Benchmark paired multimodal fatigue ATC: belum ada data/protokol ground truth berpasangan yang sah; akses IEEE juga belum terverifikasi tersedia.
+- Seluruh 3.544 audio Predi-COVID tidak diunduh; eksperimen FULL berlaku untuk subset 207 rekaman yang diizinkan.
+- Publikasi waveform/spectrogram/MFCC sumber ATCOSIM tidak diaktifkan; empat grafik ini hanya tersedia pada evidence privat lokal.
+
+## Future research
+
+Preregistrasikan target fatigue dan protokol waktu bersama Prof; audit label klinis/unwell dan confound perangkat/bahasa,
+lalu gunakan kohort eksternal dengan split peserta independen. Klarifikasi CogBeacon kepada penulis sebelum membentuk window labels.
+Kalibrasi EAR/closure dengan anotasi manual dan sampling memadai, serta kumpulkan pasangan ATC audio-video sinkron berizin.
+Validasi eksternal dan training missing-modality robustness merupakan studi baru, bukan klaim dari score emotion saat ini.
+
+## Reproduksi dan publikasi
+
+```bash
+.venv/bin/python scripts/10_execute_notebook_v3.py --mode FULL
+.venv/bin/python scripts/10_execute_notebook_v3.py --mode DEMO
+# Hanya untuk sesi audio lokal berizin; runner menyanitasi salinan publik.
+.venv/bin/python scripts/10_execute_notebook_v3.py --mode DEMO --notebook 01_audio_analysis.ipynb --private-media
+.venv/bin/python scripts/11_validate_notebook_v3.py
+.venv/bin/python -m pytest -q
+.venv/bin/ruff check src tests scripts
+.venv/bin/python -m pip check
+```
+
+Gunakan `.venv` proyek dan siapkan dataset/model lokal secara sah; clone GitHub hanya membawa notebook/output aman.
+Tidak ada paket shared diganti, GPU dipakai, media/raw dataset/cache/model diunggah, atau run completed ditimpa.
+Tiap notebook dibatasi 4 thread CPU dan OpenCV/ffmpeg 2. Audit `/home` menunjukkan sekitar 5,2 TiB free,
+bukan kuota reservasi proyek. Detail [README v3](../notebooks/v3/README.md), [dataset](../docs/datasets.md),
+[registry](notebook_v3_runs.json) dan [validation JSON](notebook_v3_validation.json).
+
+---
+
+## Snapshot awal implementasi v3 — catatan historis dipertahankan
+
+Angka, tanggal/sesi dan status pada bagian berikut berlaku untuk implementasi awal sebelum enhancement ini.
+Audit akuisisi, benchmark baru, jumlah grafik dan QA terkini menggunakan bagian terbaru di atas.
+
 
 **Tanggal:** 22 Oktober 2026, UTC. **Status:** tiga notebook utama selesai diimplementasikan dan dijalankan dalam DEMO serta FULL pada data lokal yang tersedia. **Performa multimodal fatigue ATC belum diukur.**
 

@@ -10,6 +10,23 @@ artifact_root: runs
 cached_run_registry: reports/notebook_v3_runs.json
 figure_dpi: 160
 publication_policy: safe_aggregates_and_synthetic_media
+presentation:
+  private_audio_default: false
+  private_audio_environment: ATC_NOTEBOOK_PRIVATE_MEDIA
+additional_datasets:
+  audit_summary: reports/fatigue_dataset_audit.json
+  predi_manifest: data/manifests/predi_covid_subset.parquet
+  cogbeacon_root: data/raw/cogbeacon/extracted
+  cogbeacon_audit: data/interim/cogbeacon/audit.json
+fusion_sensitivity:
+  strategy: leave_one_actor_out
+  status: exploratory
+  tune_hyperparameters: false
+historical_runs:
+  atcosim_audio: 20261022T081753373596Z_seed42_72a678
+  mrl_eye_state: 20261022T082130453246Z_seed42_6453bd
+  drozy_kss: 20261022T082144167968Z_seed42_60423d
+  ravdess_emotion: 20261022T081858104344Z_seed42_75d379
 audio:
   source_manifest: data/manifests/atcosim_subset.parquet
   sample_rate: 16000

@@ -47,26 +47,29 @@ class FigureBook:
         self.directory.mkdir(parents=True, exist_ok=True)
 
     def show(self, fig, topic: str, seen: str, meaning: str, caveat: str,
-             synthetic: bool = False) -> None:
+             synthetic: bool = False, private: bool = False, origin: str | None = None) -> None:
         if not all([seen.strip(), meaning.strip(), caveat.strip()]):
             raise ValueError("A substantive chart needs an observation, interpretation and scope")
         if not fig.axes or not any(ax.has_data() or ax.texts or ax.patches for ax in fig.axes):
             raise ValueError("Empty figure")
         relative = f"{topic}__{self.run.manifest['run_id']}.png"
-        path = safe_path(self.directory, relative)
+        directory = self.directory.parent / "private_figures" if private else self.directory
+        directory.mkdir(parents=True, exist_ok=True)
+        path = safe_path(directory, relative)
         if path.exists():
             raise FileExistsError("Figure exists; rerun in a new experiment/session")
         footer = f"{self.run.manifest['dataset']} | {self.mode} | "
-        footer += "ILUSTRASI SINTETIS" if synthetic else "data eksperimen nyata"
-        fig.text(0.01, -0.015, footer, fontsize=12, color=COLORS["secondary"])
+        footer += "ILUSTRASI SINTETIS" if synthetic else "DATA ASLI — LOKAL SAJA" if private else "data eksperimen nyata"
+        fig.text(0.01, -0.06, footer, fontsize=12, color=COLORS["secondary"])
         fig.savefig(path, dpi=self.config["figure_dpi"], bbox_inches="tight", facecolor="white")
         display(fig)
         plt.close(fig)
-        state = "FRESH" if self.mode == "FULL" else "CACHED + contoh diproses langsung"
+        state = origin or ("FRESH" if self.mode == "FULL" else "CACHED + contoh diproses langsung")
         display(Markdown(f"**Yang terlihat:** {seen}\n\n**Artinya:** {meaning}\n\n"
                          f"**Perlu diingat:** {caveat}\n\n"
                          f"*Sumber: `{self.run.manifest['run_id']}` · {state}.*"))
         self.records.append({"file": str(path), "topic": topic, "synthetic": synthetic,
+                             "private": private, "origin": state,
                              "source_run_id": self.run.manifest["run_id"],
                              "seen": seen, "meaning": meaning, "caveat": caveat,
                              "pixel_dpi": self.config["figure_dpi"],

@@ -3,6 +3,7 @@
 import argparse
 import base64
 import io
+import hashlib
 import json
 import os
 import re
@@ -20,9 +21,9 @@ import pandas as pd  # noqa: E402
 from PIL import Image  # noqa: E402
 
 from atc_fatigue.models.baselines import classification_metrics  # noqa: E402
-from atc_fatigue.research.data import regression_metrics, verify_cached_predictions  # noqa: E402
+from atc_fatigue.research.data import parse_predi_filename, regression_metrics, verify_cached_predictions  # noqa: E402
 from atc_fatigue.research.runs import (  # noqa: E402
-    cached_run, notebook_source_hash, project_config,
+    TASKS, cached_run, notebook_source_hash, project_config,
 )
 from atc_fatigue.utils.runtime import checksum, write_json  # noqa: E402
 
@@ -43,6 +44,8 @@ def main():
         assert all(c.execution_count is not None for c in cells)
         figures, outputs = 0, 0
         for cell in cells:
+            if "private-media" in cell.metadata.get("tags", []):
+                assert all(not o.get("data") for o in cell.outputs), "Private media in public notebook"
             for output in cell.outputs:
                 outputs += 1
                 assert output.output_type != "error"
@@ -64,16 +67,40 @@ def main():
                                     "code_cells": len(cells), "outputs": outputs, "figures": figures,
                                     "errors": 0, "source_hash": notebook_source_hash(notebook)})
 
-    for slug in ["atcosim_audio", "mrl_eye_state", "drozy_kss", "ravdess_emotion"]:
+    registry = json.loads(Path(config["cached_run_registry"]).read_text())["runs"]
+    for slug in TASKS:
+        if slug not in registry:
+            continue
         run, metrics = cached_run(slug, config)
         notebook = nbformat.read(Path("notebooks/v3") / run.manifest["notebook_name"], as_version=4)
         assert notebook_source_hash(notebook) == run.manifest["notebook_source_hash"]
+        for path, expected in run.manifest["source_code_checksums"].items():
+            assert checksum(Path(path)) == expected, f"Current code differs from executed code: {path}"
+        split_path = run.path / "split_manifest.csv"
+        if split_path.exists():
+            split = pd.read_csv(split_path, dtype={"subject_id": str})
+            for _, fold in split.groupby("fold") if "fold" in split else [(None, split)]:
+                assert fold.groupby("subject_id").split.nunique().max() == 1
+                if "source_checksum" in fold:
+                    assert fold.groupby("source_checksum").split.nunique().max() == 1
+        if slug == "cogbeacon_audit":
+            for path, expected in json.loads((run.path / "source_archives.json").read_text()).items():
+                assert checksum(Path(path)) == expected
         features = pd.read_parquet(run.path / "features/features.parquet")
+        if slug == "predi_covid_fatigue":
+            for row in features.itertuples():
+                path = Path(row.original_path)
+                original = parse_predi_filename(path.name)
+                assert row.target_value == original["target_value"]
+                assert row.subject_id == original["subject_id"]
+                assert row.session_id == original["session_id"]
+                assert checksum(path) == row.source_checksum
+                assert hashlib.md5(path.read_bytes()).hexdigest() == row.publisher_md5
         replayed, compared = 0, {}
         if metrics["metrics_applicable"]:
             predictions = pd.read_csv(run.path / "predictions/holdout_predictions.csv",
                                       dtype={"subject_id": str})
-            groups = predictions.groupby(["model", "fold"]) if slug == "drozy_kss" else predictions.groupby("model")
+            groups = predictions.groupby(["model", "fold"]) if slug in {"drozy_kss", "ravdess_emotion_loao"} else predictions.groupby("model")
             for key, recorded in groups:
                 model, fold = key if isinstance(key, tuple) else (key, None)
                 selected = features[features.sample_id.isin(recorded.sample_id)]
@@ -109,8 +136,32 @@ def main():
                                "source_hash_matches_current_notebook": True,
                                "replayed_checkpoints": replayed, "recomputed_metrics": compared,
                                "figures": len(inventory), "captions_complete": True,
+                               "private_figures_local_only": sum(item.get("private", False) for item in inventory),
                                "synthetic_illustrations": sum(item["synthetic"] for item in inventory),
                                "artifact_integrity": "passed"})
+
+    incremental = Path("reports/run_logs/incremental_v3_latest.json")
+    if incremental.exists():
+        pointer = json.loads(incremental.read_text())
+        proof_path = Path(pointer["audit_root"]) / "protected_checksums.json"
+        preserved = json.loads(proof_path.read_text())
+        changed = [p for p, expected in preserved.items() if not Path(p).exists() or checksum(Path(p)) != expected]
+        assert not changed, changed
+        report["preservation_incremental"] = {"checked": len(preserved), "unchanged": len(preserved), "unexpected_changes": 0}
+    historical = []
+    for slug, run_id in config["historical_runs"].items():
+        old, original = cached_run(slug, config, run_id=run_id)
+        _, current = cached_run(slug, config)
+        if original["metrics_applicable"]:
+            for name in original["models"]:
+                keys = ["mae", "rmse", "subject_macro_mae"] if slug == "drozy_kss" else ["macro_f1", "accuracy", "balanced_accuracy"]
+                left, right = original["models"][name], current["models"][name]
+                if slug != "drozy_kss":
+                    left, right = left["test"], right["test"]
+                for metric in keys:
+                    np.testing.assert_allclose(left[metric], right[metric], rtol=1e-12, atol=1e-12)
+        historical.append({"experiment": slug, "run_id": old.manifest["run_id"], "integrity": "passed", "metrics_reproduced": True})
+    report["historical_runs"] = historical
 
     proof = Path("reports/run_logs/notebook_v3_preflight/protected_checksums.json")
     if proof.exists():

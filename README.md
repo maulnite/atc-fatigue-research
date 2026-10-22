@@ -20,9 +20,11 @@ Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Contro
 
 **Pengembangan v3 — notebook-first research:** [tiga notebook utama](notebooks/v3/README.md) memperlihatkan proses dari EDA, ekstraksi fitur, training, evaluasi, sampai interpretasi. Mode **DEMO** memakai hasil FULL terverifikasi dan menjalankan contoh asli secara langsung; **FULL** mengulang eksperimen ke run baru. Lihat [laporan eksperimen dan validasi v3](reports/notebook_v3_summary.md). Lima notebook lama beserta seluruh output/model/hasilnya dipertahankan. **Performa multimodal fatigue ATC belum diukur.**
 
+**Enhancement v3 — 22 Oktober 2026:** notebook yang sama menambahkan transformasi audio ATCOSIM asli untuk sesi lokal berizin, benchmark fatigue/unwell klinis Predi-COVID (207 rekaman / 120 peserta), audit deskriptif CogBeacon, dan sensitivity analysis LOAO RAVDESS. Pada LOAO, audio-only lebih tinggi daripada fusion; hasil ini membatasi kesimpulan split historis. [Hasil, grafik, run IDs dan QA terbaru](reports/notebook_v3_summary.md) · [Audit dataset tambahan](reports/fatigue_dataset_audit.json).
+
 Status tersebut berlaku untuk **MVP**, bukan seluruh detail handoff. Lihat [checklist pemenuhan handoff](reports/handoff_coverage.md) untuk bukti, kekurangan, dan pekerjaan bersyarat, serta [pelengkapan teknis](reports/engineering_audit.md) untuk profiling/QC terbaru.
 
-**Untuk tim:** buka [notebook demo beserta outputnya](notebooks/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.
+**Untuk tim:** buka [tiga notebook v3 beserta outputnya](notebooks/v3/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.
 
 **Laporan progres:** [pekerjaan yang sudah dilakukan, hasil, dan tindak lanjut — 21 Oktober 2026](reports/progress_report_2026-10-21.md).
 

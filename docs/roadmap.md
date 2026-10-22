@@ -1,5 +1,18 @@
 # Roadmap penelitian dan implementasi
 
+**Enhancement incremental v3 — 22 Oktober 2026:** tiga notebook yang sama sekarang memuat audit/benchmark Predi-COVID, audit CogBeacon, visualisasi audio asli lokal, zoom EAR, dan LOAO actor-independent RAVDESS. Keunggulan fusion pada split historis tidak konsisten terhadap audio-only dalam LOAO; lihat [hasil dan batas interpretasi terbaru](../reports/notebook_v3_summary.md). Snapshot status sebelumnya tetap dipertahankan di bawah.
+
+| Prioritas enhancement | Implementasi dan bukti | Status |
+| :--- | :--- | :--- |
+| P0 Preserve & Audit | Snapshot checksum 1.367 berkas lama; branch/PR, environment, data dan hak akses diperiksa | Terverifikasi |
+| P1 Original Audio | Empat grafik ATCOSIM asli lokal, 114 fitur konsisten; ekspor publik menahan ilustrasi sintetis | Terimplementasi dan diuji |
+| P2 Fatigue Dataset Audits | Predi-COVID subset berizin + 3 model; CogBeacon 68.118 NPZ + audit 77 sesi | Training klinis / audit deskriptif selesai; label window CogBeacon belum valid |
+| P3 Multimodal Evaluation | Histori tetap, LOAO 8 fold / 32 checkpoint, actor metrics, dimensionality, per-class dan error analysis | Exploratory terverifikasi; bukan test konfirmatori |
+| P4 Presentation Polish | 50 grafik publik + 4 grafik audio privat lokal, caption, narasi dan review visual | Diperiksa visual |
+| P5 Validation | FULL/DEMO fresh kernel, replay 69 checkpoint, tests/Ruff/dependency checks, laporan/PR #1 | Bukti pada validation JSON; tanpa merge main |
+
+Prioritas penelitian berikutnya: protokol target bersama Prof, klarifikasi event/clock/jumlah peserta CogBeacon, kontrol confound klinis/perangkat/bahasa, dan pengumpulan pasangan ATC berlabel fatigue. Tidak ada klaim bahwa model emotion/eye-state/KSS telah mendeteksi fatigue ATC.
+
 **Pembaruan 22 Oktober 2026:** pengembangan [notebook-first v3](../notebooks/v3/README.md) menambahkan tepat tiga notebook utama, mode DEMO/FULL, dan run eksperimen terpisah. Hasil serta acceptance terbaru tercatat dalam [laporan v3](../reports/notebook_v3_summary.md). Seluruh artefak lama dipertahankan. Menurut dokumen v3 dari pengguna, permintaan akses IEEE telah dikirim; akses/data belum tersedia. Status 21 Oktober di bawah adalah snapshot historis.
 
 **Status 21 Oktober 2026:** jalur utama MVP publik M0–M4 dan M6 telah dijalankan; ini tidak berarti semua detail handoff selesai. Draft M7 tersedia. M5 belum memperoleh akses IEEE; belum ada permintaan akses yang dikirim. M8 menunggu data ATC berpasangan/protokol. Lihat [checklist per bagian handoff](../reports/handoff_coverage.md) dan [laporan hasil](../reports/smoke_test_report.md).

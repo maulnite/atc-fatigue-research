@@ -27,7 +27,13 @@ TASKS = {
     "mrl_eye_state": ("mrl_eye", "eye_state", "image; held-out subject", "subject_disjoint"),
     "drozy_kss": ("drozy", "KSS", "original_test; held-out subject", "LOSO"),
     "ravdess_emotion": ("ravdess", "emotion", "AV_recording; held-out actor", "actor_disjoint"),
+    "ravdess_emotion_loao": ("ravdess", "emotion", "AV_recording; held-out actor", "leave_one_actor_out_exploratory"),
+    "predi_covid_fatigue": ("predi_covid", "clinical_fatigue_binary", "recording; held-out participant", "subject_disjoint"),
+    "cogbeacon_audit": ("cogbeacon", None, "task_session; repeated within source ID", "descriptive_event_audit"),
 }
+
+NO_SUPERVISION_REASONS = {"atcosim_audio": "no_fatigue_labels",
+                          "cogbeacon_audit": "event_counts_not_valid_window_fatigue_labels"}
 
 
 def utc_now() -> str:
@@ -107,7 +113,7 @@ class Run:
         if target is not None and not frame.target_name.eq(target).all():
             raise ValueError("Wrong research target")
         if target is None and frame.target_value.notna().any():
-            raise ValueError("ATCOSIM has no verified fatigue labels")
+            raise ValueError("This descriptive task has no validated supervised target")
         run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
         run_id += f"_seed{config['seed']}_{uuid.uuid4().hex[:6]}"
         root = Path(config["artifact_root"])
@@ -121,6 +127,8 @@ class Run:
         manifest = {
             "run_id": run_id, "experiment": slug, "notebook_name": notebook,
             "mode": "FULL", "git_commit": commit, "utc_started": utc_now(),
+            "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()),
+            "private_media_requested": os.environ.get("ATC_NOTEBOOK_PRIVATE_MEDIA", "0") == "1",
             "utc_finished": None, "status": "running", "dataset": dataset,
             "dataset_variant/revision": rights["variant"], "source_rights": rights,
             "target_name": target, "label_source": sorted(frame.label_source.unique()),
@@ -215,7 +223,7 @@ def validate_metrics(metrics: dict, manifest: dict) -> None:
     validate_target(metrics["dataset"], metrics["target"])
     if metrics["target"] is None:
         if metrics["metrics_applicable"] or metrics["models"]:
-            raise ValueError("No supervised metrics on unlabeled ATCOSIM")
+            raise ValueError("No supervised metrics without a validated target")
     elif not metrics["metrics_applicable"] or not metrics["models"]:
         raise ValueError("Supervised experiment has no measured model results")
     for result in metrics["models"].values():
@@ -250,19 +258,19 @@ def metrics_base(run: Run, models: dict, sizes: dict, labels: dict, baseline: st
         "model": list(models), "baseline": baseline, "models": models,
         "scope": "public_subset_smoke_test; not_multimodal_ATC_fatigue",
         "limitations": m["known_limitations"], "metrics_applicable": m["metrics_applicable"],
-        "reason": "no_fatigue_labels" if m["target_name"] is None else "original_dataset_labels",
+        "reason": NO_SUPERVISION_REASONS[m["experiment"]] if m["target_name"] is None else "original_dataset_labels",
         "provenance": {"git_commit": m["git_commit"], "feature_version": m["feature_extractor_version"]},
     }
 
 
-def cached_run(slug: str, config: dict) -> tuple[Run, dict]:
+def cached_run(slug: str, config: dict, *, run_id: str | None = None) -> tuple[Run, dict]:
     registry = Path(config["cached_run_registry"])
     if not registry.exists():
         raise FileNotFoundError("Cache v3 belum ada. Jalankan tiga notebook dalam mode FULL dahulu; lihat notebooks/v3/README.md")
     runs = json.loads(registry.read_text())["runs"]
-    if slug not in runs:
+    if slug not in runs and run_id is None:
         raise FileNotFoundError(f"Run {slug} belum tersedia dalam registry v3")
-    run_id = runs[slug]
+    run_id = run_id or runs[slug]
     if not re.fullmatch(r"[A-Za-z0-9_]+", run_id):
         raise ValueError("Unsafe cached run ID")
     path = safe_path(Path(config["artifact_root"]), f"{slug}/{run_id}")
@@ -290,10 +298,12 @@ def cached_run(slug: str, config: dict) -> tuple[Run, dict]:
                 subject, trial = map(int, row.session_id.split("-"))
                 if float(labels[subject - 1, trial - 1]) != row.target_value:
                     raise ValueError("Cached KSS differs from the original per-test label file")
-    else:
+    elif slug != "cogbeacon_audit":
         keys = {"atcosim_audio": ("audio", "source_manifest"),
                 "mrl_eye_state": ("visual", "mrl_manifest"),
                 "ravdess_emotion": ("fusion", "ravdess_manifest")}
+        keys["ravdess_emotion_loao"] = ("fusion", "ravdess_manifest")
+        keys["predi_covid_fatigue"] = ("additional_datasets", "predi_manifest")
         section, name = keys[slug]
         source = Path(config[section][name])
         if source.exists():

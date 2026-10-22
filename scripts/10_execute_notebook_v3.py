@@ -1,6 +1,7 @@
 """Execute only the three v3 notebooks, preserving sources and append-only run evidence."""
 
 import argparse
+import ast
 import json
 import os
 import re
@@ -34,6 +35,10 @@ def publication_copy(notebook):
     for cell in public.cells:
         if cell.cell_type != "code":
             continue
+        if "private-media" in cell.metadata.get("tags", []):
+            cell.outputs = [nbformat.v4.new_output(
+                "stream", name="stdout", text="Visualisasi audio asli hanya tersedia pada salinan eksekusi lokal; output media dihilangkan dari salinan publik.\n")]
+            continue
         for output in cell.get("outputs", []):
             if output.output_type == "stream":
                 output.text = output.text.replace(str(ROOT), "[proyek]")
@@ -45,10 +50,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=["DEMO", "FULL"], required=True)
     parser.add_argument("--notebook", choices=NAMES, action="append")
+    parser.add_argument("--private-media", action="store_true",
+                        help="Enable authorized local ATCOSIM plots; strip them from public notebook copies")
     args = parser.parse_args()
     session = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid.uuid4().hex[:6]
     os.environ["ATC_NOTEBOOK_MODE"] = args.mode
     os.environ["ATC_NOTEBOOK_SESSION"] = session
+    os.environ["ATC_NOTEBOOK_PRIVATE_MEDIA"] = "1" if args.private_media else "0"
     evidence = ROOT / "runs" / "executions" / session
     evidence.mkdir(parents=True, exist_ok=False)
     results = []
@@ -56,10 +64,14 @@ def main():
     for name in selected:
         path = ROOT / "notebooks/v3" / name
         source = nbformat.read(path, as_version=4)
+        for index, cell in enumerate(source.cells):
+            if cell.cell_type == "code":
+                ast.parse(cell.source, filename=f"{name}:cell{index}")
         digest = source_hash(source)
         started = time.perf_counter()
         print(f"{args.mode}: {name} — fresh kernel", flush=True)
         result = {"notebook": name, "mode": args.mode, "session": session,
+                  "private_media_enabled": args.private_media,
                   "utc_started": datetime.now(timezone.utc).isoformat(), "source_hash": digest}
         try:
             client = NotebookClient(source, timeout=1200, kernel_name="atc-fatigue",
@@ -100,7 +112,10 @@ def main():
                 payload["history"].append({"session": session, "runs": current_runs})
                 write_json(registry, payload)
             # Source cells and exact executed outputs are already preserved in local evidence.
-            nbformat.write(publication_copy(source), path)
+            public = publication_copy(source)
+            result["public_png_outputs"] = sum("image/png" in o.get("data", {})
+                for c in public.cells if c.cell_type == "code" for o in c.outputs)
+            nbformat.write(public, path)
         except Exception as exc:
             nbformat.write(source, evidence / (path.stem + "__failed.ipynb"))
             result.update(status="failed", seconds=time.perf_counter()-started, error_type=type(exc).__name__)

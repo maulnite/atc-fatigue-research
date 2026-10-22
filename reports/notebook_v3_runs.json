@@ -1,9 +1,12 @@
 {
   "runs": {
-    "atcosim_audio": "20261022T081753373596Z_seed42_72a678",
-    "drozy_kss": "20261022T082144167968Z_seed42_60423d",
-    "mrl_eye_state": "20261022T082130453246Z_seed42_6453bd",
-    "ravdess_emotion": "20261022T081858104344Z_seed42_75d379"
+    "atcosim_audio": "20261022T133504291481Z_seed42_84e529",
+    "drozy_kss": "20261022T133744544508Z_seed42_0e3eaa",
+    "mrl_eye_state": "20261022T133730709109Z_seed42_1a323e",
+    "ravdess_emotion": "20261022T131839829341Z_seed42_49ba0e",
+    "cogbeacon_audit": "20261022T133828759667Z_seed42_6cfc97",
+    "ravdess_emotion_loao": "20261022T132032729881Z_seed42_20a3fa",
+    "predi_covid_fatigue": "20261022T133521652181Z_seed42_d98d66"
   },
   "history": [
     {
@@ -78,6 +81,139 @@
         {
           "experiment": "mrl_eye_state",
           "run_id": "20261022T082130453246Z_seed42_6453bd"
+        }
+      ]
+    },
+    {
+      "session": "20261022T131223Z_e9a456",
+      "runs": [
+        {
+          "experiment": "cogbeacon_audit",
+          "run_id": "20261022T131324339369Z_seed42_9ea140"
+        },
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261022T131240141197Z_seed42_f07606"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261022T131226600959Z_seed42_0cfe59"
+        }
+      ]
+    },
+    {
+      "session": "20261022T131224Z_ffbcfc",
+      "runs": [
+        {
+          "experiment": "ravdess_emotion",
+          "run_id": "20261022T131227095701Z_seed42_bfc31a"
+        },
+        {
+          "experiment": "ravdess_emotion_loao",
+          "run_id": "20261022T131418520130Z_seed42_810fff"
+        }
+      ]
+    },
+    {
+      "session": "20261022T131406Z_98c326",
+      "runs": [
+        {
+          "experiment": "cogbeacon_audit",
+          "run_id": "20261022T131508033777Z_seed42_db3a91"
+        },
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261022T131423674916Z_seed42_1f5a87"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261022T131410156833Z_seed42_93336c"
+        }
+      ]
+    },
+    {
+      "session": "20261022T131734Z_20fbda",
+      "runs": [
+        {
+          "experiment": "cogbeacon_audit",
+          "run_id": "20261022T131835466437Z_seed42_116c9e"
+        },
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261022T131751419755Z_seed42_b52938"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261022T131738023618Z_seed42_fd1539"
+        }
+      ]
+    },
+    {
+      "session": "20261022T131734Z_20fbda",
+      "runs": [
+        {
+          "experiment": "ravdess_emotion",
+          "run_id": "20261022T131839829341Z_seed42_49ba0e"
+        },
+        {
+          "experiment": "ravdess_emotion_loao",
+          "run_id": "20261022T132032729881Z_seed42_20a3fa"
+        }
+      ]
+    },
+    {
+      "session": "20261022T132545Z_b52c48",
+      "runs": [
+        {
+          "experiment": "atcosim_audio",
+          "run_id": "20261022T132547474746Z_seed42_703613"
+        },
+        {
+          "experiment": "predi_covid_fatigue",
+          "run_id": "20261022T132605336040Z_seed42_63a4d9"
+        }
+      ]
+    },
+    {
+      "session": "20261022T133035Z_ceda2a",
+      "runs": [
+        {
+          "experiment": "atcosim_audio",
+          "run_id": "20261022T133037326352Z_seed42_2ebd88"
+        },
+        {
+          "experiment": "predi_covid_fatigue",
+          "run_id": "20261022T133054424280Z_seed42_81fbac"
+        }
+      ]
+    },
+    {
+      "session": "20261022T133502Z_994582",
+      "runs": [
+        {
+          "experiment": "atcosim_audio",
+          "run_id": "20261022T133504291481Z_seed42_84e529"
+        },
+        {
+          "experiment": "predi_covid_fatigue",
+          "run_id": "20261022T133521652181Z_seed42_d98d66"
+        }
+      ]
+    },
+    {
+      "session": "20261022T133502Z_994582",
+      "runs": [
+        {
+          "experiment": "cogbeacon_audit",
+          "run_id": "20261022T133828759667Z_seed42_6cfc97"
+        },
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261022T133744544508Z_seed42_0e3eaa"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261022T133730709109Z_seed42_1a323e"
         }
       ]
     }
