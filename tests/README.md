@@ -6,4 +6,4 @@ Coverage: schema/label guards, split subject/checksum, timestamps, causal sequen
 
 Reload juga diverifikasi pada holdout eksperimen nyata dan notebook Run All. Jumlah tests tidak menggantikan validasi ilmiah.
 
-`test_notebook_v3.py` menambahkan 18 kasus untuk mode, path/artifact non-overwrite, symlink/traversal, cache tampering, target metrik, agregasi original test KSS, dan source notebook. Validasi data/model nyata dilakukan terpisah melalui `scripts/11_validate_notebook_v3.py`; unit tests tetap dapat dijalankan tanpa licensed datasets.
+`test_notebook_v3.py` menambahkan 19 kasus untuk mode, path/artifact non-overwrite, symlink/traversal, cache tampering, target metrik, agregasi original test KSS, source notebook, dan penyamaran path pada salinan publik. Validasi data/model nyata dilakukan terpisah melalui `scripts/11_validate_notebook_v3.py`; unit tests tetap dapat dijalankan tanpa licensed datasets.

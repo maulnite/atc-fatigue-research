@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import uuid
@@ -23,6 +24,21 @@ from atc_fatigue.utils.runtime import write_json  # noqa: E402
 from atc_fatigue.research.runs import notebook_source_hash as source_hash  # noqa: E402
 
 NAMES = ["01_audio_analysis.ipynb", "02_visual_analysis.ipynb", "03_multimodal_fusion.ipynb"]
+
+
+def publication_copy(notebook):
+    """Redact machine-specific paths in a copy; retain original execution evidence locally."""
+    import copy
+
+    public = copy.deepcopy(notebook)
+    for cell in public.cells:
+        if cell.cell_type != "code":
+            continue
+        for output in cell.get("outputs", []):
+            if output.output_type == "stream":
+                output.text = output.text.replace(str(ROOT), "[proyek]")
+                output.text = re.sub(r"/home/[^/\s]+/", "[home]/", output.text)
+    return public
 
 
 def main():
@@ -83,7 +99,8 @@ def main():
                     payload["runs"][run["experiment"]] = run["run_id"]
                 payload["history"].append({"session": session, "runs": current_runs})
                 write_json(registry, payload)
-            nbformat.write(source, path)
+            # Source cells and exact executed outputs are already preserved in local evidence.
+            nbformat.write(publication_copy(source), path)
         except Exception as exc:
             nbformat.write(source, evidence / (path.stem + "__failed.ipynb"))
             result.update(status="failed", seconds=time.perf_counter()-started, error_type=type(exc).__name__)

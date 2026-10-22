@@ -46,6 +46,9 @@ def main():
             for output in cell.outputs:
                 outputs += 1
                 assert output.output_type != "error"
+                if output.output_type == "stream":
+                    assert str(ROOT) not in output.text
+                    assert not re.search(r"/home/[^/\s]+/", output.text)
                 for mime, payload in output.get("data", {}).items():
                     assert mime in {"text/plain", "text/html", "text/markdown", "image/png"}, mime
                     if mime == "image/png":

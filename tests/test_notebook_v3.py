@@ -165,3 +165,22 @@ def test_cache_detects_tampered_feature_artifact(tmp_path):
     (path / "features/features.parquet").write_bytes(b"tampered-engineering-fixture")
     with pytest.raises(ValueError, match="checksum mismatch"):
         cached_run("atcosim_audio", config)
+
+
+def test_publication_copy_redacts_stream_paths_without_changing_source(monkeypatch):
+    import os
+    import runpy
+
+    root = Path(__file__).resolve().parents[1]
+    with monkeypatch.context() as context:
+        context.setattr(os, "environ", dict(os.environ))
+        context.chdir(root)
+        api = runpy.run_path(str(root / "scripts/10_execute_notebook_v3.py"))
+        original = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell("print('fixture')")])
+        original.cells[0].outputs = [nbformat.v4.new_output(
+            "stream", name="stderr", text=f"{root}/.venv/fixture.py: engineering warning")]
+        public = api["publication_copy"](original)
+        assert str(root) not in public.cells[0].outputs[0].text
+        assert "[proyek]" in public.cells[0].outputs[0].text
+        assert str(root) in original.cells[0].outputs[0].text
+        assert notebook_source_hash(original) == notebook_source_hash(public)

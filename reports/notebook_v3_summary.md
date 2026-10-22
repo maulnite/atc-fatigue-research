@@ -127,12 +127,12 @@ Run baru mencatat manifest, config, environment, schema/Parquet, split/fold, che
 
 ## 5. Validasi engineering dan visual
 
-- **57 tests lulus**: 39 tests lama dipertahankan dan 18 kasus tambahan mencakup mode, path traversal/symlink, non-overwrite, cache integrity, salah target, larangan skor ATCOSIM, resolusi label KSS, dan source notebook.
+- **58 tests lulus**: 39 tests lama dipertahankan dan 19 kasus tambahan mencakup mode, path traversal/symlink, non-overwrite, cache integrity, salah target, larangan skor ATCOSIM, resolusi label KSS, source notebook, dan penyamaran path pada output publik.
 - **Ruff lulus** untuk `src tests scripts`; **pip check lulus**. Ada 14 deprecation warnings nonfatal dari dependensi plotting pada pytest.
 - **34 checkpoint terpilih direplay**: 2 MRL, 28 KSS fold, 4 RAVDESS. Prediksi reload cocok; seluruh metrik utama dan confusion matrices dihitung ulang dari prediksi dan cocok.
 - Seluruh integrity checks cache lulus. Model/fitur yang dimodifikasi ditolak oleh checksum; input metadata/label yang tidak cocok juga ditolak.
 - **35 grafik** valid, tidak kosong, memiliki observasi/interpretasi/batasan. PNG disimpan 160 DPI dan tampil statis di GitHub. Seluruh grafik diperiksa melalui contact sheets; dua render yang berubah selama review—legenda split MRL dan panah fusion—diperiksa kembali satu per satu. 33 grafik lain identik byte dengan versi yang sudah ditinjau.
-- Output diperiksa untuk MIME, file gambar, error, absolute server path, dan elemen audio/video/iframe/script. Tidak ada media peserta atau executable HTML dalam output v3.
+- Output diperiksa untuk MIME, file gambar, error, absolute server path pada stream maupun display data, dan elemen audio/video/iframe/script. Warning opsional `tqdm` sempat mencantumkan path environment; salinan publik menyamarkan path tersebut, sedangkan evidence asli tetap lokal. Tidak ada media peserta atau executable HTML dalam output v3.
 - **318 berkas lama diperiksa:** 317 checksum tetap identik; satu perubahan yang disengaja adalah indeks `notebooks/README.md`. Kelima notebook lama, seluruh model lama, data/cache dan hasil canonical tetap utuh.
 
 Bukti agregat yang dapat ditinjau: [validation JSON](notebook_v3_validation.json). Bukti lebih rinci tetap lokal di `runs/qa/`, termasuk JUnit XML, review grafik, dan checksum perlindungan artefak.
