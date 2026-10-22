@@ -1,5 +1,7 @@
 # Menjalankan smoke test
 
+Untuk alur riset dan presentasi terbaru, gunakan [tiga notebook utama v3 beserta mode DEMO/FULL](../notebooks/v3/README.md). Runner-nya adalah `scripts/10_execute_notebook_v3.py`. Perintah di bawah tetap mendokumentasikan pipeline dan demo awal; tidak perlu menjalankan ulang generator atau menimpa artefak canonical untuk menggunakan v3.
+
 Jalankan dari root proyek dengan environment pribadi. Environment/data lokal sesi ini sudah tersedia; tidak perlu download ulang. Untuk checkout baru, gunakan Python 3.10 dan ffmpeg sistem.
 
 ## Setup

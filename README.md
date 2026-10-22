@@ -18,6 +18,8 @@ Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Contro
 
 > **Status — smoke test dataset publik telah dijalankan.** Ekstraksi audio/visual, baseline berlabel asli, paired emotion fusion, model reload, serta lima notebook dengan fresh-kernel Run All tersedia. Benchmark **multimodal ATC fatigue belum terukur**; akses IEEE audio fatigue dan dataset ATC berpasangan masih diperlukan.
 
+**Pengembangan v3 — notebook-first research:** [tiga notebook utama](notebooks/v3/README.md) memperlihatkan proses dari EDA, ekstraksi fitur, training, evaluasi, sampai interpretasi. Mode **DEMO** memakai hasil FULL terverifikasi dan menjalankan contoh asli secara langsung; **FULL** mengulang eksperimen ke run baru. Lihat [laporan eksperimen dan validasi v3](reports/notebook_v3_summary.md). Lima notebook lama beserta seluruh output/model/hasilnya dipertahankan. **Performa multimodal fatigue ATC belum diukur.**
+
 Status tersebut berlaku untuk **MVP**, bukan seluruh detail handoff. Lihat [checklist pemenuhan handoff](reports/handoff_coverage.md) untuk bukti, kekurangan, dan pekerjaan bersyarat, serta [pelengkapan teknis](reports/engineering_audit.md) untuk profiling/QC terbaru.
 
 **Untuk tim:** buka [notebook demo beserta outputnya](notebooks/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.

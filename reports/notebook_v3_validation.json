@@ -1,0 +1,406 @@
+{
+  "utc": "2026-10-22T08:24:27.084599+00:00",
+  "notebooks": [
+    {
+      "path": "notebooks/v3/01_audio_analysis.ipynb",
+      "cells": 23,
+      "code_cells": 14,
+      "outputs": 27,
+      "figures": 8,
+      "errors": 0,
+      "source_hash": "21a0b5775229ec64d91a1f592c0f307978ebc527120b38199252b117c88bfc7f"
+    },
+    {
+      "path": "notebooks/v3/02_visual_analysis.ipynb",
+      "cells": 41,
+      "code_cells": 29,
+      "outputs": 58,
+      "figures": 18,
+      "errors": 0,
+      "source_hash": "638fd7919828daa18959a7308b623c6bb8ebe29624e24fcf9d85d461b114f25a"
+    },
+    {
+      "path": "notebooks/v3/03_multimodal_fusion.ipynb",
+      "cells": 28,
+      "code_cells": 17,
+      "outputs": 30,
+      "figures": 9,
+      "errors": 0,
+      "source_hash": "ce2045d9c7bb746aa8ebb9979e86d0fea0ae9afa44d2d21171004c73573e4d02"
+    }
+  ],
+  "runs": [
+    {
+      "experiment": "atcosim_audio",
+      "run_id": "20261022T081753373596Z_seed42_72a678",
+      "target": null,
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "replayed_checkpoints": 0,
+      "recomputed_metrics": {},
+      "figures": 8,
+      "captions_complete": true,
+      "synthetic_illustrations": 3,
+      "artifact_integrity": "passed",
+      "source_code_checksums_match_current_files": true
+    },
+    {
+      "experiment": "mrl_eye_state",
+      "run_id": "20261022T082130453246Z_seed42_6453bd",
+      "target": "eye_state",
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "replayed_checkpoints": 2,
+      "recomputed_metrics": {
+        "dummy_majority": {
+          "macro_f1": 0.3557531962201223,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5522001725625539
+        },
+        "hog_linear_svm": {
+          "macro_f1": 0.7876650826572456,
+          "balanced_accuracy": 0.7872064667630058,
+          "accuracy": 0.7903364969801553
+        }
+      },
+      "figures": 7,
+      "captions_complete": true,
+      "synthetic_illustrations": 1,
+      "artifact_integrity": "passed",
+      "source_code_checksums_match_current_files": true
+    },
+    {
+      "experiment": "drozy_kss",
+      "run_id": "20261022T082144167968Z_seed42_60423d",
+      "target": "KSS",
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "replayed_checkpoints": 28,
+      "recomputed_metrics": {
+        "dummy_mean": {
+          "mae": 2.0518659989248227,
+          "rmse": 2.2704238708865025,
+          "subject_macro_mae": 2.1082020687062704
+        },
+        "ridge_alpha1": {
+          "mae": 1.4544404230466665,
+          "rmse": 1.8170156032301952,
+          "subject_macro_mae": 1.4405102105732717
+        }
+      },
+      "figures": 11,
+      "captions_complete": true,
+      "synthetic_illustrations": 1,
+      "artifact_integrity": "passed",
+      "source_code_checksums_match_current_files": true
+    },
+    {
+      "experiment": "ravdess_emotion",
+      "run_id": "20261022T081858104344Z_seed42_75d379",
+      "target": "emotion",
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "replayed_checkpoints": 4,
+      "recomputed_metrics": {
+        "audio_only": {
+          "macro_f1": 0.3116013071895425,
+          "balanced_accuracy": 0.375,
+          "accuracy": 0.375
+        },
+        "audio_visual": {
+          "macro_f1": 0.45489926739926734,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5
+        },
+        "dummy_majority": {
+          "macro_f1": 0.027777777777777776,
+          "balanced_accuracy": 0.125,
+          "accuracy": 0.125
+        },
+        "visual_only": {
+          "macro_f1": 0.27965686274509804,
+          "balanced_accuracy": 0.34375,
+          "accuracy": 0.34375
+        }
+      },
+      "figures": 9,
+      "captions_complete": true,
+      "synthetic_illustrations": 0,
+      "artifact_integrity": "passed",
+      "source_code_checksums_match_current_files": true
+    }
+  ],
+  "privacy_scope": "new v3 notebooks and figures; legacy notebooks preserved",
+  "legacy": {
+    "checked": 318,
+    "unchanged": 317,
+    "intentional_index_update": [
+      "notebooks/README.md"
+    ],
+    "unexpected_changes": 0
+  },
+  "status": "passed",
+  "pytest": {
+    "tests": "57",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "time": "3.552",
+    "timestamp": "2026-10-22T08:30:11.348439+00:00"
+  },
+  "ruff": "passed: src tests scripts",
+  "pip_check": "No broken requirements found",
+  "chart_visual_review": {
+    "figures": 35,
+    "reviewed": 35,
+    "unchanged_after_initial_visual_review": 33,
+    "reinspected_refinements": [
+      "MRL split legend",
+      "RAVDESS fusion arrows"
+    ]
+  },
+  "execution_records": [
+    {
+      "notebook": "01_audio_analysis.ipynb",
+      "mode": "FULL",
+      "session": "20261022T080817Z_df364b",
+      "utc_started": "2026-10-22T08:08:17.630062+00:00",
+      "source_hash": "21a0b5775229ec64d91a1f592c0f307978ebc527120b38199252b117c88bfc7f",
+      "status": "passed",
+      "seconds": 16.885444961022586,
+      "code_cells": 14,
+      "outputs": 27,
+      "png_outputs": 8,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "atcosim_audio",
+          "run_id": "20261022T080819713845Z_seed42_d5250b"
+        }
+      ]
+    },
+    {
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "FULL",
+      "session": "20261022T081004Z_57985e",
+      "utc_started": "2026-10-22T08:10:04.970215+00:00",
+      "source_hash": "bde90954ea3afb705366142d7ef7e08fc350ceaec52347d36a06bd712793d9f9",
+      "status": "passed",
+      "seconds": 47.68433536402881,
+      "code_cells": 27,
+      "outputs": 57,
+      "png_outputs": 18,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261022T081021715912Z_seed42_61ffa6"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261022T081008142510Z_seed42_1af317"
+        }
+      ]
+    },
+    {
+      "notebook": "03_multimodal_fusion.ipynb",
+      "mode": "FULL",
+      "session": "20261022T081106Z_7194e4",
+      "utc_started": "2026-10-22T08:11:06.841233+00:00",
+      "source_hash": "9b8159bd2eb3e652128d317d8393011f5f034d465a71c398fbb8c7b18a497583",
+      "status": "passed",
+      "seconds": 116.06662155804224,
+      "code_cells": 17,
+      "outputs": 34,
+      "png_outputs": 9,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "ravdess_emotion",
+          "run_id": "20261022T081109461438Z_seed42_6badaf"
+        }
+      ]
+    },
+    {
+      "notebook": "01_audio_analysis.ipynb",
+      "mode": "DEMO",
+      "session": "20261022T081457Z_5713bd",
+      "utc_started": "2026-10-22T08:14:58.018472+00:00",
+      "source_hash": "21a0b5775229ec64d91a1f592c0f307978ebc527120b38199252b117c88bfc7f",
+      "status": "passed",
+      "seconds": 7.782009485876188,
+      "code_cells": 14,
+      "outputs": 27,
+      "png_outputs": 8,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": []
+    },
+    {
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "DEMO",
+      "session": "20261022T081457Z_5713bd",
+      "utc_started": "2026-10-22T08:15:05.830563+00:00",
+      "source_hash": "bde90954ea3afb705366142d7ef7e08fc350ceaec52347d36a06bd712793d9f9",
+      "status": "passed",
+      "seconds": 11.879451527027413,
+      "code_cells": 27,
+      "outputs": 57,
+      "png_outputs": 18,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": []
+    },
+    {
+      "notebook": "03_multimodal_fusion.ipynb",
+      "mode": "DEMO",
+      "session": "20261022T081457Z_5713bd",
+      "utc_started": "2026-10-22T08:15:17.746591+00:00",
+      "source_hash": "9b8159bd2eb3e652128d317d8393011f5f034d465a71c398fbb8c7b18a497583",
+      "status": "passed",
+      "seconds": 11.01678377809003,
+      "code_cells": 17,
+      "outputs": 30,
+      "png_outputs": 9,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": []
+    },
+    {
+      "notebook": "01_audio_analysis.ipynb",
+      "mode": "FULL",
+      "session": "20261022T081751Z_a79d0c",
+      "utc_started": "2026-10-22T08:17:51.257433+00:00",
+      "source_hash": "21a0b5775229ec64d91a1f592c0f307978ebc527120b38199252b117c88bfc7f",
+      "status": "passed",
+      "seconds": 16.907178194029257,
+      "code_cells": 14,
+      "outputs": 27,
+      "png_outputs": 8,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "atcosim_audio",
+          "run_id": "20261022T081753373596Z_seed42_72a678"
+        }
+      ]
+    },
+    {
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "FULL",
+      "session": "20261022T081751Z_a79d0c",
+      "utc_started": "2026-10-22T08:18:08.202570+00:00",
+      "source_hash": "d7869afa5506c40926d9be80ea782802409e90fd1f33fe3a794c563ff238d29e",
+      "status": "passed",
+      "seconds": 47.30661997804418,
+      "code_cells": 29,
+      "outputs": 57,
+      "png_outputs": 18,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261022T081824921430Z_seed42_87050f"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261022T081811392405Z_seed42_c39a3a"
+        }
+      ]
+    },
+    {
+      "notebook": "03_multimodal_fusion.ipynb",
+      "mode": "FULL",
+      "session": "20261022T081751Z_a79d0c",
+      "utc_started": "2026-10-22T08:18:55.581341+00:00",
+      "source_hash": "ce2045d9c7bb746aa8ebb9979e86d0fea0ae9afa44d2d21171004c73573e4d02",
+      "status": "passed",
+      "seconds": 113.96563519584015,
+      "code_cells": 17,
+      "outputs": 34,
+      "png_outputs": 9,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "ravdess_emotion",
+          "run_id": "20261022T081858104344Z_seed42_75d379"
+        }
+      ]
+    },
+    {
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "FULL",
+      "session": "20261022T082127Z_568ce0",
+      "utc_started": "2026-10-22T08:21:27.225025+00:00",
+      "source_hash": "638fd7919828daa18959a7308b623c6bb8ebe29624e24fcf9d85d461b114f25a",
+      "status": "passed",
+      "seconds": 48.01279404293746,
+      "code_cells": 29,
+      "outputs": 58,
+      "png_outputs": 18,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261022T082144167968Z_seed42_60423d"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261022T082130453246Z_seed42_6453bd"
+        }
+      ]
+    },
+    {
+      "notebook": "01_audio_analysis.ipynb",
+      "mode": "DEMO",
+      "session": "20261022T082249Z_6c998c",
+      "utc_started": "2026-10-22T08:22:49.483243+00:00",
+      "source_hash": "21a0b5775229ec64d91a1f592c0f307978ebc527120b38199252b117c88bfc7f",
+      "status": "passed",
+      "seconds": 7.7363414510618895,
+      "code_cells": 14,
+      "outputs": 27,
+      "png_outputs": 8,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": []
+    },
+    {
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "DEMO",
+      "session": "20261022T082249Z_6c998c",
+      "utc_started": "2026-10-22T08:22:57.249446+00:00",
+      "source_hash": "638fd7919828daa18959a7308b623c6bb8ebe29624e24fcf9d85d461b114f25a",
+      "status": "passed",
+      "seconds": 11.097061523934826,
+      "code_cells": 29,
+      "outputs": 58,
+      "png_outputs": 18,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": []
+    },
+    {
+      "notebook": "03_multimodal_fusion.ipynb",
+      "mode": "DEMO",
+      "session": "20261022T082249Z_6c998c",
+      "utc_started": "2026-10-22T08:23:08.400086+00:00",
+      "source_hash": "ce2045d9c7bb746aa8ebb9979e86d0fea0ae9afa44d2d21171004c73573e4d02",
+      "status": "passed",
+      "seconds": 10.462190323043615,
+      "code_cells": 17,
+      "outputs": 30,
+      "png_outputs": 9,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": []
+    }
+  ]
+}

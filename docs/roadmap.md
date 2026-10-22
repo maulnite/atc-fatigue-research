@@ -1,5 +1,7 @@
 # Roadmap penelitian dan implementasi
 
+**Pembaruan 22 Oktober 2026:** pengembangan [notebook-first v3](../notebooks/v3/README.md) menambahkan tepat tiga notebook utama, mode DEMO/FULL, dan run eksperimen terpisah. Hasil serta acceptance terbaru tercatat dalam [laporan v3](../reports/notebook_v3_summary.md). Seluruh artefak lama dipertahankan. Menurut dokumen v3 dari pengguna, permintaan akses IEEE telah dikirim; akses/data belum tersedia. Status 21 Oktober di bawah adalah snapshot historis.
+
 **Status 21 Oktober 2026:** jalur utama MVP publik M0–M4 dan M6 telah dijalankan; ini tidak berarti semua detail handoff selesai. Draft M7 tersedia. M5 belum memperoleh akses IEEE; belum ada permintaan akses yang dikirim. M8 menunggu data ATC berpasangan/protokol. Lihat [checklist per bagian handoff](../reports/handoff_coverage.md) dan [laporan hasil](../reports/smoke_test_report.md).
 
 Lihat [rencana eksekusi lengkap](execution-plan.md) untuk pekerjaan, dependensi, output, kriteria selesai, dan penanganan akses dataset yang belum pasti.
