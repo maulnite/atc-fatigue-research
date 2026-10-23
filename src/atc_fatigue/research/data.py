@@ -55,6 +55,25 @@ def private_media_enabled() -> bool:
     return value == "1"
 
 
+def deny_raw_media_reads() -> None:
+    """Process-local audit hook for the public DEMO acceptance test; never renames data."""
+    import sys
+
+    raw_root = (Path.cwd() / "data/raw").resolve()
+
+    def audit(event, arguments):
+        if event == "open" and isinstance(arguments[0], (str, Path)):
+            if Path(arguments[0]).resolve().is_relative_to(raw_root):
+                raise PermissionError("Public DEMO attempted to open raw source data")
+        if event == "subprocess.Popen":
+            command = arguments[1]
+            command = command if isinstance(command, (list, tuple)) else [command]
+            if any("data/raw/" in str(part) for part in command):
+                raise PermissionError("Public DEMO attempted to decode raw source data")
+
+    sys.addaudithook(audit)
+
+
 def parse_predi_filename(name: str) -> dict:
     """Parse publisher-defined participant/date/task/device/label fields, not inferred fatigue."""
     import re
@@ -163,7 +182,7 @@ def actor_metric_table(predictions: pd.DataFrame, labels: list[int]) -> pd.DataF
     return pd.DataFrame(rows)
 
 
-def local_manifest(path: str, target: str | None) -> pd.DataFrame:
+def local_manifest(path: str, target: str | None, *, verify_media: bool = True) -> pd.DataFrame:
     """Verify all local sources against the original manifest; never download missing data."""
     source = safe_path(Path.cwd(), path)
     if not source.exists():
@@ -175,6 +194,8 @@ def local_manifest(path: str, target: str | None) -> pd.DataFrame:
             raise ValueError("Unlabeled genuine audio expected")
     else:
         require_scientific_samples(frame, target)
+    if not verify_media:
+        return frame
     for row in frame.itertuples():
         media = safe_path(Path.cwd(), row.original_path)
         if not media.exists():

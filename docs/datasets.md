@@ -84,3 +84,16 @@ LICENSE MIT secara eksplisit menyebut software; publikasi menjelaskan data-shari
 Audit ini tidak menganggapnya izin baru untuk mendistribusikan ulang data biometrik.
 Analisis lokal dan grafik agregat saja dipublikasikan, tanpa koordinat wajah, EEG, atau identitas individu.
 Kebutuhan berikutnya: klarifikasi jumlah peserta, clock/sampling, makna event dan protokol supervisi yang dapat divalidasi.
+
+
+## Pembaruan three-track — 23 Oktober 2026
+
+Subset dan hak akses sebelumnya tetap digunakan; tidak ada dataset baru yang diunduh.
+
+- **Predi-COVID:**207 recording / 120 peserta, label native fatigue/unwell tetap berbeda dari COVID symptomatic status. Transformasi radio tidak mengubah konten, label, identitas atau split sumber. Semua derivative recording tetap di partisi peserta semula; hanya train di-augment. Parameter channel dan checksum signal hasil transformasi dicatat pada run baru. SNR20/10dB adalah stress terkontrol, bukan bukti transfer ke operator atau radio ATC.
+- **MRL:** input berupa eye images, bukan urutan video dengan timestamp/FPS yang terverifikasi. HOG appearance/classification tidak menghasilkan fitur temporal kedipan/PERCLOS.
+- **DROZY:** actual 68 landmarks/native timestamps menghasilkan EAR/window features, lalu agregasi 10 fitur per original test yang memiliki satu KSS. Ablation membandingkan fitur pada 14 LOSO folds yang sama. PERCLOS operasional berdasarkan EAR threshold/durasi closure belum setara validasi kelopak 80% tertutup.
+- **RAVDESS:** audio/video dari containerAV asli yang sama; schema 114 audio + 3.528 HOG + 2 availability masks. HOG 2 FPS adalah appearance, bukan eye geometry. Tidak ada pasangan lintas dataset atau skor fatigue dari label emotion.
+- **CogBeacon:** hanya audit deskriptif event counter dan sampling 2 FPS; label fatigue frame/window belum terdefinisi sah, sehingga tidak dibuat classifier.
+
+Preview audio, eye image dan landmark source hanya opt-in lokal, tidak disertakan pada output publik. Numeric previews dibatasi beberapa row/kolom; raw media, full feature tables dan checkpoint tetap di luar Git. DEMO publik berjalan dari cache terverifikasi tanpa raw media, sedangkan FULL memerlukan data lokal yang sah. Rincian eksekusi serta metrik ada pada [laporan v3](../reports/notebook_v3_summary.md).

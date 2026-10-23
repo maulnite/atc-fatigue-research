@@ -37,9 +37,17 @@ def publication_copy(notebook):
             continue
         if "private-media" in cell.metadata.get("tags", []):
             cell.outputs = [nbformat.v4.new_output(
-                "stream", name="stdout", text="Visualisasi audio asli hanya tersedia pada salinan eksekusi lokal; output media dihilangkan dari salinan publik.\n")]
+                "stream", name="stdout", text="Media sumber hanya tersedia pada salinan eksekusi lokal; output privat dihilangkan dari salinan publik.\n")]
             continue
         for output in cell.get("outputs", []):
+            data = output.get("data", {})
+            media = any(mime.startswith(("audio/", "video/")) for mime in data)
+            media = media or bool(re.search(r"<(audio|video)\b|data:(audio|video)/",
+                                            data.get("text/html", ""), re.I))
+            if media:
+                output.clear()
+                output.update(output_type="stream", name="stdout",
+                              text="Playback media hanya tersedia pada evidence lokal; dihapus dari salinan publik.\n")
             if output.output_type == "stream":
                 output.text = output.text.replace(str(ROOT), "[proyek]")
                 output.text = re.sub(r"/home/[^/\s]+/", "[home]/", output.text)
@@ -51,12 +59,17 @@ def main():
     parser.add_argument("--mode", choices=["DEMO", "FULL"], required=True)
     parser.add_argument("--notebook", choices=NAMES, action="append")
     parser.add_argument("--private-media", action="store_true",
-                        help="Enable authorized local ATCOSIM plots; strip them from public notebook copies")
+                        help="Enable authorized local media previews/playback; strip them from public copies")
+    parser.add_argument("--deny-raw-media", action="store_true",
+                        help="DEMO acceptance: deny every open/decode under data/raw in the kernel")
     args = parser.parse_args()
+    if args.deny_raw_media and (args.mode != "DEMO" or args.private_media):
+        parser.error("--deny-raw-media requires public DEMO without --private-media")
     session = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid.uuid4().hex[:6]
     os.environ["ATC_NOTEBOOK_MODE"] = args.mode
     os.environ["ATC_NOTEBOOK_SESSION"] = session
     os.environ["ATC_NOTEBOOK_PRIVATE_MEDIA"] = "1" if args.private_media else "0"
+    os.environ["ATC_NOTEBOOK_DENY_RAW_MEDIA"] = "1" if args.deny_raw_media else "0"
     evidence = ROOT / "runs" / "executions" / session
     evidence.mkdir(parents=True, exist_ok=False)
     results = []
@@ -72,6 +85,7 @@ def main():
         print(f"{args.mode}: {name} — fresh kernel", flush=True)
         result = {"notebook": name, "mode": args.mode, "session": session,
                   "private_media_enabled": args.private_media,
+                  "raw_media_reads_denied": args.deny_raw_media,
                   "utc_started": datetime.now(timezone.utc).isoformat(), "source_hash": digest}
         try:
             client = NotebookClient(source, timeout=1200, kernel_name="atc-fatigue",

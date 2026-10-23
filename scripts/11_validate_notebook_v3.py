@@ -16,6 +16,7 @@ for key in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "NUMBA
     os.environ[key] = "4"
 
 import nbformat  # noqa: E402
+import joblib  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from PIL import Image  # noqa: E402
@@ -25,6 +26,7 @@ from atc_fatigue.research.data import parse_predi_filename, regression_metrics, 
 from atc_fatigue.research.runs import (  # noqa: E402
     TASKS, cached_run, notebook_source_hash, project_config,
 )
+from atc_fatigue.research.representations import binary_ranking_metrics, positive_class_score  # noqa: E402
 from atc_fatigue.utils.runtime import checksum, write_json  # noqa: E402
 
 
@@ -87,7 +89,37 @@ def main():
             for path, expected in json.loads((run.path / "source_archives.json").read_text()).items():
                 assert checksum(Path(path)) == expected
         features = pd.read_parquet(run.path / "features/features.parquet")
-        if slug == "predi_covid_fatigue":
+        if slug == "predi_covid_radio":
+            import soundfile as sf
+            from atc_fatigue.audio.features import extract_signal, resample
+            from atc_fatigue.audio.radio import radio_style, recording_seed
+
+            for channel in ("radio20", "radio10"):
+                derivative = pd.read_parquet(run.path / f"features/{channel}.parquet")
+                pd.testing.assert_frame_equal(
+                    features[["sample_id", "subject_id", "target_value", "split"]],
+                    derivative[["sample_id", "subject_id", "target_value", "split"]],
+                )
+                example = derivative.sort_values("sample_id").iloc[0]
+                signal, rate = sf.read(example.original_path, always_2d=True)
+                prepared = resample(signal.mean(axis=1), rate, config["audio"]["sample_rate"]).astype(np.float32)
+                transformed = radio_style(prepared, config["audio"]["sample_rate"], config["radio_channel"],
+                                          recording_seed(example.sample_id, config["seed"]),
+                                          snr_db=20 if channel == "radio20" else 10)
+                assert hashlib.sha256(transformed["signal"].tobytes()).hexdigest() == example.transformed_signal_sha256
+                actual_features = extract_signal(transformed["signal"], config["audio"]["sample_rate"], config["audio"])
+                columns = json.loads((run.path / "features/feature_schema.json").read_text())["columns"]
+                np.testing.assert_allclose([actual_features[c] for c in columns], example[columns].to_numpy(float), rtol=1e-10, atol=1e-10)
+            n_train = int(features.split.eq("train").sum())
+            for artifact in (run.path / "models").glob("*.joblib"):
+                bundle = joblib.load(artifact)
+                if "standardscaler" in getattr(bundle["model"], "named_steps", {}):
+                    expected = n_train * (2 if artifact.name.startswith("aug20") else 1)
+                    assert bundle["model"].named_steps["standardscaler"].n_samples_seen_ == expected
+            qc = pd.read_csv(run.path / "data_channel_qc.csv")
+            assert np.abs(qc.measured_snr_db - qc.requested_snr_db).max() < 1e-4
+            assert qc.radio_clipping_fraction.eq(0).all()
+        if slug in {"predi_covid_fatigue", "predi_covid_radio"}:
             for row in features.itertuples():
                 path = Path(row.original_path)
                 original = parse_predi_filename(path.name)
@@ -100,18 +132,46 @@ def main():
         if metrics["metrics_applicable"]:
             predictions = pd.read_csv(run.path / "predictions/holdout_predictions.csv",
                                       dtype={"subject_id": str})
-            groups = predictions.groupby(["model", "fold"]) if slug in {"drozy_kss", "ravdess_emotion_loao"} else predictions.groupby("model")
+            groups = predictions.groupby(["model", "fold"]) if slug in {"drozy_kss", "drozy_feature_ablation", "ravdess_emotion_loao"} else predictions.groupby("model")
             for key, recorded in groups:
                 model, fold = key if isinstance(key, tuple) else (key, None)
-                selected = features[features.sample_id.isin(recorded.sample_id)]
+                evaluation_features = features
+                if slug == "predi_covid_radio":
+                    channel = metrics["models"][model]["evaluation_channel"]
+                    if channel != "clean":
+                        evaluation_features = pd.read_parquet(run.path / f"features/{channel}.parquet")
+                selected = evaluation_features[evaluation_features.sample_id.isin(recorded.sample_id)]
                 truth_check = selected[["sample_id", "target_value"]].merge(
                     recorded[["sample_id", "truth"]], on="sample_id", validate="one_to_one")
                 np.testing.assert_allclose(truth_check.target_value, truth_check.truth)
                 artifact = f"{model}_fold{fold:02d}" if fold is not None else model
+                if slug == "predi_covid_radio":
+                    artifact = metrics["models"][model]["artifact"]
                 verify_cached_predictions(run, selected, recorded, model, artifact)
+                bundle = joblib.load(run.path / f"models/{artifact}.joblib")
+                pipeline = bundle["model"]
+                steps = getattr(pipeline, "named_steps", {})
+                if "standardscaler" in steps:
+                    membership = split[split.fold.eq(fold)] if fold is not None else split
+                    training = features[features.sample_id.isin(membership.loc[membership.split.eq("train"), "sample_id"])]
+                    if slug == "predi_covid_radio" and metrics["models"][model]["training_regime"] == "aug20":
+                        augmented = pd.read_parquet(run.path / "features/radio20.parquet")
+                        training = pd.concat([training, augmented[augmented.split.eq("train")]], ignore_index=True)
+                    columns = bundle["feature_columns"]
+                    expected_median = training[columns].median().fillna(0).to_numpy(float)
+                    np.testing.assert_allclose(steps["simpleimputer"].statistics_, expected_median, rtol=1e-10, atol=1e-10)
+                    imputed = steps["simpleimputer"].transform(training[columns])
+                    np.testing.assert_allclose(steps["standardscaler"].mean_, imputed.mean(axis=0), rtol=1e-10, atol=1e-10)
+                    np.testing.assert_allclose(steps["standardscaler"].var_, imputed.var(axis=0), rtol=1e-10, atol=1e-10)
+                    assert steps["standardscaler"].n_samples_seen_ == len(training)
+                if "score_1" in recorded:
+                    score = positive_class_score(bundle["model"], selected, bundle["feature_columns"])
+                    aligned = pd.DataFrame({"sample_id": selected.sample_id, "actual": score}).merge(
+                        recorded[["sample_id", "score_1"]], on="sample_id", validate="one_to_one")
+                    np.testing.assert_allclose(aligned.actual, aligned.score_1, rtol=1e-10, atol=1e-10)
                 replayed += 1
             for model, recorded in predictions.groupby("model"):
-                if slug == "drozy_kss":
+                if slug in {"drozy_kss", "drozy_feature_ablation"}:
                     actual = regression_metrics(recorded)
                     keys = ["mae", "rmse", "subject_macro_mae"]
                     target = metrics["models"][model]
@@ -122,6 +182,10 @@ def main():
                     keys = ["macro_f1", "balanced_accuracy", "accuracy"]
                     target = metrics["models"][model]["test"]
                     assert actual["confusion_matrix"] == target["confusion_matrix"]
+                    if "score_1" in test:
+                        rankings = binary_ranking_metrics(test.truth, test.score_1)
+                        for metric, value in rankings.items():
+                            np.testing.assert_allclose(value, target[metric], rtol=1e-12, atol=1e-12)
                 for key in keys:
                     np.testing.assert_allclose(actual[key], target[key], rtol=1e-12, atol=1e-12)
                 compared[model] = {k: actual[k] for k in keys}
@@ -135,19 +199,22 @@ def main():
                                "target": metrics["target"], "status": run.manifest["status"],
                                "source_hash_matches_current_notebook": True,
                                "replayed_checkpoints": replayed, "recomputed_metrics": compared,
+                               "unique_checkpoints": len(list((run.path / "models").glob("*.joblib"))),
                                "figures": len(inventory), "captions_complete": True,
                                "private_figures_local_only": sum(item.get("private", False) for item in inventory),
                                "synthetic_illustrations": sum(item["synthetic"] for item in inventory),
                                "artifact_integrity": "passed"})
 
-    incremental = Path("reports/run_logs/incremental_v3_latest.json")
-    if incremental.exists():
-        pointer = json.loads(incremental.read_text())
+    for evidence_name in ("incremental_v3", "three_track"):
+        pointer_file = Path(f"reports/run_logs/{evidence_name}_latest.json")
+        if not pointer_file.exists():
+            continue
+        pointer = json.loads(pointer_file.read_text())
         proof_path = Path(pointer["audit_root"]) / "protected_checksums.json"
         preserved = json.loads(proof_path.read_text())
         changed = [p for p, expected in preserved.items() if not Path(p).exists() or checksum(Path(p)) != expected]
         assert not changed, changed
-        report["preservation_incremental"] = {"checked": len(preserved), "unchanged": len(preserved), "unexpected_changes": 0}
+        report[f"preservation_{evidence_name}"] = {"checked": len(preserved), "unchanged": len(preserved), "unexpected_changes": 0}
     historical = []
     for slug, run_id in config["historical_runs"].items():
         old, original = cached_run(slug, config, run_id=run_id)

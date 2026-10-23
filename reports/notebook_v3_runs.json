@@ -1,12 +1,14 @@
 {
   "runs": {
-    "atcosim_audio": "20261022T133504291481Z_seed42_84e529",
-    "drozy_kss": "20261022T133744544508Z_seed42_0e3eaa",
-    "mrl_eye_state": "20261022T133730709109Z_seed42_1a323e",
-    "ravdess_emotion": "20261022T131839829341Z_seed42_49ba0e",
-    "cogbeacon_audit": "20261022T133828759667Z_seed42_6cfc97",
-    "ravdess_emotion_loao": "20261022T132032729881Z_seed42_20a3fa",
-    "predi_covid_fatigue": "20261022T133521652181Z_seed42_d98d66"
+    "atcosim_audio": "20261023T105347534495Z_seed42_49cb09",
+    "drozy_kss": "20261023T110137480062Z_seed42_566711",
+    "mrl_eye_state": "20261023T110123270660Z_seed42_29f903",
+    "ravdess_emotion": "20261023T104859625424Z_seed42_cce30b",
+    "cogbeacon_audit": "20261023T110223847434Z_seed42_d2fddb",
+    "ravdess_emotion_loao": "20261023T105052302183Z_seed42_0d6280",
+    "predi_covid_fatigue": "20261023T105402224766Z_seed42_880107",
+    "predi_covid_radio": "20261023T105608840284Z_seed42_0d3b34",
+    "drozy_feature_ablation": "20261023T110208961056Z_seed42_d8ef0c"
   },
   "history": [
     {
@@ -214,6 +216,95 @@
         {
           "experiment": "mrl_eye_state",
           "run_id": "20261022T133730709109Z_seed42_1a323e"
+        }
+      ]
+    },
+    {
+      "session": "20261023T104016Z_c442b7",
+      "runs": [
+        {
+          "experiment": "atcosim_audio",
+          "run_id": "20261023T104018732709Z_seed42_24a903"
+        },
+        {
+          "experiment": "predi_covid_fatigue",
+          "run_id": "20261023T104033483401Z_seed42_569b05"
+        },
+        {
+          "experiment": "predi_covid_radio",
+          "run_id": "20261023T104239391320Z_seed42_1c3fba"
+        }
+      ]
+    },
+    {
+      "session": "20261023T104016Z_c442b7",
+      "runs": [
+        {
+          "experiment": "cogbeacon_audit",
+          "run_id": "20261023T104855329767Z_seed42_5473a8"
+        },
+        {
+          "experiment": "drozy_feature_ablation",
+          "run_id": "20261023T104840315057Z_seed42_359866"
+        },
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261023T104808357168Z_seed42_243e71"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261023T104754468453Z_seed42_a434c1"
+        }
+      ]
+    },
+    {
+      "session": "20261023T104016Z_c442b7",
+      "runs": [
+        {
+          "experiment": "ravdess_emotion",
+          "run_id": "20261023T104859625424Z_seed42_cce30b"
+        },
+        {
+          "experiment": "ravdess_emotion_loao",
+          "run_id": "20261023T105052302183Z_seed42_0d6280"
+        }
+      ]
+    },
+    {
+      "session": "20261023T105345Z_f39c54",
+      "runs": [
+        {
+          "experiment": "atcosim_audio",
+          "run_id": "20261023T105347534495Z_seed42_49cb09"
+        },
+        {
+          "experiment": "predi_covid_fatigue",
+          "run_id": "20261023T105402224766Z_seed42_880107"
+        },
+        {
+          "experiment": "predi_covid_radio",
+          "run_id": "20261023T105608840284Z_seed42_0d3b34"
+        }
+      ]
+    },
+    {
+      "session": "20261023T105345Z_f39c54",
+      "runs": [
+        {
+          "experiment": "cogbeacon_audit",
+          "run_id": "20261023T110223847434Z_seed42_d2fddb"
+        },
+        {
+          "experiment": "drozy_feature_ablation",
+          "run_id": "20261023T110208961056Z_seed42_d8ef0c"
+        },
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261023T110137480062Z_seed42_566711"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261023T110123270660Z_seed42_29f903"
         }
       ]
     }

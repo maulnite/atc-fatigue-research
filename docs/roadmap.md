@@ -1,5 +1,9 @@
 # Roadmap penelitian dan implementasi
 
+**Three-track feasibility — 23 Oktober 2026:** implementasi tetap pada tiga notebook v3. Actual raw/transformed feature representations dan X/y ditampilkan; audio menjalankan radio-channel study, visual menjalankan fixed LOSO feature ablation, fusion memperlihatkan paired vectors dan prediction walkthrough. Final QA: 79 tests, 145 unique checkpoints / 154 replays, 9 fresh-kernel acceptance executions, 69 public plots + 9 local private plots. Sebanyak 50 prior plot topics dan 3.284 protected files dipertahankan.
+
+Temuan: Logistic clinical fatigue clean/radio20/augmented-radio20 Macro F1 = 0,4857/0,6298/0,5758 (recall positif 0,3889/0,3333/0,4444); augmentation belum konsisten membantu. DROZY EAR-only MAE 1,3508 versus combined 1,4544. Fusion RAVDESS tetap unggul di split lama, tetapi kalah dari audio dalam LOAO. CogBeacon belum mempunyai ground truth frame/window yang sah. Tidak ada benchmark fatigue ATC atau perubahan shared environment. [Hasil dan evidence](../reports/notebook_v3_summary.md).
+
 **Enhancement incremental v3 — 22 Oktober 2026:** tiga notebook yang sama sekarang memuat audit/benchmark Predi-COVID, audit CogBeacon, visualisasi audio asli lokal, zoom EAR, dan LOAO actor-independent RAVDESS. Keunggulan fusion pada split historis tidak konsisten terhadap audio-only dalam LOAO; lihat [hasil dan batas interpretasi terbaru](../reports/notebook_v3_summary.md). Snapshot status sebelumnya tetap dipertahankan di bawah.
 
 | Prioritas enhancement | Implementasi dan bukti | Status |

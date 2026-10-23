@@ -1,0 +1,1634 @@
+{
+  "selection": "public aggregate/numeric previews or labelled synthetic illustrations; private media excluded",
+  "figures": [
+    {
+      "topic": "audio_ke_fitur",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "Alur berakhir pada 114 fitur akustik per ujaran, tanpa kelas fatigue.",
+      "meaning": "Representasi numerik memungkinkan pengujian model ketika label yang tepat tersedia.",
+      "caveat": "Diagram menjelaskan proses; tidak menggambarkan model fatigue yang sudah dilatih.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "",
+          "title": "Bagaimana suara menjadi masukan model?"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/audio_ke_fitur__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "9e3f1429c8440ad847defd5497d7ef053064743f48b863952d9036da55e2db71",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "waveform_sintetis",
+      "synthetic": true,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "Sinyal dua detik mempertahankan durasi setelah jumlah sampel per detik diubah.",
+      "meaning": "Resampling menyamakan format masukan extractor, bukan membuat label.",
+      "caveat": "Sinyal ini buatan dan tidak masuk eksperimen atau skor.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Amplitudo relatif",
+          "title": "Sebelum: kanal 1 dari stereo 32 kHz"
+        },
+        {
+          "x": "Waktu (detik)",
+          "y": "Amplitudo relatif",
+          "title": "Sesudah: mono 16 kHz"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/waveform_sintetis__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "6522a836b23fbdb0ddc6eece680f4cdffe0fe47a1f7e731de489d80873567df6",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "logmel_sintetis",
+      "synthetic": true,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "Energi terkonsentrasi di frekuensi harmonik yang dipakai membentuk sinyal buatan.",
+      "meaning": "Spektrogram memisahkan informasi waktu dan frekuensi yang tidak terlihat pada satu angka RMS.",
+      "caveat": "Mel menekankan resolusi frekuensi menurut persepsi pendengaran; bukan indikator fatigue.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Waktu (detik)",
+          "y": "Frekuensi (Hz; skala Mel)",
+          "title": "ILUSTRASI SINTETIS — energi frekuensi sepanjang dua detik"
+        },
+        {
+          "x": "",
+          "y": "Energi relatif (dB)",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/logmel_sintetis__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "3aaf1a87b4809675ccba59da290f39152459bea313d79968a857601c6d168cb9",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "mfcc_sintetis",
+      "synthetic": true,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "Setiap baris mengikuti satu koefisien; tabel model merangkum rerata dan variasinya.",
+      "meaning": "Ringkasan mengubah sinyal berdurasi berbeda menjadi vektor dengan panjang tetap.",
+      "caveat": "Matriks ini sintetis; 114 fitur eksperimen dihitung dari audio ATCOSIM asli.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Waktu (detik)",
+          "y": "Indeks koefisien MFCC",
+          "title": "ILUSTRASI SINTETIS — 13 koefisien sebelum diringkas"
+        },
+        {
+          "x": "",
+          "y": "Nilai koefisien (skala komputasi librosa)",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/mfcc_sintetis__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "35b9a85de5f21c16edbf17eebf5e95145fc94c35fb65b00e0fd0d6479c70f16a",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "distribusi_durasi",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "Total audio 425.61 detik; median ujaran 3.92 detik.",
+      "meaning": "Durasi bervariasi, sehingga ringkasan fitur berdimensi tetap membantu menyusun tabel.",
+      "caveat": "Ini durasi potongan rekaman, bukan waktu speech bersih hasil VAD atau sesi kontinu.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Durasi potongan ujaran (detik)",
+          "y": "Jumlah observasi",
+          "title": "ATCOSIM: durasi 100 ujaran / 1 speaker"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/distribusi_durasi__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "3516676c400b875e70354083064557adb8c3f86eeeea30cabcea8550edadce03",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "rms_dan_clipping",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "RMS median 0.051524; clipping maksimum 0.000074.",
+      "meaning": "Pemeriksaan ini mendeteksi persoalan level sinyal sebelum fitur dipakai model.",
+      "caveat": "RMS dan clipping bukan estimasi SNR, VAD, atau kondisi fatigue.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "RMS (amplitudo relatif)",
+          "y": "Jumlah ujaran",
+          "title": ""
+        },
+        {
+          "x": "Proporsi sampel clipping (0–1)",
+          "y": "Jumlah ujaran",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/rms_dan_clipping__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "0b93ce82e002bb05dd47bf4cca5811ef2472824bb94de78abd0dcc75d052747a",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "kualitas_dan_missingness",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "100 ujaran tersedia; 100.0% sel fitur finite.",
+      "meaning": "Pipeline dapat membentuk tabel tanpa mengarang pengukuran pada sampel tidak valid.",
+      "caveat": "Quality ok adalah kelayakan teknis ekstraksi, bukan validasi biomarker atau generalisasi.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Jumlah ujaran",
+          "title": "Quality flag extractor"
+        },
+        {
+          "x": "",
+          "y": "Persentase sel fitur (%)",
+          "title": "114 fitur × seluruh ujaran"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/kualitas_dan_missingness__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "b864c9052c2cbb28197b7287b74fdccc07c5a92a906ded3b0b220c357ea2b4d5",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "distribusi_pitch",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105347534495Z_seed42_49cb09",
+      "seen": "Median fitur pitch pada subset 34.30 semitone.",
+      "meaning": "Satu fitur memiliki variasi antarujaran meskipun berasal dari speaker yang sama.",
+      "caveat": "Tidak ada kelompok fatigue/non-fatigue untuk menguji apakah variasi ini berkaitan dengan kelelahan.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Rerata pitch relatif 27,5 Hz (semitone)",
+          "y": "Jumlah observasi",
+          "title": "Sebaran deskriptif pitch — 100 ujaran / satu speaker"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/distribusi_pitch__20261023T105347534495Z_seed42_49cb09.png",
+      "sha256": "1cadbae90e549e4e4dd2e0e542ce31cd5c37048f46ba79115b6999237ad49f63",
+      "experiment": "atcosim_audio"
+    },
+    {
+      "topic": "geometri_ear",
+      "synthetic": true,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Enam titik buatan menghasilkan EAR 0,20.",
+      "meaning": "Rasio mengurangi ketergantungan pada ukuran absolut mata dalam piksel.",
+      "caveat": "Anatomi, pose, dan landmark error tetap berpengaruh; ini bukan threshold fatigue.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Koordinat horizontal (unit ilustrasi)",
+          "y": "Koordinat vertikal (unit ilustrasi)",
+          "title": "ILUSTRASI SINTETIS — EAR = (0,6 + 0,6) / (2 × 3) = 0.20"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/geometri_ear__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "49e3dc8d1bd93656fbad1db7992b20cabde2b80f79dd410f0aa14803a5acc468",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "ear_geometry_parameter",
+      "synthetic": true,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Jarak horizontal sama sementara dua jarak vertikal berbeda; EAR dihitung dengan fungsi canonical yang juga dipakai pada DROZY.",
+      "meaning": "Pembaca dapat mengubah satu parameter untuk memahami pengaruh geometri terhadap rasio.",
+      "caveat": "Ilustrasi sintetis, bukan anotasi fatigue; threshold 0,21 bukan konstanta universal anatomi.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Koordinat horizontal (unit ilustrasi)",
+          "y": "Koordinat vertikal (unit ilustrasi)",
+          "title": "Parameter yang dapat diubah / EAR=0.400"
+        },
+        {
+          "x": "Koordinat horizontal (unit ilustrasi)",
+          "y": "Koordinat vertikal (unit ilustrasi)",
+          "title": "Kelopak lebih mendekat / EAR=0.067"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/ear_geometry_parameter__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "7a20b5dbb489a3a7f74c372c883c4bd9228ba6e314febbe746faf49478ebc3b8",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "ear_dan_events",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Terdapat 91 kandidat blink selesai pada seluruh contoh test.",
+      "meaning": "Event menghitung rentang penutupan, bukan jumlah frame yang berada di bawah threshold.",
+      "caveat": "Grafik hanya menit pertama; event kandidat belum diverifikasi manual sebagai kedipan fisiologis.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Waktu relatif dalam contoh test (detik)",
+          "y": "EAR (rasio tanpa satuan)",
+          "title": "DROZY: satu menit EAR asli; hijau = kandidat closure, merah = gap invalid"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/ear_dan_events__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "4aa56253cb9484f23c75a68cbb7a35ce14940f256d41fcb2ad3270174060519d",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "ear_event_zoom",
+      "synthetic": false,
+      "private": false,
+      "origin": "FRESH — landmark dan timestamp asli",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Kurva melintasi threshold dan kembali terbuka; arsiran membatasi awal dan akhir event berdasarkan timestamp.",
+      "meaning": "Durasi penutupan dihitung dari rentang waktu, bukan sekadar banyaknya frame di bawah threshold.",
+      "caveat": "Threshold belum dikalibrasi per orang; event sangat singkat atau panjang tidak otomatis blink valid.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Timestamp relatif test (detik)",
+          "y": "EAR (rasio tanpa satuan)",
+          "title": "Closure 3.57–3.63 s / 66 ms"
+        },
+        {
+          "x": "Timestamp relatif test (detik)",
+          "y": "EAR (rasio tanpa satuan)",
+          "title": "Closure 5.67–5.73 s / 66 ms"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/ear_event_zoom__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "1f0199dfc59059e485deed0c0773cdcd49197d305734258830c299278530608a",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "coverage_drozy",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "348/360 windows tersedia; total gap >150 ms: 1041.",
+      "meaning": "Coverage menjaga agar waktu yang tidak teramati tidak ikut dihitung sebagai mata terbuka/tertutup.",
+      "caveat": "Coverage baik tidak menjamin landmark akurat; pose dan kacamata masih perlu QC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Indeks test (bukan urutan waktu lintas orang)",
+          "y": "Coverage durasi (0–1)",
+          "title": "DROZY: kualitas pengamatan / 360 windows, 36 tests"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/coverage_drozy__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "cce0dc3410312839740272398c18af0449afa004d8cd03f891cab71143fe7bb5",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "sensitivitas_threshold",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Mean PERCLOS berubah 0.0138–0.0233 pada threshold yang diperiksa.",
+      "meaning": "Fitur bergantung pada definisi closure; threshold bukan konstanta universal.",
+      "caveat": "Model tetap memakai 0,21; tidak ada pemilihan threshold menggunakan hasil holdout KSS.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Threshold EAR (rasio)",
+          "y": "PERCLOS operasional (proporsi)",
+          "title": ""
+        },
+        {
+          "x": "Threshold EAR (rasio)",
+          "y": "Kandidat blink per menit",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/sensitivitas_threshold__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "1d6326193ba24235a6d83f46df75ae9fc8875f37ffbd38f63b9ce7bafacacb8f",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "window_ke_test",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Satu KSS asli dipasangkan dengan satu agregat test.",
+      "meaning": "Evaluasi mempertahankan resolusi label dan menahan subjek yang sama di satu fold uji.",
+      "caveat": "Whole-test features memakai seluruh rekaman offline; bukan prediksi awal atau real-time.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "",
+          "title": "DROZY: jumlah window tidak memperbanyak label manusia"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/window_ke_test__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "cfda2d03b64a262dde52444eb957f22cfe8ba2914e41516cac8af6509afc3d9d",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "distribusi_kss",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Skor KSS yang tersedia berkisar 2–9.",
+      "meaning": "Target adalah angka rasa kantuk subjektif, sehingga masalah ini diperlakukan sebagai regresi.",
+      "caveat": "Histogram berunit test, tidak dihitung ulang per window; nilai dummy nol tidak dimasukkan.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "KSS asli per test (skala 1–9)",
+          "y": "Jumlah observasi",
+          "title": "DROZY: distribusi 36 label test / 14 subjek"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/distribusi_kss__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "1b32434dce5ed58bf745a881a65c3c8299926a6eeece8c7ca5e3b46b4187074d",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "diagram_loso",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Sel biru menunjukkan subjek test; subjek lainnya menjadi training.",
+      "meaning": "Tidak ada data orang yang sedang diuji untuk fit model atau preprocessing fold tersebut.",
+      "caveat": "LOSO pada korpus kecil belum menggantikan validasi pada operator ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Subjek terurut (ID tampilan)",
+          "y": "Fold evaluasi",
+          "title": "LOSO: tepat satu subjek ditahan pada setiap fold"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/diagram_loso__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "0dea6c2f84e87ac783cffe1c640d9724b143fdfa10e81dc3a400dd83ea849b0f",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "drozy_actual_model_input",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Nilai berasal dari transform pipeline fold0 tersimpan; median dan scaler tidak belajar dari subjek test.",
+      "meaning": "Ridge menggabungkan angka ini untuk menghasilkan satu prediksi KSS per test.",
+      "caveat": "Skala z bukan skala KSS; aggregate memakai keseluruhan test offline dan tidak mendukung klaim real-time.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Nilai fitur setelah imputasi/scaling training (z)",
+          "y": "Nama fitur asli",
+          "title": "DROZY KSS LOSO fold0: sepuluh angka yang masuk Ridge untuk satu test"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/drozy_actual_model_input__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "61a3276851ec5d746f285468bfd00da0190f623bfd5012f85b2fe9a93f6e87a4",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "baseline_mae_kss",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Ridge MAE 1.4544; Dummy 2.0519 poin KSS.",
+      "meaning": "MAE adalah rata-rata besar selisih prediksi terhadap label; nilainya dalam satuan poin KSS.",
+      "caveat": "Angka ini tidak dapat dibandingkan langsung dengan Macro F1 klasifikasi MRL atau RAVDESS.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "MAE (poin KSS; lebih rendah lebih baik)",
+          "title": "KSS LOSO — 36 tests / 14 subjek"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/baseline_mae_kss__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "3c08f93ff721191a3e50aacb384fdec7e5e9703867fcdd921f41d86167703469",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "aktual_vs_prediksi_kss",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "RMSE Ridge 1.8170 poin; titik di luar garis adalah error nyata.",
+      "meaning": "Jarak vertikal menunjukkan seberapa jauh prediksi tiap test dari penilaian subjek.",
+      "caveat": "Prediksi regresi tidak dipotong ke 1–9; angka ekstrem tetap terlihat sebagai kegagalan.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "KSS asli per test (poin)",
+          "y": "KSS prediksi LOSO (poin)",
+          "title": "DROZY: nilai asli vs prediksi Ridge / 36 tests"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/aktual_vs_prediksi_kss__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "942edb8bb50cc55bf6d1bca1daa2df5feef6e627fe55f2250513923d0c4ce7f1",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "residual_kss",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "Residual rerata -0.085 poin; residual negatif berarti kantuk diperkirakan terlalu rendah.",
+      "meaning": "Distribusi error membantu melihat bias arah yang tidak tampak pada MAE saja.",
+      "caveat": "Ukuran sampel kecil dan tests berulang membuat histogram ini deskriptif, bukan bukti kalibrasi.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Residual = prediksi − label asli (poin KSS)",
+          "y": "Jumlah observasi",
+          "title": "DROZY: arah dan besar error Ridge / n=36 tests"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/residual_kss__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "716fd65a3964f2a39a165539d0b1e10c1e3022960356aea34ac9493c32abee08",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "mae_per_subjek_kss",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110137480062Z_seed42_566711",
+      "seen": "MAE per subjek berkisar 0.322–2.887 poin.",
+      "meaning": "Subject-macro MAE memberi bobot sama pada setiap orang, meski jumlah tests berbeda.",
+      "caveat": "Variasi ini belum merupakan interval keyakinan generalisasi ke populasi ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Subjek terurut (ID tampilan)",
+          "y": "MAE per subjek (poin KSS)",
+          "title": "DROZY: variasi error antar 14 subjek holdout"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/mae_per_subjek_kss__20261023T110137480062Z_seed42_566711.png",
+      "sha256": "033e3d1346cc4e1d791099f23babbbff5d0b2c1a9324462354d0687c1528ed02",
+      "experiment": "drozy_kss"
+    },
+    {
+      "topic": "gambar_ke_hog_sintetis",
+      "synthetic": true,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Bentuk mata buatan berubah menjadi peta arah tepi.",
+      "meaning": "HOG merangkum bentuk lokal menjadi vektor numerik berukuran tetap.",
+      "caveat": "Ilustrasi tidak dipakai untuk training; 756 fitur contoh di tabel berasal dari gambar asli.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "",
+          "title": "Patch sintetis"
+        },
+        {
+          "x": "",
+          "y": "",
+          "title": "Grayscale / resize"
+        },
+        {
+          "x": "",
+          "y": "",
+          "title": "Arah tepi HOG"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/gambar_ke_hog_sintetis__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "4917c9d23f52ed25ac6dd5d34788621b66e739baf71c357ca869509309779ce7",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "distribusi_kelas_mrl",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Tertutup 2753 gambar; terbuka 2532 gambar.",
+      "meaning": "Kedua kelas tersedia untuk membandingkan model dengan tebakan kelas mayoritas.",
+      "caveat": "Sampling dibatasi per subjek/kelas; ini bukan frekuensi keadaan mata di tempat kerja.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Jumlah gambar",
+          "title": "MRL: distribusi kelas pada 5285 gambar / 37 subjek"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/distribusi_kelas_mrl__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "62c990c8a164422a06783062c3dd0f8cf3755f5dc98dae0b18459b050204a5d8",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "split_mrl",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Train 3234, validation 892, test 1159 gambar; overlap subjek nol.",
+      "meaning": "Skor test menilai subjek yang tidak digunakan untuk fit preprocessing atau classifier.",
+      "caveat": "Gambar dalam orang yang sama tetap berkorelasi; ini bukan ribuan peserta independen.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Bagian data (subjek/aktor terpisah)",
+          "y": "Jumlah sampel",
+          "title": "MRL: split subjek terpisah / total 37 subjek"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/split_mrl__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "923e3686589dc9cc0f24fd5e8c5b7bbe9c14b722727118f53467bde2c605ead1",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "perbandingan_model_mrl",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Macro F1 SVM 0.7877; Dummy 0.3558.",
+      "meaning": "Macro F1 merata-ratakan F1 tiap kelas, sehingga kedua keadaan mata ikut dinilai.",
+      "caveat": "Peningkatan di subset ini tidak berarti model mampu mendeteksi fatigue.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Macro F1 (0–1; lebih tinggi lebih baik)",
+          "title": "MRL eye state — 1159 gambar / 8 subjek test"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/perbandingan_model_mrl__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "bb98c211f0e2ccd081908cd8b2ea3c40d168aeec55ed84dee9073cc86c2b0dc0",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "confusion_mrl",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Dari matriks test, 916 gambar diprediksi benar; sisanya tertukar kelas.",
+      "meaning": "Baris menyatakan label asli, kolom prediksi; sel di luar diagonal adalah kesalahan.",
+      "caveat": "Normalisasi dilakukan per baris agar proporsi kesalahan tiap kelas mudah dibandingkan.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Jumlah sampel"
+        },
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Proporsi per label asli"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/confusion_mrl__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "f24a28490a2206d0edd34b5dd89290394c85458c106ac30de3a62fa6aff33e0e",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "recall_mrl",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Recall tertutup 0.817; terbuka 0.757.",
+      "meaning": "Recall adalah bagian sampel kelas asli yang dikenali dengan benar.",
+      "caveat": "Kesalahan open/closed belum dapat diterjemahkan menjadi false alarm fatigue.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Recall: proporsi kelas dikenali",
+          "title": "MRL: seberapa banyak tiap kelas berhasil dikenali?"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/recall_mrl__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "38b35c9dfcab40ef113b1528fc5bfeab6420ca1c580de2048677683eb8eb0a5d",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "mrl_actual_input_matrix",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Heatmap berasal dari transform pipeline SVM yang sama dengan model evaluasi; tabel raw memungkinkan penelusuran nilai.",
+      "meaning": "SVM menerima vektor tepi, tanpa perlu melihat raw image pada notebook publik.",
+      "caveat": "HOG bukan pengukuran fisiologis; dimensi ini tidak mengandung durasi blink atau fatigue ground truth.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Pilihan 16 kolom HOG (nama pada tabel)",
+          "y": "Tiga baris awal training",
+          "title": "MRL eye state: actual X_train setelah preprocessing / 756 fitur"
+        },
+        {
+          "x": "",
+          "y": "Nilai setelah scaling training (z)",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/mrl_actual_input_matrix__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "65ac438bad315ae46ad9cd4fcf43676f94260942945c9f7eccd16c5a8b858d60",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "error_per_subjek_mrl",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110123270660Z_seed42_29f903",
+      "seen": "Proporsi kesalahan per subjek berkisar 0.14–0.38.",
+      "meaning": "Rata-rata global dapat menyembunyikan perbedaan antarorang.",
+      "caveat": "ID tampilan disamarkan; tidak ada contoh foto peserta yang dipublikasikan.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Proporsi gambar salah (0–1)",
+          "title": "MRL: kesalahan berbeda antar delapan subjek holdout"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/error_per_subjek_mrl__20261023T110123270660Z_seed42_29f903.png",
+      "sha256": "3fd81dcf3699539e61381f288c6e9045f5b22039930e3d504bf3ad4bf4620b3d",
+      "experiment": "mrl_eye_state"
+    },
+    {
+      "topic": "alur_paired_fusion",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Kedua modalitas berasal dari checksum file sumber yang sama.",
+      "meaning": "Baseline dapat menguji manfaat fitur gabungan tanpa membuat pasangan palsu.",
+      "caveat": "Diagram ini memakai HOG appearance; cabang EAR/PERCLOS fatigue ATC adalah pekerjaan berikutnya.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "",
+          "title": "Paired fusion yang dijalankan — target emotion"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/alur_paired_fusion__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "438230a264dd7322528c2f587a79f91f0f53a3f949329af46bca65ec5bab42e3",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "distribusi_emotion",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Setiap kelas memiliki 16–16 klip pada subset ini.",
+      "meaning": "Keseimbangan label membantu membandingkan model, sementara ukuran aktor tetap kecil.",
+      "caveat": "Emotion adalah ekspresi aktor; label ini bukan penilaian fatigue operator.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Jumlah recording AV",
+          "title": "RAVDESS: 128 klip / 8 aktor / emotion"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/distribusi_emotion__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "6f4aa1bbfa82286afa0527827930ee3d36b868be6ea25df167ee579976f53568",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "split_dan_demografi",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Keanggotaan split asli memisahkan kelompok metadata male/female sekaligus memisahkan aktor.",
+      "meaning": "Model mengalami domain shift yang membatasi interpretasi generalisasi dan fairness.",
+      "caveat": "Kelompok diambil dari konvensi sumber, bukan diinferensikan dari wajah/suara; split tidak diubah sesudah melihat skor.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Bagian data",
+          "y": "Jumlah aktor",
+          "title": "Confound split: train male-only, validation/test female-only"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/split_dan_demografi__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "24e4218849fea6ae2f9ce2c2fbfe6bc98da036b2155d5c072ba76eece9aa27f1",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "split_class_support",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Setiap kelas memiliki delapan recording train, empat validation dan empat test; zero actor overlap.",
+      "meaning": "Hanya empat contoh test per emotion: satu kesalahan mengubah recall kelas sebesar 0,25.",
+      "caveat": "Keseimbangan label tidak meniadakan confound aktor, demografi, intensitas dan protokol scripted speech.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Split historis / aktor terpisah",
+          "y": "Jumlah AV recording",
+          "title": "RAVDESS emotion: dukungan tiap kelas di train / validation / test"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/split_class_support__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "af2fba71199277964660e69af6e8cecf47de3315fe1101b4bfb6989b057d1c15",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "actor_recording_counts",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Distribusi recording seragam antardelapan aktor, tetapi hanya dua aktor menjadi test historis.",
+      "meaning": "Unit generalisasi adalah aktor, sehingga 32 klip test tidak setara 32 orang independen.",
+      "caveat": "Subset hanya aktor 01–08; temuan tidak merepresentasikan semua aktor RAVDESS atau operator ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "ID aktor RAVDESS",
+          "y": "Jumlah AV recording",
+          "title": "Seluruh delapan aktor: 16 recording per aktor / split historis"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/actor_recording_counts__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "095ab058bc1ab90d7e79487a9346aa711b17fbde20f6e1fbe57d8e3cc4d98bda",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "dimensi_fitur",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "3644 kolom fusion dibanding hanya 64 baris training.",
+      "meaning": "Banyak fitur pada sedikit sampel meningkatkan risiko overfitting; regularisasi tidak menghilangkan kebutuhan data.",
+      "caveat": "Jumlah kolom bukan ukuran jumlah peserta atau bukti bahwa model lebih baik.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Jumlah fitur numerik (kolom)",
+          "title": "Dimensi fitur besar, tetapi training hanya 64 recording"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/dimensi_fitur__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "a58d63eb854cbafaca8085c8acec7b629c34ccb7d7ad01c9773ad3e1fa60bdfb",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "qc_availability",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Audio tersedia 100.0%, video 100.0%; deteksi wajah rerata 100.0%.",
+      "meaning": "Ketersediaan klip dan keberhasilan deteksi per frame adalah pemeriksaan kualitas yang berbeda.",
+      "caveat": "Persentase deteksi dirata-ratakan per klip; sampling 2 FPS bukan cakupan temporal untuk kedipan.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Persentase (%)",
+          "title": "QC pasangan AV — 128 recording RAVDESS"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/qc_availability__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "85f77b16dbb5139cac29475033b05c57b2f2022ea55abaa7d4a069c0372c0188",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "fusion_actual_training_matrices",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Tiga training rows memperlihatkan angka yang diteruskan ke classifier setelah imputation dan scaling.",
+      "meaning": "Posisi kolom mengikuti schema masing-masing; concatenation menambah informasi sekaligus dimensionality.",
+      "caveat": "Subset kolom ditampilkan agar terbaca; nilai z besar bukan bukti fitur penting atau pola kausal.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "16 kolom tersebar dari schema (indeks)",
+          "y": "Training recording (3 dari 64)",
+          "title": "audio_only / 114 dimensi"
+        },
+        {
+          "x": "16 kolom tersebar dari schema (indeks)",
+          "y": "Training recording (3 dari 64)",
+          "title": "visual_only / 3528 dimensi"
+        },
+        {
+          "x": "16 kolom tersebar dari schema (indeks)",
+          "y": "Training recording (3 dari 64)",
+          "title": "audio_visual / 3644 dimensi"
+        },
+        {
+          "x": "",
+          "y": "z-score (fit train saja)",
+          "title": ""
+        },
+        {
+          "x": "",
+          "y": "z-score (fit train saja)",
+          "title": ""
+        },
+        {
+          "x": "",
+          "y": "z-score (fit train saja)",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/fusion_actual_training_matrices__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "520bcb809d788d18b24eea812b6e0c155dc3d7ceefb36f662b88565077c95e9a",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "perbandingan_model_emotion",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Fusion F1 0.4549; audio 0.3116; visual 0.2797.",
+      "meaning": "Pada split kecil yang sama, kita dapat membandingkan empat jalur model secara langsung.",
+      "caveat": "Dua aktor test dan demographic shift tidak mendukung klaim keunggulan umum atau signifikansi populasi.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Macro F1 (0–1; lebih tinggi lebih baik)",
+          "title": "Emotion holdout — 32 klip / 2 aktor test"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/perbandingan_model_emotion__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "35fd2dd0071b18be90a8475c3b8ff4fca1603137d4aa18fb67e0c96b9d17adf6",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "confusion_emotion",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Sebanyak 16/32 recording diklasifikasikan benar oleh fusion.",
+      "meaning": "Sel di luar diagonal menunjukkan jenis emosi yang tertukar; warna dinormalisasi per label pada panel kanan.",
+      "caveat": "Tiap kelas test hanya memiliki empat sampel; satu kesalahan mengubah recall sebesar 0,25.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Jumlah sampel"
+        },
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Proporsi per label asli"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/confusion_emotion__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "0088c1c489ca1befe2629461b50b9a52d90306dbce4889956bf54a72c0593f0d",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "recall_emotion",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Kelas dengan recall nol: Netral, Sedih.",
+      "meaning": "Skor rata-rata belum menjamin semua kelas dikenali; error perlu dilihat per kelas.",
+      "caveat": "Support kecil membuat perbedaan recall tidak stabil; emotion tetap berbeda dari fatigue.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Recall: proporsi kelas dikenali",
+          "title": "RAVDESS: kegagalan per kelas tetap ditampilkan"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/recall_emotion__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "c1529a35db24f9c3b29cee8a359a1038ac1c89529e33b3ff46e7a1fdae001d14",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "ablation_modalitas",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "F1 lengkap 0.4549, tanpa audio 0.2500, tanpa video 0.2222.",
+      "meaning": "Perbedaan mengukur respons model tetap terhadap gangguan input pada subset ini.",
+      "caveat": "Ini bukan hasil training missing-modality, bukan jaminan robust di lingkungan ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Macro F1 emotion (0–1; lebih tinggi lebih baik)",
+          "title": "Inference stress test / 32 klip pada model fusion tetap"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/ablation_modalitas__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "bc36b0bc7abbf2e4773c13e071ce564d549dc93fce5424f3a03b4004e89242b0",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "fusion_recording_error_map",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T104859625424Z_seed42_cce30b",
+      "seen": "Fusion salah pada 16/32 recording; semua recording test ditampilkan.",
+      "meaning": "Baris berbeda menunjukkan informasi modalitas dapat membantu atau menyesatkan pada klip yang sama.",
+      "caveat": "Klip dalam satu aktor tidak independen; diagram error tidak menunjukkan penyebab dan bukan fatigue detection.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Test recording terurut (32 dari 2 aktor; 4 per emotion)",
+          "y": "Model",
+          "title": "RAVDESS emotion / fixed test: di mana model benar dan berbeda?"
+        },
+        {
+          "x": "",
+          "y": "",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/fusion_recording_error_map__20261023T104859625424Z_seed42_cce30b.png",
+      "sha256": "ff60ca99665760a140a6125c0226a8c65ea14b99c4882935ee8227635c0a80b8",
+      "experiment": "ravdess_emotion"
+    },
+    {
+      "topic": "cog_native_event_counts",
+      "synthetic": false,
+      "private": false,
+      "origin": "FRESH CSV example + FRESH audit seluruh arsip",
+      "source_run_id": "20261023T110223847434Z_seed42_d2fddb",
+      "seen": "79 tekan tercatat pada 6972 ronde; grafik kiri memakai hitungan asli sesi pertama (source/cache ditandai).",
+      "meaning": "Counter perlu di-difference untuk mengetahui ronde dengan tekan baru; nilainya bukan derajat fatigue kontinu.",
+      "caveat": "Tidak ada tekan bukan label non-fatigue; durasi sebelum/sesudah tekan yang boleh dilabeli belum tervalidasi.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Nomor ronde dalam sesi (bukan detik)",
+          "y": "Jumlah tekan kumulatif",
+          "title": "Satu sesi pertama: label asli adalah counter tombol"
+        },
+        {
+          "x": "Urutan ID numerik sumber",
+          "y": "Total tekan tombol",
+          "title": "Event pada seluruh 20 ID numerik"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/cog_native_event_counts__20261023T110223847434Z_seed42_d2fddb.png",
+      "sha256": "84e3551be71c95fdb9836e1d685f164c13bae626774aa7fc9a85d405c25c428c",
+      "experiment": "cogbeacon_audit"
+    },
+    {
+      "topic": "cog_coverage_dan_sessions",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110223847434Z_seed42_d2fddb",
+      "seen": "68,118 NPZ diperiksa; 0 rekaman invalid menurut schema finite140angka.",
+      "meaning": "Keberadaan landmark dan alignment ronde bisa diaudit tanpa menganggap semua frame memiliki target fatigue.",
+      "caveat": "Finite values bukan bukti landmark akurat; urutan koordinat dan clock absolut perlu validasi sebelum fitur fisiologis.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Jumlah rekaman landmark per ronde",
+          "y": "Jumlah ronde",
+          "title": "Cakupan visual per ronde tugas"
+        },
+        {
+          "x": "Jumlah sesi per ID (hari b digabung)",
+          "y": "Jumlah ID numerik",
+          "title": "Pengukuran berulang dan cakupan tidak seragam"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/cog_coverage_dan_sessions__20261023T110223847434Z_seed42_d2fddb.png",
+      "sha256": "d2abeee096d7ab5553501d2fb1228af365d42b8d084f0fc49416676a0bc9b43b",
+      "experiment": "cogbeacon_audit"
+    },
+    {
+      "topic": "loao_model_comparison",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105052302183Z_seed42_0d6280",
+      "seen": "Empat model memakai delapan fold actor-independent yang identik; setiap klip diprediksi sekali ketika aktornya ditahan.",
+      "meaning": "Perbandingan ini menguji sensitivitas terhadap aktor tanpa memilih split dengan skor tertinggi.",
+      "caveat": "Pooled F1 bukan rerata F1 per aktor; data sebelumnya sudah dipakai dalam pengembangan, sehingga bukti exploratory.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Macro F1 pooled (0–1)",
+          "title": "RAVDESS LOAO exploratory: emotion / 128 klip, 8 heldout aktor"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/loao_model_comparison__20261023T105052302183Z_seed42_0d6280.png",
+      "sha256": "19f98cd9537518a0a168d7695a4157b6482d2d90dded4630c6bea0cd99552ff6",
+      "experiment": "ravdess_emotion_loao"
+    },
+    {
+      "topic": "loao_actor_variation",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105052302183Z_seed42_0d6280",
+      "seen": "Setiap titik dihitung dari 16 recording aktor yang sama; garis menunjukkan variasi antaraktor, bukan urutan waktu.",
+      "meaning": "Keunggulan pooled dapat menyembunyikan aktor yang tidak terbantu fusion.",
+      "caveat": "Hanya delapan aktor; simpangan baku/rentang bersifat deskriptif, bukan confidence interval atau bukti signifikansi.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Aktor heldout / satu fold per aktor",
+          "y": "Macro F1 per aktor (0–1)",
+          "title": "LOAO RAVDESS emotion: variasi performa pada seluruh delapan aktor"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/loao_actor_variation__20261023T105052302183Z_seed42_0d6280.png",
+      "sha256": "29793c493698220a6bc59a621059d48e5488d387657a1313a595931cbc3c265b",
+      "experiment": "ravdess_emotion_loao"
+    },
+    {
+      "topic": "loao_paired_actor_deltas",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105052302183Z_seed42_0d6280",
+      "seen": "Fusion melampaui audio pada 2/8 aktor dan visual pada 4/8 aktor.",
+      "meaning": "Selisih dipasangkan pada aktor dan fold yang sama; nilai di bawah nol berarti fusion merugikan pada aktor itu.",
+      "caveat": "Tidak ada bootstrap klip independen dan tidak ada klaim signifikansi dari delapan aktor.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Aktor heldout",
+          "y": "Selisih Macro F1 (poin skala 0–1)",
+          "title": "LOAO emotion: apakah fusion membantu setiap aktor?"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/loao_paired_actor_deltas__20261023T105052302183Z_seed42_0d6280.png",
+      "sha256": "8864ee7cde86050093877d3b1735246a9de5bb0dbe367d19e21ff3bf8f0bc0ca",
+      "experiment": "ravdess_emotion_loao"
+    },
+    {
+      "topic": "loao_confusion",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105052302183Z_seed42_0d6280",
+      "seen": "Setiap emotion memiliki 16 prediksi out-of-fold; matriks kiri absolut dan kanan ternormalisasi per label asli.",
+      "meaning": "Distribusi error menguji apakah hasil agregat menutupi kegagalan kelas tertentu.",
+      "caveat": "Matriks menggabungkan delapan model/fold fusion yang dilatih berbeda; bukan satu checkpoint untuk semua data.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Jumlah sampel"
+        },
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Proporsi per label asli"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/loao_confusion__20261023T105052302183Z_seed42_0d6280.png",
+      "sha256": "f678c8548611b5c121c06e77b1d5e8788c5e3cf15d79a12044763d4163ae3bce",
+      "experiment": "ravdess_emotion_loao"
+    },
+    {
+      "topic": "predi_label_dan_pengulangan",
+      "synthetic": false,
+      "private": false,
+      "origin": "FRESH — manifest sumber terverifikasi",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Kelas 0 berisi 121 rekaman, kelas 1 berisi 86; subset maksimal dua rekaman per peserta.",
+      "meaning": "Ketidakseimbangan kelas memerlukan baseline mayoritas, Macro F1, balanced accuracy dan recall tiap kelas.",
+      "caveat": "Label unwell mencakup gejala selain fatigue; dua rekaman dari orang sama tidak setara dua orang.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Jumlah rekaman",
+          "title": "Label klinis: 207 WAV / 120 peserta"
+        },
+        {
+          "x": "Rekaman membaca teks per peserta",
+          "y": "Jumlah peserta",
+          "title": "Pengukuran berulang bukan peserta independen"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/predi_label_dan_pengulangan__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "3d2a5a04f478518f1a6348d070f504f7fe7c902136bfdb39a6da31096ccb35fb",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "predi_split",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Seluruh hari dan rekaman seorang peserta berada pada satu bagian data; overlap subjek dan checksum lintas split = 0.",
+      "meaning": "Model diuji pada peserta yang tidak dipakai fitting, sehingga tidak cukup menghafal identitas suara training.",
+      "caveat": "Split independen tidak menghapus confound klinis atau memastikan populasi test mewakili operator ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Split peserta terpisah",
+          "y": "Jumlah rekaman",
+          "title": "Predi-COVID: label klinis pada setiap split"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/predi_split__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "601a4c70bdbf5d3fa386b110055d86caaf8fd1dbb5a37187a1489a9e23ba06b8",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "predi_audio_qc",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Durasi dan sample rate sumber bervariasi; seluruh WAV dianalisis pada 16 kHz melalui pipeline yang sama.",
+      "meaning": "Perbedaan perangkat atau protokol dapat menghasilkan pola suara yang berkorelasi dengan label.",
+      "caveat": "Resampling 8 kHz ke 16 kHz tidak menciptakan informasi frekuensi baru dan tidak menghapus domain/device confound.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Durasi WAV penerbit (detik)",
+          "y": "Jumlah rekaman",
+          "title": "Predi-COVID: durasi\nmenurut label klinis"
+        },
+        {
+          "x": "Sample rate WAV sebelum resampling",
+          "y": "Jumlah rekaman",
+          "title": "Sample rate sumber\nberpotensi menjadi confound"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/predi_audio_qc__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "0968169832a840064a9c90bf16b93c42ca158a318e6236398acc7b601ec53f0d",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "schema_114_audio",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Schema memuat 88 eGeMAPS dan 26 MFCC.",
+      "meaning": "Setiap kelompok mengukur aspek suara berbeda, dengan unit fisik atau komputasi berbeda.",
+      "caveat": "Jumlah fitur tidak menyatakan pentingnya fitur; kelompok penjelasan bukan hasil feature selection.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Jumlah kolom dalam schema",
+          "y": "Kelompok representasi",
+          "title": "Predi-COVID: asal seluruh 114 fitur input model"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/schema_114_audio__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "d33825f6f9afc8713cbabae07fef5d0e467cb6fa5308ce51cca0e10c04890569",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "predi_model_comparison",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Ketiga model dievaluasi pada rekaman dan peserta test yang sama; semua skor berasal dari prediksi tersimpan.",
+      "meaning": "Macro F1 perlu dibaca bersama balanced accuracy: menebak kedua kelas dapat menaikkan F1 tanpa akurasi seimbang yang kuat.",
+      "caveat": "Tidak ada tuning test; ukuran test kecil dan rekaman berulang membatasi kekuatan kesimpulan.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "",
+          "y": "Macro F1 (0–1)",
+          "title": "Predi-COVID: fatigue klinis / test 42 WAV / 24 peserta"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/predi_model_comparison__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "47535544ef8d3559680b43b379cbf105fb1d531fe9795550929e0fa38eba4181",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "actual_audio_model_input",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Vektor lengkap test dan cuplikan matriks training ditransformasi oleh pipeline tersimpan yang sama dengan classifier.",
+      "meaning": "Model menerima angka ini; batas eGeMAPS/MFCC memperjelas concatenation 88+26 tanpa metadata peserta.",
+      "caveat": "Scaling tidak menghapus confound, dan satu contoh tidak menjelaskan perilaku seluruh peserta.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Indeks kolom dalam schema tersimpan",
+          "y": "Nilai setelah scaling (z)",
+          "title": "Satu vektor test nyata: seluruh 114 angka input Logistic C=1"
+        },
+        {
+          "x": "Indeks pilihan kolom (lihat tabel nama)",
+          "y": "Baris training",
+          "title": "X_train setelah preprocessing: tiga baris × 16 kolom terpilih"
+        },
+        {
+          "x": "",
+          "y": "Nilai setelah scaling (z)",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/actual_audio_model_input__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "3528ef5b5a43dfe6a049b3554f223c1107c5d370f4f00522dd9509c49125982e",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "mfcc_summary_26",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Masing-masing grafik memiliki 13 angka nyata; keduanya membentuk 26 kolom dari rekaman test yang sama.",
+      "meaning": "Rerata menunjukkan pusat nilai tiap koefisien, sedangkan std merangkum variasinya sepanjang rekaman.",
+      "caveat": "Ringkasan menghilangkan urutan temporal; koefisien tidak memiliki arti tunggal sebagai tingkat fatigue.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Indeks koefisien MFCC",
+          "y": "Nilai ringkasan (skala librosa)",
+          "title": "Rerata MFCC per utterance"
+        },
+        {
+          "x": "Indeks koefisien MFCC",
+          "y": "Nilai ringkasan (skala librosa)",
+          "title": "Simpangan baku MFCC per utterance"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/mfcc_summary_26__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "5a912a6760ea9e97f7c921b23f84df5bf44824b5f4dfe04db92ae22d2d4d8d2e",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "predi_confusion",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "Confusion matrix berjumlah 42 rekaman; sisi kanan dinormalisasi berdasarkan kelas asli.",
+      "meaning": "Recall kelas 1 menunjukkan proporsi laporan fatigued/unwell yang ditemukan, sementara kelas 0 memeriksa false alarms.",
+      "caveat": "Logistic dipilih sebagai baseline interpretabel sebelum melihat skor, bukan sebagai pemenang test.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Jumlah sampel"
+        },
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Proporsi per label asli"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/predi_confusion__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "cf71e47a077e8b01148f5a29a61646153f1e66a32cfd80380c05c86da8bf7d5a",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "predi_error_per_subject",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105402224766Z_seed42_880107",
+      "seen": "21 dari 42 rekaman test salah; semua peserta ditampilkan tanpa seleksi hasil terbaik.",
+      "meaning": "Error dapat terkonsentrasi pada orang tertentu; ringkasan klip saja menyembunyikan variasi tersebut.",
+      "caveat": "Hanya satu atau dua rekaman per peserta; error 0 atau 1 bukan estimasi presisi tentang kemampuan individual.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Urutan peserta test (ID disembunyikan)",
+          "y": "Proporsi prediksi salah (0–1)",
+          "title": "Predi-COVID Logistic: error pada seluruh 24 peserta test"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/predi_error_per_subject__20261023T105402224766Z_seed42_880107.png",
+      "sha256": "c7338d9497ce9568d4d7fb9daf783cc9772aaae6275723f567207fd7a819644a",
+      "experiment": "predi_covid_fatigue"
+    },
+    {
+      "topic": "radio_filter_response",
+      "synthetic": false,
+      "private": false,
+      "origin": "FRESH — respons matematis filter, tanpa media peserta",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Band 300–3.400 Hz lebih dipertahankan daripada frekuensi di luar band; kurva dihitung dari koefisien filter aktual.",
+      "meaning": "Penyaringan mengubah informasi spektral yang diterima extractor, bahkan sebelum noise ditambahkan.",
+      "caveat": "Kurva ini milik simulasi terkontrol; bukan hasil pengukuran perangkat radio ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Frekuensi (Hz)",
+          "y": "Gain filter efektif (dB)",
+          "title": "Radio-style: respons filter forward-backward / parameter tetap"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_filter_response__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "a93fd7776b16a5ccd449d51601f3af75fae8acec165db76f631bca1c207fc8f0",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_synthetic_energy",
+      "synthetic": true,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Komponen 5.000 Hz ditekan oleh filter, sementara komponen 700 Hz tetap terlihat pada ilustrasi ini.",
+      "meaning": "Ilustrasi memperlihatkan mengapa membatasi bandwidth dapat mengubah fitur spektral.",
+      "caveat": "Sinyal dibuat secara matematis, bukan suara pasien/ATC; tidak dipakai training atau score benchmark.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Frekuensi (Hz)",
+          "y": "Proporsi energi per bin FFT",
+          "title": "Sintetis: dua komponen 700 + 5.000 Hz"
+        },
+        {
+          "x": "Frekuensi (Hz)",
+          "y": "Proporsi energi per bin FFT",
+          "title": "Sintetis: sesudah radio-style 20 dB"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_synthetic_energy__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "e3c866e040c241997c54eb337dfd2cf0fb6fbc5ac2ae6acd783a387dc5b5d2c5",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_primary_comparison",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Semua batang memakai target klinis dan 42 recording test yang sama; kondisi hanya mengubah kanal atau data training yang diizinkan.",
+      "meaning": "Selisih clean→radio mengukur sensitivitas kanal; augmented→radio menguji apakah paparan kanal saat training membantu.",
+      "caveat": "Arah perubahan dilaporkan apa adanya. Tambahan 10 dB bersifat eksploratif; bukan bukti transfer ke populasi ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Training → evaluasi / peserta test sama",
+          "y": "Macro F1 (0–1)",
+          "title": "Macro F1 / 42 recording, 24 peserta test"
+        },
+        {
+          "x": "Training → evaluasi / peserta test sama",
+          "y": "Balanced accuracy (0–1)",
+          "title": "Balanced accuracy / 42 recording, 24 peserta test"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_primary_comparison__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "d5dd170443bf43f324b6b9de72bcecec1339c81d09dc4e4dd23aea10dc716167",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_snr_sensitivity",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Model clean dan augmented dinilai pada turunan 20/10 dB dari recording test yang sama; 10 dB menambah noise relatif terhadap reference.",
+      "meaning": "Kurva menguji sensitivitas, bukan memilih kondisi dengan skor tertinggi; tidak ada tuning pada test.",
+      "caveat": "SNR simulasi dihitung dari noise tambahan yang diketahui, bukan estimasi SNR asli suara klinis.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Kondisi evaluasi dari recording test yang sama",
+          "y": "Balanced accuracy (0–1)",
+          "title": "Predi-COVID Logistic: sensitivitas kanal / test 42 WAV, 24 peserta"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_snr_sensitivity__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "bfdc8d3641212d5aaee12ef298bd1b943e7e13a5badeb1a1e2325baae7021acd",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_roc_pr",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Kurva memakai skor kontinu Logistic pada label asli test; AUC dan AP dihitung dari prediksi tersimpan.",
+      "meaning": "Kurva menunjukkan trade-off threshold, sedangkan confusion matrix memakai threshold model tetap.",
+      "caveat": "AP adalah average precision, bukan luas trapezoid PR; skor bukan tingkat fatigue atau probabilitas yang sudah dikalibrasi.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "False positive rate",
+          "y": "True positive rate / recall",
+          "title": "ROC / Logistic / test peserta terpisah"
+        },
+        {
+          "x": "Recall fatigue/unwell",
+          "y": "Precision fatigue/unwell",
+          "title": "Precision–recall / test 18 label positif"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_roc_pr__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "2c846544b7d9d398233892a15f7a19ba6afb4c131b8cbbfbb299f210ef279a32",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_confusion_clean_clean",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Recall fatigue/unwell 0.389; support positif 18 dan negatif 24 recording.",
+      "meaning": "Matriks menampilkan false negatives/false alarms pada populasi identik untuk tiga kondisi primer.",
+      "caveat": "Label klinis mencampur fatigue dan unwell; hasil bukan diagnosis atau deteksi fatigue ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Jumlah sampel"
+        },
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Proporsi per label asli"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_confusion_clean_clean__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "f3e2758dab5939ef0d44225630455065825757411d9b26f7776ce1f1f99494f5",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_confusion_clean_radio20",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Recall fatigue/unwell 0.333; support positif 18 dan negatif 24 recording.",
+      "meaning": "Matriks menampilkan false negatives/false alarms pada populasi identik untuk tiga kondisi primer.",
+      "caveat": "Label klinis mencampur fatigue dan unwell; hasil bukan diagnosis atau deteksi fatigue ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Jumlah sampel"
+        },
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Proporsi per label asli"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_confusion_clean_radio20__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "28370599fad983f3f6c8fd1acba2768fabe91268665e8cfcdc0b20f4fd5805b7",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_confusion_aug20_radio20",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Recall fatigue/unwell 0.444; support positif 18 dan negatif 24 recording.",
+      "meaning": "Matriks menampilkan false negatives/false alarms pada populasi identik untuk tiga kondisi primer.",
+      "caveat": "Label klinis mencampur fatigue dan unwell; hasil bukan diagnosis atau deteksi fatigue ATC.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Jumlah sampel"
+        },
+        {
+          "x": "Prediksi",
+          "y": "Label asli",
+          "title": "Proporsi per label asli"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_confusion_aug20_radio20__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "9ef882d83be9c433b1664a8ad728b8cacd98d9d183d2100621f784c9b6e0b9bf",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_feature_shift",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Setiap titik merangkum perubahan fitur pada pasangan recording yang sama; scaler tidak di-fit ulang pada test.",
+      "meaning": "Perubahan besar menunjukkan representasi sensitif terhadap kanal, bukan bahwa kondisi fatigue berubah.",
+      "caveat": "Analisis ini deskriptif setelah evaluasi; tidak dipakai memilih fitur atau tuning parameter test.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Indeks fitur dalam schema 114 kolom",
+          "y": "Rerata |radio − original| dalam skala training (z)",
+          "title": "Feature shift: pasangan 42 recording test / scaler dari training clean"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_feature_shift__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "bddf15ee42c197ecd0585a8e92cd52d2e99acb0109b0b3f9cc14c8bf2778db94",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "radio_subject_errors",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "seen": "Semua peserta test ditampilkan pada urutan yang sama untuk ketiga kondisi; merah lebih pekat berarti lebih banyak prediksi salah.",
+      "meaning": "Perubahan pooled score dapat menyembunyikan peserta yang dirugikan; satu/dua recording per peserta membuat error individual kasar.",
+      "caveat": "Tidak ada seleksi subjek terbaik atau CI yang menganggap klip berulang sebagai orang independen.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Urutan seluruh 24 peserta test (ID disembunyikan)",
+          "y": "Kondisi Logistic",
+          "title": "Error per peserta: perubahan kanal dan augmentation tidak selalu membantu"
+        },
+        {
+          "x": "",
+          "y": "Proporsi recording salah per peserta",
+          "title": ""
+        }
+      ],
+      "file": "reports/figures/notebook_v3/radio_subject_errors__20261023T105608840284Z_seed42_0d3b34.png",
+      "sha256": "74a1a1abb704e038c1f3feba42403952c9b8737049c819e7e6050641cbb149ac",
+      "experiment": "predi_covid_radio"
+    },
+    {
+      "topic": "drozy_feature_ablation",
+      "synthetic": false,
+      "private": false,
+      "origin": "REAL / FRESH",
+      "source_run_id": "20261023T110208961056Z_seed42_d8ef0c",
+      "seen": "Lima metode dinilai pada fold/target/unit test yang sama; kelompok fitur masing-masing memuat 4/4/2/10 angka.",
+      "meaning": "Perbandingan menguji nilai informasi kelompok fitur dengan model dan protokol tetap, bukan membuktikan sebab kantuk.",
+      "caveat": "Korpus kecil, threshold belum dikalibrasi, dan perbandingan eksploratif; tidak dilakukan tuning test.",
+      "pixel_dpi": 160,
+      "axis_labels": [
+        {
+          "x": "Kelompok input / Ridge alpha=1",
+          "y": "MAE (poin KSS; lebih rendah lebih baik)",
+          "title": "DROZY LOSO / 36 test, 14 peserta / MAE"
+        },
+        {
+          "x": "Kelompok input / Ridge alpha=1",
+          "y": "RMSE (poin KSS; lebih rendah lebih baik)",
+          "title": "DROZY LOSO / 36 test, 14 peserta / RMSE"
+        }
+      ],
+      "file": "reports/figures/notebook_v3/drozy_feature_ablation__20261023T110208961056Z_seed42_d8ef0c.png",
+      "sha256": "d273545417a8fbeda8a61d88c8f24f4ddba7da693cf98a6bbee3bc8f17d0722d",
+      "experiment": "drozy_feature_ablation"
+    }
+  ]
+}

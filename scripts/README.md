@@ -1,6 +1,6 @@
 # Entry points
 
-Untuk v3, gunakan `10_execute_notebook_v3.py --mode DEMO` atau `--mode FULL`. Runner hanya mengeksekusi tiga notebook pada `notebooks/v3/` dan menyimpan evidence per sesi. `11_validate_notebook_v3.py` memeriksa source, cache, replay model/prediksi, metrik, gambar dan output secara read-only. Lihat [panduan v3](../notebooks/v3/README.md).
+Untuk v3, gunakan `10_execute_notebook_v3.py --mode DEMO` atau `--mode FULL`. Gunakan `--deny-raw-media` pada DEMO publik untuk acceptance tanpa raw source. Gunakan `--private-media` untuk player/preview lokal; salinan publik disanitasi dan evidence asli tetap lokal. Runner hanya mengeksekusi tiga notebook pada `notebooks/v3/` dan menyimpan evidence per sesi. `11_validate_notebook_v3.py` memeriksa source, cache, replay model/prediksi, metrik, gambar dan output secara read-only. Lihat [panduan v3](../notebooks/v3/README.md).
 
 CLI utama: `atc-fatigue --help`. Scripts 00–06 adalah wrapper audit environment/dataset, ekstraksi audio, DROZY, training MRL, fusion RAVDESS, dan report builder. `07_build_notebooks.py --execute` membuat dan memvalidasi notebook demo.
 

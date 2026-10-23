@@ -1,3 +1,189 @@
+# Notebook-first v3 — three-track feasibility dan input model transparan
+
+Pembaruan **23 Oktober 2026 UTC**, branch `feat/notebook-first-v3`, [PR #1](https://github.com/maulnite/atc-fatigue-research/pull/1).
+Tetap tepat tiga notebook utama. Bagian ini adalah hasil terkini; laporan sebelumnya dipertahankan utuh di bawah.
+**Fatigue klinis/unwell, eye state, KSS sleepiness dan emotion tetap target berbeda. Performa fatigue ATC multimodal belum diukur.**
+
+## Implemented and verified
+
+- **[01 — Audio](../notebooks/v3/01_audio_analysis.ipynb):** raw/processed ATCOSIM lokal, STFT/log-Mel/MFCC, kelompok 88 eGeMAPS + 26 MFCC, schema 114 aktual, contoh nilai raw/scaled, beberapa row `X_train`, bentuk `X_train/X_validation/X_test` dan `y`. Predi-COVID memakai target native fatigue/unwell dan participant split tetap. Tambahan radio study menjalankan actual extraction/training/evaluation, confusion, recall/precision, ROC/AP, feature shift serta error seluruh peserta.
+- **[02 — Visual](../notebooks/v3/02_visual_analysis.ipynb):** raw eye→resize→HOG lokal, input 756D actual dan prediksi benar/salah deterministik. Landmark 68→enam titik→EAR lokal, diagram EAR parametrik sintetis, events/coverage/zoom, window→test 10D, raw/scaled actual Ridge input, original KSS prediction/error serta ablation 14 LOSO. Panel landmark sebelum/sesudah memakai sumbu dan aspect ratio yang sama.
+- **[03 — Fusion](../notebooks/v3/03_multimodal_fusion.ipynb):** metadata genuine paired AV, durasi/offset/availability, 114 fitur audio + 3.528 HOG + 2 masks = 3.644 input, raw/scaled matrices, schema lengkap, deterministic 9-step prediction walkthrough dan minimal satu kegagalan fusion. Semua 32 test recording terlihat pada error map. Baseline, masking ablation dan LOAO lama tetap tersedia.
+- **Privasi:** player clean/radio dan media sumber hanya opt-in lokal. Semua cell privat dan embedded audio/video tanpa tag disanitasi pada salinan publik; evidence asli tetap lokal. DEMO publik memuat cache dan menghitung inference, tanpa membaca raw media atau mengklaim training/ekstraksi baru.
+- **Reproducibility:** run append-only, config/seed/environment/source hashes, split/source labels, checkpoint reload dan artifact integrity. Semua skor historis direproduksi; model/checkpoint/cache lama tidak ditimpa. Tidak ada download baru, GPU atau perubahan shared environment.
+
+**Bagaimana menelusuri input:** mulai dari source metadata/label, periksa temporal/image representation, lihat feature names/values,
+bandingkan raw terhadap transformed rows dari checkpoint training-only, kemudian cocokkan prediksi terhadap ground truth.
+Schema ID, filename/path, target, timestamp dan demografi tidak digunakan sebagai prediktor.
+Input cache tetap biometrik dan tidak dipublikasikan penuh; preview terbatas sengaja cukup untuk pendidikan.
+
+**Validasi final:** 79 tests lulus; Ruff dan dependency check lulus. Sembilan acceptance executions (3 notebook × FULL/DEMO publik tanpa raw/DEMO privat) memakai fresh kernels dan source hash yang sama. Ada 69 grafik publik dan 9 grafik privat lokal; 50 topik grafik sebelumnya tetap tersedia, serta 85 PNG publik lama identik. Seluruh 145 checkpoint unik pada registry aktif diverifikasi dalam 154 replay-evaluations (artefak radio sama dipakai pada beberapa kondisi); metrik/ROC/AP dihitung ulang dari prediksi. Median, mean, variance dan jumlah training rows diverifikasi terhadap training fold masing-masing. Sebanyak 3.284 berkas terlindungi dan historical metrics tidak berubah. Peringatan tests hanya 14 deprecation Matplotlib/Pyparsing, bukan kegagalan training.
+
+Semua raw audio/video/eye images/source-derived plots tetap lokal. Output publik berisi 0 embedded audio/video dan 0 private paths. Clone GitHub dapat menampilkan seluruh hasil; menjalankan DEMO tetap memerlukan model/feature cache lokal yang sah.
+
+## Audio: clean versus radio-channel simulation
+
+Dataset lokal berizin tetap **207 recording / 120 peserta**, terdiri dari 129 train / 36 validation / 42 test,
+dengan 76/20/24 peserta yang tidak overlap. Test 24 well + 18 fatigue/unwell.
+Clean berarti sebelum simulasi tambahan, bukan jaminan suara bebas noise.
+
+| Komponen simulasi | Parameter yang benar-benar digunakan |
+| :--- | :--- |
+| Preprocessing | Canonical mono 16 kHz; source 8 kHz tidak mendapat informasi frekuensi baru |
+| Filter | Butterworth SOS order 4, 300–3400 Hz, forward-backward offline/acausal; effective magnitude squared |
+| Gain | −3 dB; joint peak attenuation bila perlu menjaga peak ≤0,98 |
+| Noise | Gaussian band-limited; primary 20 dB dan exploratory stress 10 dB |
+| Seed | SHA-256 dari radio-v1, seed 42 dan sample ID; tidak bergantung label/split/order |
+| SNR | Diukur terhadap filtered/gained reference; bukan estimasi noise asli |
+| Codec/distorsi | Tidak disimulasikan; tidak mengklaim radio receiver ATC tervalidasi |
+
+Dua player lokal memakai recording test deterministik yang **sama** dan `normalize=False`.
+Waveform/STFT sejajar memakai sumbu dan color reference sama; PSD before/after ditampilkan lokal dengan satuan dB amplitudo²/Hz.
+Publik memakai respons matematis filter, ilustrasi energi sintetis berlabel, dan ringkasan quality/feature/evaluation yang aman.
+Tidak ada derivative WAV yang disimpan atau masuk Git. QC 414 transformasi memenuhi SNR 20/10 dB dengan error maksimum
+**1.26e-08 dB**, clipping seluruh derivative 0.
+
+Split peserta dibekukan **sebelum augmentation**. Hanya 129 training source recording diberi versi radio20,
+menghasilkan 258 training rows tetapi tetap 76 orang. Validation/test channel adalah repeated measurements recording sama,
+bukan tambahan observasi independen. Model tetap Dummy, Logistic C=1 dan Linear SVM C=1; tidak ada tuning pada test.
+Enam checkpoint menghasilkan 15 kombinasi evaluasi (tiga primer dan dua stress × tiga model).
+
+| Train → test | Model | Macro F1 | Balanced accuracy | Recall fatigue/unwell | ROC-AUC | Average precision |
+| :--- | :--- | ---: | ---: | ---: | ---: | ---: |
+| clean → clean | dummy_majority | 0.3636 | 0.5000 | 0.0000 | 0.5000 | 0.4286 |
+| clean → clean | logistic_c1 | 0.4857 | 0.4861 | 0.3889 | 0.5648 | 0.4880 |
+| clean → clean | linear_svm_c1 | 0.5258 | 0.5278 | 0.3889 | 0.5764 | 0.4833 |
+| clean → radio20 | dummy_majority | 0.3636 | 0.5000 | 0.0000 | 0.5000 | 0.4286 |
+| clean → radio20 | logistic_c1 | 0.6298 | 0.6458 | 0.3333 | 0.6852 | 0.6889 |
+| clean → radio20 | linear_svm_c1 | 0.5758 | 0.5764 | 0.4444 | 0.6088 | 0.5297 |
+| aug20 → radio20 | dummy_majority | 0.3636 | 0.5000 | 0.0000 | 0.5000 | 0.4286 |
+| aug20 → radio20 | logistic_c1 | 0.5758 | 0.5764 | 0.4444 | 0.6157 | 0.5367 |
+| aug20 → radio20 | linear_svm_c1 | 0.4815 | 0.4931 | 0.2778 | 0.5417 | 0.4644 |
+| clean → radio10 | dummy_majority | 0.3636 | 0.5000 | 0.0000 | 0.5000 | 0.4286 |
+| clean → radio10 | logistic_c1 | 0.5073 | 0.5625 | 0.1667 | 0.6042 | 0.5571 |
+| clean → radio10 | linear_svm_c1 | 0.5654 | 0.5694 | 0.3889 | 0.5741 | 0.5244 |
+| aug20 → radio10 | dummy_majority | 0.3636 | 0.5000 | 0.0000 | 0.5000 | 0.4286 |
+| aug20 → radio10 | logistic_c1 | 0.4457 | 0.5139 | 0.1111 | 0.6296 | 0.5348 |
+| aug20 → radio10 | linear_svm_c1 | 0.4590 | 0.5000 | 0.1667 | 0.6042 | 0.5405 |
+
+**Hasil yang tidak sesuai dugaan:** Logistic clean→radio20 justru memiliki pooled Macro F1 lebih tinggi daripada clean→clean,
+tetapi recall positif turun 7/18 → 6/18. Matrix clean `[[14,10],[11,7]]`, radio20 `[[23,1],[12,6]]`.
+Augmentation menjadi `[[17,7],[10,8]]`: recall positif 8/18 naik, tetapi false alarms bertambah dan Macro F1 turun menjadi 0,5758.
+Jadi kenaikan satu metrik tidak berarti seluruh kelas terbantu. Augmentation belum memberikan keuntungan konsisten.
+Pada 10 dB recall positif Logistic hanya 3/18 (clean train) atau 2/18 (augmented train).
+AP adalah average precision, bukan luas trapezoid PR. SVM margin/Logistic scores bukan tingkat fatigue yang terkalibrasi.
+
+Feature shift terbesar pada test adalah `egemaps__logRelF0-H1-A3_sma3nz_stddevNorm`: rerata absolute shift 41,67 z pada scaler training clean (raw test mean 0,363→5,278; training scale 0,118). Descriptor yang dinormalisasi ini sensitif terhadap perubahan kanal. Angka z besar menunjukkan distribution shift input, bukan peningkatan fatigue atau feature importance. Status benar/salah MRL mengikuti label resmi dataset; contoh privat bukan pengganti validasi manual seluruh anotasi.
+
+Ini uji **channel robustness pada populasi klinis**. Penyakit, perangkat, demografi, bahasa dan label fatigue **atau unwell**
+masih menjadi confound. Tidak ada bukti transfer ke occupational fatigue operator atau kanal radio ATC yang sebenarnya.
+Tidak ada confidence interval yang memperlakukan recording dari orang sama sebagai independen.
+
+![Ketiga kondisi primer memakai 42 recording test / 24 peserta yang sama; augmentation tidak konsisten meningkatkan Macro F1 atau balanced accuracy.](figures/notebook_v3/radio_primary_comparison__20261023T105608840284Z_seed42_0d3b34.png)
+
+**Interpretasi:** Ketiga kondisi primer memakai 42 recording test / 24 peserta yang sama; augmentation tidak konsisten meningkatkan Macro F1 atau balanced accuracy. Sumber run `20261023T105608840284Z_seed42_0d3b34`.
+
+
+## Visual: perbandingan fitur pada label KSS yang sama
+
+MRL tetap eye-state classification: 5.285 gambar / 37 subjek, 1.159 gambar / 8 subjek test;
+SVM Macro F1 **0,7877**, balanced accuracy **0,7872**, Dummy Macro F1 **0,3558**.
+MRL tidak memiliki urutan timestamp/FPS yang terverifikasi pada subset, sehingga tidak digunakan menghitung durasi blink.
+
+DROZY tetap **360 windows → 36 original tests / 14 subjek**. Sebanyak 348 window tersedia menjadi input agregasi,
+bukan 348 label KSS independen. Satu test memiliki 10 fitur (mean/std dari EAR mean/std, blink rate/duration dan operational closure fraction).
+Preprocessing di-fit ulang pada training setiap LOSO fold; KSS adalah sleepiness subjektif, bukan fatigue keseluruhan.
+Threshold EAR 0,21, gap 150 ms, blink 50–500 ms, sustained closure ≥500 ms dan coverage ≥80% tetap engineering definitions.
+Operational PERCLOS adalah sustained-closure duration / valid duration, belum validasi kelopak 80% tertutup.
+
+| Kelompok / Ridge alpha1 kecuali Dummy | MAE KSS | RMSE KSS | Subject-macro MAE |
+| :--- | ---: | ---: | ---: |
+| blink_only | 1.5362 | 1.9033 | 1.5422 |
+| closure_only | 1.9109 | 2.1040 | 1.9552 |
+| combined | 1.4544 | 1.8170 | 1.4405 |
+| dummy_mean | 2.0519 | 2.2704 | 2.1082 |
+| ear_only | 1.3508 | 1.6524 | 1.3571 |
+
+**EAR-only lebih rendah errornya daripada combined pada protokol ini.** Seluruh 70 checkpoint (5 model × 14 fold) memakai fold yang sama;
+fitur tidak ditambah kompleksitas untuk mengejar score. Ini perbandingan exploratory, bukan pemilihan model final dari holdout.
+Model combined identik dengan benchmark Ridge sebelumnya: MAE 1,4544 versus Dummy 2,0519.
+Ridge tidak dibatasi ke 1–9; prediksi di luar rentang KSS tetap ditampilkan, tidak di-clip agar skor terlihat lebih baik.
+Variasi/error per subjek, missing handling dan penghitungan satu window dapat diperiksa pada notebook.
+
+![Menambahkan blink/closure tidak otomatis memperbaiki KSS prediction: EAR-only MAE 1,351, combined 1,454 poin; 14 LOSO folds identik.](figures/notebook_v3/drozy_feature_ablation__20261023T110208961056Z_seed42_d8ef0c.png)
+
+**Interpretasi:** Menambahkan blink/closure tidak otomatis memperbaiki KSS prediction: EAR-only MAE 1,351, combined 1,454 poin; 14 LOSO folds identik. Sumber run `20261023T110208961056Z_seed42_d8ef0c`.
+
+
+## Fusion: engineering berhasil; keuntungan performa belum konsisten
+
+Model menerima fitur aktual dari container AV yang sama, bukan pairing lintas dataset.
+Audio 114D, HOG appearance 3.528D, masks 2D dan fusion 3.644D dibandingkan pada split/label emotion yang sama.
+Historical train hanya 64 recording / 4 aktor; test 32 recording / 2 aktor, 4 per emotion.
+Rasio fusion/train 56,94 fitur per recording memperjelas risiko overfitting.
+Train male-only dan evaluasi female-only menurut metadata masih confound historis.
+
+| Model | Historical fixed test Macro F1 | LOAO exploratory pooled Macro F1 |
+| :--- | ---: | ---: |
+| Dummy |0,0278|0,0278|
+| Audio-only |0,3116|0,5452|
+| Visual-only |0,2797|0,4071|
+| Early fusion |0,4549|0,4268|
+
+LOAO 8 fold menahan satu aktor, train 112 / test 16 per fold; zero actor overlap dan fixed C=1.
+Fusion mengungguli audio pada **2/8 aktor**, bukan konsisten. Populasi/training size berbeda dari split historis;
+tabel bukan klaim kenaikan langsung antarprotokol. Aktor sudah dipakai pengembangan: LOAO bukan test konfirmatori baru.
+Masking modality pada inference bukan training agar model robust terhadap modality hilang.
+Walkthrough deterministik dan seluruh error map memperlihatkan kesepakatan model dapat tetap salah.
+HOG 2 FPS bukan blink/PERCLOS. Tidak ada skor fatigue ATC dari emotion.
+
+![Actual transformed X_train menampilkan subset 16 kolom dari audio, visual dan fusion; imputation/scaling berasal dari 64 training clips saja.](figures/notebook_v3/fusion_actual_training_matrices__20261023T104859625424Z_seed42_cce30b.png)
+
+**Interpretasi:** Actual transformed X_train menampilkan subset 16 kolom dari audio, visual dan fusion; imputation/scaling berasal dari 64 training clips saja. Sumber run `20261023T104859625424Z_seed42_cce30b`.
+
+
+## Status akses, implemented but not executed, blocked dan future research
+
+| Kategori | Status transparan |
+| :--- | :--- |
+| Implemented and verified | Tiga track, actual input views, radio training/evaluation, visual ablation, source-private players/previews, FULL/DEMO, QA dan publikasi aman sesuai validation JSON |
+| Implemented but not executed | Tidak ada jalur inti yang sengaja ditinggalkan tanpa pengujian. FULL hanya subset lokal berizin; seluruh corpus tambahan belum dijalankan |
+| Not implemented / blocked | Supervised CogBeacon frame/window fatigue: counter event tidak memberi ground truth yang cukup; clock alignment dan selisih 77 sesi / 20 ID vs paper 76/19 belum tuntas |
+| Not implemented / blocked | Multimodal ATC fatigue benchmark: belum ada paired ATC AV dengan label sah; IEEE audio fatigue masih belum tersedia |
+| Future research | External subject-independent validation, kontrol confound klinis/perangkat/bahasa, measured radio channels, label protocol bersama Prof, kalibrasi EAR/PERCLOS, dan optional fixed late fusion tanpa test tuning |
+
+Predi-COVID sudah tersedia lokal dengan izin sebelumnya, CC BY 4.0, checksum MD5 penerbit / SHA-256 diverifikasi;
+tidak menggunakan COVID symptomatic label sebagai pengganti fatigue.
+CogBeacon di-audit ulang dari seluruh 68.118 NPZ / 6.972 rounds, 79 button presses; sampling 2 FPS tidak mendukung blink/PERCLOS.
+Tidak ada binary fatigue classifier yang dipaksakan. Tidak ada download tambahan pada pekerjaan ini.
+
+## Run IDs, reproduksi dan validation evidence
+
+| Eksperimen aktif | Run ID baru |
+| :--- | :--- |
+| atcosim_audio | `20261023T105347534495Z_seed42_49cb09` |
+| drozy_kss | `20261023T110137480062Z_seed42_566711` |
+| mrl_eye_state | `20261023T110123270660Z_seed42_29f903` |
+| ravdess_emotion | `20261023T104859625424Z_seed42_cce30b` |
+| cogbeacon_audit | `20261023T110223847434Z_seed42_d2fddb` |
+| ravdess_emotion_loao | `20261023T105052302183Z_seed42_0d6280` |
+| predi_covid_fatigue | `20261023T105402224766Z_seed42_880107` |
+| predi_covid_radio | `20261023T105608840284Z_seed42_0d3b34` |
+| drozy_feature_ablation | `20261023T110208961056Z_seed42_d8ef0c` |
+
+[Registry](notebook_v3_runs.json) menyimpan histori lengkap. `runs/` dan full biometric caches/checkpoints tetap lokal.
+Perintah dan pengaturan media ada pada [README tiga notebook](../notebooks/v3/README.md).
+[Validation JSON](notebook_v3_validation.json) memuat hasil final source/metrics/checkpoint replay, privacy, execution matrix,
+preservation checks dan daftar grafik publik. Seluruh grafik tambahan diperiksa visual: font, sumbu, colorbar, legend, overlap dan kejujuran skala.
+
+Saat integrasi, fresh-kernel Run All menemukan satu cell PSD diletakkan sebelum konfigurasi Predi-COVID.
+Urutannya diperbaiki; evidence gagal dipertahankan lokal. Final FULL/DEMO dijalankan ulang setelah perbaikan,
+termasuk narasi sumber cache dan penyamaan sumbu geometri landmark.
+
+---
+
+# Snapshot enhancement sebelumnya — 22 Oktober 2026
+
 # Notebook-first v3 — enhancement incremental terverifikasi
 
 Pembaruan **22 Oktober 2026 (UTC)** pada branch `feat/notebook-first-v3`, untuk [PR #1](https://github.com/maulnite/atc-fatigue-research/pull/1).

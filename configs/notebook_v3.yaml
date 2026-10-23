@@ -10,6 +10,16 @@ artifact_root: runs
 cached_run_registry: reports/notebook_v3_runs.json
 figure_dpi: 160
 publication_policy: safe_aggregates_and_synthetic_media
+radio_channel:
+  band_hz: [300, 3400]
+  filter_order: 4
+  gain_db: -3.0
+  snr_db: 20.0
+  stress_snr_db: 10.0
+  peak_limit: 0.98
+  filter_mode: forward_backward_offline
+  codec: none
+  augmentation: clean_plus_radio20_training_subjects_only
 presentation:
   private_audio_default: false
   private_audio_environment: ATC_NOTEBOOK_PRIVATE_MEDIA

@@ -64,7 +64,7 @@ class FigureBook:
         fig.savefig(path, dpi=self.config["figure_dpi"], bbox_inches="tight", facecolor="white")
         display(fig)
         plt.close(fig)
-        state = origin or ("FRESH" if self.mode == "FULL" else "CACHED + contoh diproses langsung")
+        state = origin or ("REAL / FRESH" if self.mode == "FULL" else "REAL / CACHED; inference dihitung ulang")
         display(Markdown(f"**Yang terlihat:** {seen}\n\n**Artinya:** {meaning}\n\n"
                          f"**Perlu diingat:** {caveat}\n\n"
                          f"*Sumber: `{self.run.manifest['run_id']}` · {state}.*"))
@@ -86,7 +86,7 @@ class FigureBook:
 def run_card(run, mode: str, primary: str) -> None:
     m = run.manifest
     state = "FRESH — ekstraksi/training di run ini" if mode == "FULL" else (
-        "CACHED — hasil FULL terverifikasi; contoh ekstraksi/inference diproses langsung"
+        "CACHED — hasil FULL terverifikasi; inference checkpoint dihitung ulang, tanpa training baru"
     )
     display(Markdown(
         f"| Identitas run | Nilai |\n| :--- | :--- |\n"

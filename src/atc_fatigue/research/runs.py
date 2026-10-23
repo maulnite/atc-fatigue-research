@@ -30,6 +30,8 @@ TASKS = {
     "ravdess_emotion_loao": ("ravdess", "emotion", "AV_recording; held-out actor", "leave_one_actor_out_exploratory"),
     "predi_covid_fatigue": ("predi_covid", "clinical_fatigue_binary", "recording; held-out participant", "subject_disjoint"),
     "cogbeacon_audit": ("cogbeacon", None, "task_session; repeated within source ID", "descriptive_event_audit"),
+    "predi_covid_radio": ("predi_covid", "clinical_fatigue_binary", "recording; held-out participant", "fixed_subject_split_channel_stress_test"),
+    "drozy_feature_ablation": ("drozy", "KSS", "original_test; held-out subject", "LOSO_fixed_feature_ablation"),
 }
 
 NO_SUPERVISION_REASONS = {"atcosim_audio": "no_fatigue_labels",
@@ -290,9 +292,11 @@ def cached_run(slug: str, config: dict, *, run_id: str | None = None) -> tuple[R
     # Compare cache labels/identity with local source metadata, when present.
     # Cached-only synthesis remains usable when raw source metadata is absent.
     features = pd.read_parquet(path / "features/features.parquet")
-    if slug == "drozy_kss":
+    if slug in {"drozy_kss", "drozy_feature_ablation"}:
         label_file = Path(config["visual"]["drozy_root"]) / "KSS.txt"
-        if label_file.exists():
+        raw_labels_allowed = (os.environ.get("ATC_NOTEBOOK_MODE") != "DEMO"
+                              or os.environ.get("ATC_NOTEBOOK_PRIVATE_MEDIA") == "1")
+        if raw_labels_allowed and label_file.exists():
             labels = np.loadtxt(label_file, ndmin=2)
             for row in features.itertuples():
                 subject, trial = map(int, row.session_id.split("-"))
@@ -304,6 +308,7 @@ def cached_run(slug: str, config: dict, *, run_id: str | None = None) -> tuple[R
                 "ravdess_emotion": ("fusion", "ravdess_manifest")}
         keys["ravdess_emotion_loao"] = ("fusion", "ravdess_manifest")
         keys["predi_covid_fatigue"] = ("additional_datasets", "predi_manifest")
+        keys["predi_covid_radio"] = ("additional_datasets", "predi_manifest")
         section, name = keys[slug]
         source = Path(config[section][name])
         if source.exists():
