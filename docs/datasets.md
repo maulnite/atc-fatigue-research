@@ -1,5 +1,8 @@
 # Dataset dan batas penggunaan
 
+**Pembaruan publikasi media — 23 Oktober 2026:** pengguna mengizinkan contoh asli untuk smoke test publik. [Galeri media](../assets/demo_media/README.md) kini menyediakan source/clean/radio Predi-COVID (CC BY4.0), tiga grafik transformasi, serta genuine paired AV/frame RAVDESS (CC BY-NC-SA4.0). Dua player audio boleh tertanam hanya jika cell dan audio bytes cocok dengan [manifest izin/checksum](../reports/notebook_v3_media_publication.json). Dataset lengkap/cache/models tetap lokal; ATCOSIM/DROZY dan media lain yang hak redistribusinya belum jelas tetap tidak dibagikan. Pernyataan lama “semua media hanya lokal” di bagian historis dibatasi oleh pengecualian terbaru ini.
+
+
 Dokumen ini memetakan peran dataset dari master handoff. Status akses, ukuran, lisensi, serta subset yang benar-benar digunakan sudah dicatat dalam **[dataset audit](../reports/dataset_audit.md)**; lihat laporan tersebut untuk temuan runtime terbaru.
 
 | Dataset | Sumber rujukan | Kegunaan | Batasan utama |

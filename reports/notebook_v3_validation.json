@@ -1,14 +1,14 @@
 {
-  "utc": "2026-10-23T11:04:03.179814+00:00",
+  "utc": "2026-10-23T11:49:00.362794+00:00",
   "notebooks": [
     {
       "path": "notebooks/v3/01_audio_analysis.ipynb",
-      "cells": 70,
+      "cells": 71,
       "code_cells": 47,
-      "outputs": 107,
+      "outputs": 112,
       "figures": 27,
       "errors": 0,
-      "source_hash": "da9c006e9fc5117b5a23b86b148f560888260237cd543325a80e76cf57ccabb7"
+      "source_hash": "9dcc33f2cc672688bbe1811ab0e46509d53ed481f24f368b376fe891b9aab63f"
     },
     {
       "path": "notebooks/v3/02_visual_analysis.ipynb",
@@ -21,12 +21,12 @@
     },
     {
       "path": "notebooks/v3/03_multimodal_fusion.ipynb",
-      "cells": 44,
+      "cells": 45,
       "code_cells": 27,
       "outputs": 80,
       "figures": 17,
       "errors": 0,
-      "source_hash": "4171619201399997ebd0f97e56d55781c62dbf8cc07b89e81b0377bfc72c1b22"
+      "source_hash": "35b9a75ac4d38ce912e3f6bfe0ea6cf21d2ad843615c2040facad9c14c189731"
     }
   ],
   "runs": [
@@ -35,7 +35,9 @@
       "run_id": "20261023T105347534495Z_seed42_49cb09",
       "target": null,
       "status": "completed",
-      "source_hash_matches_current_notebook": true,
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
       "replayed_checkpoints": 0,
       "recomputed_metrics": {},
       "unique_checkpoints": 0,
@@ -51,6 +53,8 @@
       "target": "eye_state",
       "status": "completed",
       "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
       "replayed_checkpoints": 2,
       "recomputed_metrics": {
         "dummy_majority": {
@@ -77,6 +81,8 @@
       "target": "KSS",
       "status": "completed",
       "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
       "replayed_checkpoints": 28,
       "recomputed_metrics": {
         "dummy_mean": {
@@ -102,7 +108,9 @@
       "run_id": "20261023T104859625424Z_seed42_cce30b",
       "target": "emotion",
       "status": "completed",
-      "source_hash_matches_current_notebook": true,
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
       "replayed_checkpoints": 4,
       "recomputed_metrics": {
         "audio_only": {
@@ -138,7 +146,9 @@
       "run_id": "20261023T105052302183Z_seed42_0d6280",
       "target": "emotion",
       "status": "completed",
-      "source_hash_matches_current_notebook": true,
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
       "replayed_checkpoints": 32,
       "recomputed_metrics": {
         "audio_only": {
@@ -174,7 +184,9 @@
       "run_id": "20261023T105402224766Z_seed42_880107",
       "target": "clinical_fatigue_binary",
       "status": "completed",
-      "source_hash_matches_current_notebook": true,
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
       "replayed_checkpoints": 3,
       "recomputed_metrics": {
         "dummy_majority": {
@@ -206,6 +218,8 @@
       "target": null,
       "status": "completed",
       "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
       "replayed_checkpoints": 0,
       "recomputed_metrics": {},
       "unique_checkpoints": 0,
@@ -220,7 +234,9 @@
       "run_id": "20261023T105608840284Z_seed42_0d3b34",
       "target": "clinical_fatigue_binary",
       "status": "completed",
-      "source_hash_matches_current_notebook": true,
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
       "replayed_checkpoints": 15,
       "recomputed_metrics": {
         "aug20_to_radio10__dummy_majority": {
@@ -312,6 +328,8 @@
       "target": "KSS",
       "status": "completed",
       "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
       "replayed_checkpoints": 70,
       "recomputed_metrics": {
         "blink_only": {
@@ -394,50 +412,57 @@
     "unexpected_changes": 0
   },
   "status": "passed",
+  "licensed_media_publication": {
+    "manifest": "reports/notebook_v3_media_publication.json",
+    "assets": 8,
+    "assets_bytes": 11188079,
+    "approved_audio_cells": 1,
+    "source_and_audio_checksums": "passed",
+    "publication_helper_sha256": "2bdd2cf30edd565a80acfad0c8cca5f40c44ca916719daab741f182a4871b170"
+  },
+  "publication_revision": {
+    "authorization": "explicit user revision permits public smoke-test media, subject to source licenses",
+    "prior_full_validation_commit": "fa0ba961058f5bc47bcfa1cff9b6210708b37f3a",
+    "prior_full_validation_url": "https://github.com/maulnite/atc-fatigue-research/blob/fa0ba961058f5bc47bcfa1cff9b6210708b37f3a/reports/notebook_v3_validation.json",
+    "new_training_runs": 0,
+    "scientific_code_cells_identical_to_full": true,
+    "full_source_hashes_preserved": true,
+    "markdown_and_publication_outputs_updated": true,
+    "replayed_checkpoints_unique": 145,
+    "replay_evaluations": 154
+  },
   "execution_matrix": [
     {
-      "notebook": "01_audio_analysis.ipynb",
-      "mode": "FULL",
-      "session": "20261023T105345Z_f39c54",
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "DEMO",
+      "session": "20261023T114643Z_916e3d",
       "private_media_enabled": false,
-      "raw_media_reads_denied": false,
-      "utc_started": "2026-10-23T10:53:45.322538+00:00",
-      "source_hash": "da9c006e9fc5117b5a23b86b148f560888260237cd543325a80e76cf57ccabb7",
+      "raw_media_reads_denied": true,
+      "licensed_media_published": false,
+      "utc_started": "2026-10-23T11:47:02.041842+00:00",
+      "source_hash": "11bbbae5bc02763b5bbd374fe3ae1497d2ea7b2317b143ddfd3eccdf650ce350",
       "status": "passed",
-      "seconds": 454.76628733612597,
-      "code_cells": 47,
-      "outputs": 115,
-      "png_outputs": 27,
+      "seconds": 14.442227402934805,
+      "code_cells": 42,
+      "outputs": 93,
+      "png_outputs": 25,
       "errors": 0,
       "sources_unchanged": true,
-      "fresh_runs": [
-        {
-          "experiment": "atcosim_audio",
-          "run_id": "20261023T105347534495Z_seed42_49cb09"
-        },
-        {
-          "experiment": "predi_covid_fatigue",
-          "run_id": "20261023T105402224766Z_seed42_880107"
-        },
-        {
-          "experiment": "predi_covid_radio",
-          "run_id": "20261023T105608840284Z_seed42_0d3b34"
-        }
-      ],
-      "public_png_outputs": 27,
-      "local_evidence": "runs/executions/20261023T105345Z_f39c54/execution.json",
-      "acceptance_mode": "FULL"
+      "fresh_runs": [],
+      "public_png_outputs": 25,
+      "local_evidence": "runs/executions/20261023T114643Z_916e3d/execution.json"
     },
     {
       "notebook": "01_audio_analysis.ipynb",
       "mode": "DEMO",
-      "session": "20261023T110304Z_17d926",
+      "session": "20261023T114643Z_916e3d",
       "private_media_enabled": false,
       "raw_media_reads_denied": true,
-      "utc_started": "2026-10-23T11:03:04.789532+00:00",
-      "source_hash": "da9c006e9fc5117b5a23b86b148f560888260237cd543325a80e76cf57ccabb7",
+      "licensed_media_published": false,
+      "utc_started": "2026-10-23T11:46:43.724086+00:00",
+      "source_hash": "9dcc33f2cc672688bbe1811ab0e46509d53ed481f24f368b376fe891b9aab63f",
       "status": "passed",
-      "seconds": 16.76578264310956,
+      "seconds": 18.216829766053706,
       "code_cells": 47,
       "outputs": 107,
       "png_outputs": 27,
@@ -445,19 +470,39 @@
       "sources_unchanged": true,
       "fresh_runs": [],
       "public_png_outputs": 27,
-      "local_evidence": "runs/executions/20261023T110304Z_17d926/execution.json",
-      "acceptance_mode": "DEMO_PUBLIC_NO_RAW"
+      "local_evidence": "runs/executions/20261023T114643Z_916e3d/execution.json"
+    },
+    {
+      "notebook": "03_multimodal_fusion.ipynb",
+      "mode": "DEMO",
+      "session": "20261023T114643Z_916e3d",
+      "private_media_enabled": false,
+      "raw_media_reads_denied": true,
+      "licensed_media_published": false,
+      "utc_started": "2026-10-23T11:47:16.563040+00:00",
+      "source_hash": "35b9a75ac4d38ce912e3f6bfe0ea6cf21d2ad843615c2040facad9c14c189731",
+      "status": "passed",
+      "seconds": 14.268237926065922,
+      "code_cells": 27,
+      "outputs": 80,
+      "png_outputs": 17,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [],
+      "public_png_outputs": 17,
+      "local_evidence": "runs/executions/20261023T114643Z_916e3d/execution.json"
     },
     {
       "notebook": "01_audio_analysis.ipynb",
       "mode": "DEMO",
-      "session": "20261023T110207Z_d3b949",
+      "session": "20261023T114833Z_6e9ad1",
       "private_media_enabled": true,
       "raw_media_reads_denied": false,
-      "utc_started": "2026-10-23T11:02:07.923805+00:00",
-      "source_hash": "da9c006e9fc5117b5a23b86b148f560888260237cd543325a80e76cf57ccabb7",
+      "licensed_media_published": true,
+      "utc_started": "2026-10-23T11:48:33.131443+00:00",
+      "source_hash": "9dcc33f2cc672688bbe1811ab0e46509d53ed481f24f368b376fe891b9aab63f",
       "status": "passed",
-      "seconds": 21.948030858999118,
+      "seconds": 22.239864060888067,
       "code_cells": 47,
       "outputs": 117,
       "png_outputs": 33,
@@ -465,219 +510,40 @@
       "sources_unchanged": true,
       "fresh_runs": [],
       "public_png_outputs": 27,
-      "local_evidence": "runs/executions/20261023T110207Z_d3b949/execution.json",
-      "acceptance_mode": "DEMO_PRIVATE"
-    },
-    {
-      "notebook": "02_visual_analysis.ipynb",
-      "mode": "FULL",
-      "session": "20261023T105345Z_f39c54",
-      "private_media_enabled": false,
-      "raw_media_reads_denied": false,
-      "utc_started": "2026-10-23T11:01:20.263443+00:00",
-      "source_hash": "11bbbae5bc02763b5bbd374fe3ae1497d2ea7b2317b143ddfd3eccdf650ce350",
-      "status": "passed",
-      "seconds": 65.40735004213639,
-      "code_cells": 42,
-      "outputs": 93,
-      "png_outputs": 25,
-      "errors": 0,
-      "sources_unchanged": true,
-      "fresh_runs": [
-        {
-          "experiment": "cogbeacon_audit",
-          "run_id": "20261023T110223847434Z_seed42_d2fddb"
-        },
-        {
-          "experiment": "drozy_feature_ablation",
-          "run_id": "20261023T110208961056Z_seed42_d8ef0c"
-        },
-        {
-          "experiment": "drozy_kss",
-          "run_id": "20261023T110137480062Z_seed42_566711"
-        },
-        {
-          "experiment": "mrl_eye_state",
-          "run_id": "20261023T110123270660Z_seed42_29f903"
-        }
-      ],
-      "public_png_outputs": 25,
-      "local_evidence": "runs/executions/20261023T105345Z_f39c54/execution.json",
-      "acceptance_mode": "FULL"
-    },
-    {
-      "notebook": "02_visual_analysis.ipynb",
-      "mode": "DEMO",
-      "session": "20261023T110304Z_17d926",
-      "private_media_enabled": false,
-      "raw_media_reads_denied": true,
-      "utc_started": "2026-10-23T11:03:21.657831+00:00",
-      "source_hash": "11bbbae5bc02763b5bbd374fe3ae1497d2ea7b2317b143ddfd3eccdf650ce350",
-      "status": "passed",
-      "seconds": 13.45031390315853,
-      "code_cells": 42,
-      "outputs": 93,
-      "png_outputs": 25,
-      "errors": 0,
-      "sources_unchanged": true,
-      "fresh_runs": [],
-      "public_png_outputs": 25,
-      "local_evidence": "runs/executions/20261023T110304Z_17d926/execution.json",
-      "acceptance_mode": "DEMO_PUBLIC_NO_RAW"
-    },
-    {
-      "notebook": "02_visual_analysis.ipynb",
-      "mode": "DEMO",
-      "session": "20261023T110242Z_00c82a",
-      "private_media_enabled": true,
-      "raw_media_reads_denied": false,
-      "utc_started": "2026-10-23T11:02:42.101483+00:00",
-      "source_hash": "11bbbae5bc02763b5bbd374fe3ae1497d2ea7b2317b143ddfd3eccdf650ce350",
-      "status": "passed",
-      "seconds": 17.02862249687314,
-      "code_cells": 42,
-      "outputs": 97,
-      "png_outputs": 28,
-      "errors": 0,
-      "sources_unchanged": true,
-      "fresh_runs": [],
-      "public_png_outputs": 25,
-      "local_evidence": "runs/executions/20261023T110242Z_00c82a/execution.json",
-      "acceptance_mode": "DEMO_PRIVATE"
-    },
-    {
-      "notebook": "03_multimodal_fusion.ipynb",
-      "mode": "FULL",
-      "session": "20261023T104016Z_c442b7",
-      "private_media_enabled": false,
-      "raw_media_reads_denied": false,
-      "utc_started": "2026-10-23T10:48:57.230924+00:00",
-      "source_hash": "4171619201399997ebd0f97e56d55781c62dbf8cc07b89e81b0377bfc72c1b22",
-      "status": "passed",
-      "seconds": 122.29374336707406,
-      "code_cells": 27,
-      "outputs": 84,
-      "png_outputs": 17,
-      "errors": 0,
-      "sources_unchanged": true,
-      "fresh_runs": [
-        {
-          "experiment": "ravdess_emotion",
-          "run_id": "20261023T104859625424Z_seed42_cce30b"
-        },
-        {
-          "experiment": "ravdess_emotion_loao",
-          "run_id": "20261023T105052302183Z_seed42_0d6280"
-        }
-      ],
-      "public_png_outputs": 17,
-      "local_evidence": "runs/executions/20261023T104016Z_c442b7/execution.json",
-      "acceptance_mode": "FULL"
-    },
-    {
-      "notebook": "03_multimodal_fusion.ipynb",
-      "mode": "DEMO",
-      "session": "20261023T110304Z_17d926",
-      "private_media_enabled": false,
-      "raw_media_reads_denied": true,
-      "utc_started": "2026-10-23T11:03:35.184042+00:00",
-      "source_hash": "4171619201399997ebd0f97e56d55781c62dbf8cc07b89e81b0377bfc72c1b22",
-      "status": "passed",
-      "seconds": 13.311727891908959,
-      "code_cells": 27,
-      "outputs": 80,
-      "png_outputs": 17,
-      "errors": 0,
-      "sources_unchanged": true,
-      "fresh_runs": [],
-      "public_png_outputs": 17,
-      "local_evidence": "runs/executions/20261023T110304Z_17d926/execution.json",
-      "acceptance_mode": "DEMO_PUBLIC_NO_RAW"
-    },
-    {
-      "notebook": "03_multimodal_fusion.ipynb",
-      "mode": "DEMO",
-      "session": "20261023T105152Z_31224c",
-      "private_media_enabled": true,
-      "raw_media_reads_denied": false,
-      "utc_started": "2026-10-23T10:52:09.027934+00:00",
-      "source_hash": "4171619201399997ebd0f97e56d55781c62dbf8cc07b89e81b0377bfc72c1b22",
-      "status": "passed",
-      "seconds": 16.42276589293033,
-      "code_cells": 27,
-      "outputs": 80,
-      "png_outputs": 17,
-      "errors": 0,
-      "sources_unchanged": true,
-      "fresh_runs": [],
-      "public_png_outputs": 17,
-      "local_evidence": "runs/executions/20261023T105152Z_31224c/execution.json",
-      "acceptance_mode": "DEMO_PRIVATE"
+      "local_evidence": "runs/executions/20261023T114833Z_6e9ad1/execution.json"
     }
   ],
   "engineering_checks": {
-    "pytest_passed": 79,
+    "pytest_passed": 82,
     "pytest_warnings": 14,
-    "pytest_warning_kind": "pre-existing Matplotlib/Pyparsing deprecations",
+    "warning_kind": "existing Matplotlib/Pyparsing deprecations",
     "ruff": "passed",
-    "pip_check": "No broken requirements found",
-    "gpu_training": false,
+    "pip_check": "passed",
+    "downloads_added": 0,
     "shared_environment_changed": false,
-    "downloads_added": 0
-  },
-  "visual_review": {
-    "status": "passed",
-    "public_figures_reviewed": 69,
-    "private_figures_reviewed_local": 9,
-    "checks": [
-      "readable fonts",
-      "axis labels/units",
-      "legend/colorbar placement",
-      "no overlapping text",
-      "honest shared before/after scales",
-      "source and interpretation captions"
-    ],
-    "prior_public_images_unchanged": 85,
-    "retained_topics": {
-      "prior_public_topics": 50,
-      "current_public_topics": 69,
-      "retained_prior_topics": 50,
-      "missing": []
-    }
+    "gpu_training": false
   },
   "privacy": {
-    "embedded_audio_video_in_public": 0,
-    "private_media_outputs_in_public": 0,
-    "private_filesystem_paths_in_public": 0,
-    "raw_media_reads_denied_in_all_three_public_demo_kernels": true,
-    "local_players": {
-      "execution": "20261023T110207Z_d3b949",
-      "players": 2,
-      "one_source_recording": true,
-      "all_private_tagged": true
-    },
-    "private_figures_not_published": 9
+    "approved_embedded_audio_players": 2,
+    "approved_notebook_audio_cells": 1,
+    "other_private_media_outputs_public": 0,
+    "restricted_raw_media_assets": 0,
+    "approved_public_assets": 8,
+    "approved_public_bytes": 11188079,
+    "private_filesystem_paths_public": 0,
+    "raw_source_denied_demo_all_three_notebooks": true
   },
-  "unique_active_checkpoints": 145,
-  "replay_evaluations": 154,
-  "dataset_status": {
-    "predi_covid": "existing approved207recording/120participant subset; native clinical fatigue/unwell labels; no new download",
-    "cogbeacon": "full descriptive audit repeated; frame/window supervised fatigue labels remain blocked",
-    "atc_paired_fatigue": "not available; no performance claims"
+  "visual_review": {
+    "licensed_figures_reviewed": 3,
+    "licensed_frame_reviewed": 1,
+    "status": "passed",
+    "checks": [
+      "shared before/after amplitude scale",
+      "shared STFT reference/color scale",
+      "readable axes/units",
+      "genuine AV frame",
+      "source/credit/license checked"
+    ]
   },
-  "publication_figure_inventory": "reports/notebook_v3_public_figures.json",
-  "local_read_only_qa_evidence": "runs/qa/20261023T110416Z_validation.json",
-  "integration_failure": {
-    "session": "20261023T105128Z_a6cd4f",
-    "error": "NameError: private PSD cell preceded Predi-COVID definition",
-    "resolution": "reordered cell, reran final FULL and both DEMO modes successfully; failed local evidence preserved"
-  },
-  "reproducibility": {
-    "historical_metrics_reproduced": true,
-    "source_hashes_match": true,
-    "split_subject_overlap": 0,
-    "preprocessing_medians_means_variances_verified_against_train_only": true,
-    "radio_retransformation_signal_sha256_and114features_reproduced": true,
-    "score_rankings_replayed_from_checkpoints": true
-  }
+  "local_read_only_qa_evidence": "runs/qa/20261023T114914Z_validation.json"
 }

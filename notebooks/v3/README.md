@@ -1,5 +1,8 @@
 # Tiga notebook riset untuk presentasi
 
+**Pembaruan publikasi media — 23 Oktober 2026:** pengguna mengizinkan contoh asli untuk smoke test publik. [Galeri media](../../assets/demo_media/README.md) kini menyediakan source/clean/radio Predi-COVID (CC BY4.0), tiga grafik transformasi, serta genuine paired AV/frame RAVDESS (CC BY-NC-SA4.0). Dua player audio boleh tertanam hanya jika cell dan audio bytes cocok dengan [manifest izin/checksum](../../reports/notebook_v3_media_publication.json). Dataset lengkap/cache/models tetap lokal; ATCOSIM/DROZY dan media lain yang hak redistribusinya belum jelas tetap tidak dibagikan. Pernyataan lama “semua media hanya lokal” di bagian historis dibatasi oleh pengecualian terbaru ini.
+
+
 Versi v3 menampilkan proses riset dari data mentah sampai hasil eksperimen. **Performa multimodal fatigue ATC belum diukur.** Skor MRL, DROZY, RAVDESS dan Predi-COVID memiliki target serta satuan berbeda; CogBeacon masih analisis event deskriptif.
 
 | Urutan | Notebook utama | Proses yang dapat diperiksa | Visual utama |
@@ -108,3 +111,14 @@ Subject split dibekukan **sebelum** augmentation. Hanya training129 recording me
 **Fusion walkthrough:** satu genuine AV test recording deterministik →114 audio +3528 HOG +2 masks =3644 fitur aktual → tiga prediksi checkpoint → ground truth. Minimal satu kegagalan ditampilkan bila ada. Early fusion berarti feature concatenation sebelum classifier; late fusion menggabungkan keputusan setelah classifier, belum menjadi eksperimen utama ini.
 
 Gunakan `--private-media` hanya pada sesi lokal yang sah. File `.ipynb` dari Jupyter privat dapat memuat embedded audio; jalankan runner untuk ekspor publik. Runner menghapus semua output cell privat dan juga audio/video MIME atau HTML player yang tidak sengaja tidak diberi tag. Pemeriksaan publik terpisah menolak media, private paths, dan error outputs. Evidence asli tidak dihapus.
+
+
+Untuk mereproduksi dua embedded player publik yang telah diizinkan:
+
+```bash
+.venv/bin/python scripts/13_prepare_public_demo_media.py
+.venv/bin/python scripts/10_execute_notebook_v3.py --mode DEMO --private-media \
+  --publish-licensed-media --notebook 01_audio_analysis.ipynb
+```
+
+Tidak ada training/download baru. Hanya cell audio dan bytes yang tepat pada manifest yang dipertahankan; private plots lain tetap disanitasi. Renderer GitHub dapat menyembunyikan HTML player: file WAV/MP4 pada galeri selalu dapat diunduh. Perubahan Markdown tidak memerlukan training ulang: QA membandingkan seluruh code cells dengan salinan FULL asli dan menolak setiap perubahan kode ilmiah. Source hash FULL lama tetap dicatat; DEMO baru menyimpan source hash presentasi terkini.

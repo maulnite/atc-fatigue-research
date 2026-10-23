@@ -141,5 +141,19 @@
       }
     ],
     "verified_run_id": "20261022T133828759667Z_seed42_6cfc97"
+  },
+  "publication_update_2026_10_23": {
+    "authorization": "user explicitly allows licensed public smoke-test examples",
+    "manifest": "reports/notebook_v3_media_publication.json",
+    "approved": [
+      "one Predi-COVID source and clean/radio derivatives, CC BY4.0",
+      "one RAVDESS AV and extracted frame, CC BY-NC-SA4.0"
+    ],
+    "excluded": [
+      "ATCOSIM: third-party redistribution prohibited",
+      "DROZY: prior written approval required",
+      "MRL/CogBeacon: biometric redistribution grant not verified"
+    ],
+    "training_and_dataset_access_unchanged": true
   }
 }

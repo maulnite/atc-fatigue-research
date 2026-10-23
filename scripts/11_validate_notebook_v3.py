@@ -27,6 +27,9 @@ from atc_fatigue.research.runs import (  # noqa: E402
     TASKS, cached_run, notebook_source_hash, project_config,
 )
 from atc_fatigue.research.representations import binary_ranking_metrics, positive_class_score  # noqa: E402
+from atc_fatigue.research.publication import (  # noqa: E402
+    POLICY, approved_audio_cell, publication_policy, verify_presentation_only_change,
+)
 from atc_fatigue.utils.runtime import checksum, write_json  # noqa: E402
 
 
@@ -37,6 +40,7 @@ def main():
     config = project_config()
     report = {"utc": datetime.now(timezone.utc).isoformat(), "notebooks": [], "runs": [],
               "privacy_scope": "new v3 notebooks and figures; legacy notebooks preserved"}
+    policy = publication_policy() if POLICY.exists() else None
     paths = sorted(Path("notebooks/v3").glob("*.ipynb"))
     assert len(paths) == 3, "Exactly three main notebooks required"
     for path in paths:
@@ -46,7 +50,8 @@ def main():
         assert all(c.execution_count is not None for c in cells)
         figures, outputs = 0, 0
         for cell in cells:
-            if "private-media" in cell.metadata.get("tags", []):
+            approved = bool(policy and approved_audio_cell(cell, path.name, policy))
+            if "private-media" in cell.metadata.get("tags", []) and not approved:
                 assert all(not o.get("data") for o in cell.outputs), "Private media in public notebook"
             for output in cell.outputs:
                 outputs += 1
@@ -63,7 +68,8 @@ def main():
                             assert any(high > low for low, high in image.convert("RGB").getextrema())
                         figures += 1
                     elif isinstance(payload, str):
-                        assert not re.search(r"<(audio|video|iframe|script)\b", payload, re.I)
+                        assert not re.search(r"<(video|iframe|script)\b", payload, re.I)
+                        assert approved or not re.search(r"<audio\b", payload, re.I)
                         assert str(ROOT) not in payload
         report["notebooks"].append({"path": str(path), "cells": len(notebook.cells),
                                     "code_cells": len(cells), "outputs": outputs, "figures": figures,
@@ -75,7 +81,11 @@ def main():
             continue
         run, metrics = cached_run(slug, config)
         notebook = nbformat.read(Path("notebooks/v3") / run.manifest["notebook_name"], as_version=4)
-        assert notebook_source_hash(notebook) == run.manifest["notebook_source_hash"]
+        exact_source = notebook_source_hash(notebook) == run.manifest["notebook_source_hash"]
+        if not exact_source:
+            frozen_path = run.path / 'executed_notebooks' / f'{Path(run.manifest["notebook_name"]).stem}__{run.manifest["run_id"]}.ipynb'
+            frozen = nbformat.read(frozen_path, as_version=4)
+            verify_presentation_only_change(notebook, frozen, run.manifest["notebook_source_hash"])
         for path, expected in run.manifest["source_code_checksums"].items():
             assert checksum(Path(path)) == expected, f"Current code differs from executed code: {path}"
         split_path = run.path / "split_manifest.csv"
@@ -197,7 +207,9 @@ def main():
                 assert min(image.size) > 250
         report["runs"].append({"experiment": slug, "run_id": run.manifest["run_id"],
                                "target": metrics["target"], "status": run.manifest["status"],
-                               "source_hash_matches_current_notebook": True,
+                               "source_hash_matches_current_notebook": exact_source,
+                               "scientific_code_matches_full_execution": True,
+                               "markdown_only_publication_update": not exact_source,
                                "replayed_checkpoints": replayed, "recomputed_metrics": compared,
                                "unique_checkpoints": len(list((run.path / "models").glob("*.joblib"))),
                                "figures": len(inventory), "captions_complete": True,
@@ -240,6 +252,14 @@ def main():
     else:
         report["legacy"] = {"status": "original local preflight snapshot unavailable on this checkout"}
     report["status"] = "passed"
+    if policy:
+        report['licensed_media_publication'] = {
+            'manifest': str(POLICY), 'assets': len(policy['assets']),
+            'assets_bytes': sum(row['bytes'] for row in policy['assets']),
+            'approved_audio_cells': len(policy['notebook_audio_cells']),
+            'source_and_audio_checksums': 'passed',
+            'publication_helper_sha256': checksum('src/atc_fatigue/research/publication.py'),
+        }
     output = args.output or Path("runs/qa") / (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_validation.json")
     if output.exists():
         raise FileExistsError("Preserve prior audit evidence; select a new output path")

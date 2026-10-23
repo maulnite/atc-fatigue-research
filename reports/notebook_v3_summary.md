@@ -1,3 +1,28 @@
+# Pembaruan publikasi media berizin — 23 Oktober 2026
+
+Pengguna telah merevisi preferensi sebelumnya dan mengizinkan repo publik memuat contoh media smoke test.
+[Galeri media asli](../assets/demo_media/README.md) kini memuat delapan asset kecil (total 11.188.079 byte, sekitar 10,67 MiB):
+source WAV Predi-COVID yang isinya tidak diubah, clean mono 16 kHz, radio20 dari recording yang sama, tiga grafik waveform/STFT/PSD,
+serta satu genuine paired AV RAVDESS beserta frame JPEG sekitar 0,5 detik.
+Pemilihan tetap recording test pertama menurut sample ID, identik dengan demo sebelumnya, bukan berdasarkan skor terbaik.
+
+**Predi-COVID:** CC BY4.0; kredit Abir Elbéji et al.(2022),[sumber](https://doi.org/10.5281/zenodo.5937844).
+**RAVDESS:** CC BY-NC-SA4.0; kredit Steven R. Livingstone dan Frank A. Russo(2018),[sumber](https://doi.org/10.5281/zenodo.1188976).
+Source, perubahan, license per asset,checksum dan run ID tercatat dalam [manifest publikasi](notebook_v3_media_publication.json).
+Dua player Predi-COVID yang bytes-nya cocok whitelist boleh tertanam pada notebook audio. File WAV/MP4 menyediakan fallback download jika renderer GitHub menyembunyikan HTML player.
+
+Raw ATCOSIM tetap tidak dipublikasikan: [technical report](https://www2.spsc.tugraz.at/databases/ATCOSIM/DOC/atcosim_report.pdf) melarang redistribusi kepada pihak ketiga.
+Raw/gambar DROZY memerlukan [izin tertulis dan ketentuan penampilan](https://orbi.uliege.be/bitstream/2268/191620/5/DROZY-LicenseAgreement-20180718.pdf).
+Hak redistribusi media MRL/CogBeacon belum terverifikasi. Izin pengguna atas repo tidak mengubah ketentuan pemilik dataset tersebut.
+
+**Tidak ada training atau download dataset baru.** Semua code cells penelitian pada ketiga notebook identik dengan versi FULL sebelumnya;
+perubahan notebook hanya Markdown/publikasi output. Source hash FULL lama tetap dicatat, sedangkan source hash DEMO terbaru mencakup Markdown yang diperbarui.
+QA memverifikasi original FULL source hash, exact scientific code identity, preprocessing train-only, 145 checkpoint / 154 replays, asset checksums dan whitelist audio bytes.
+82 tests lulus, termasuk penolakan payload/audio/kode tidak sesuai whitelist. Mode DEMO tanpa raw source tetap diuji pada ketiga notebook.
+Kebijakan blanket "semua media hanya lokal" dalam laporan historis di bawah kini mempunyai pengecualian spesifik ini; seluruh skor, model dan completed runs tetap dipertahankan.
+
+---
+
 # Notebook-first v3 — three-track feasibility dan input model transparan
 
 Pembaruan **23 Oktober 2026 UTC**, branch `feat/notebook-first-v3`, [PR #1](https://github.com/maulnite/atc-fatigue-research/pull/1).

@@ -38,8 +38,9 @@
 ## Git dan data
 
 - Gunakan `gh-orie` untuk operasi GitHub, dengan akun `maulnite`; jangan gunakan `gh` default.
-- Jangan memasukkan token, rekaman biometrik, dataset, cache fitur, atau model ke Git.
-- Pengguna telah meminta notebook demo beserta outputnya diunggah ke GitHub untuk tim. Pertahankan output tabel/grafik/preview fitur yang sudah ditinjau; jangan mengosongkan output secara otomatis. Ketentuan ini tidak mengizinkan token, media mentah, atau dump dataset/cache penuh ikut Git.
+- Jangan memasukkan token, dataset/cache fitur penuh, model, atau media yang tidak memiliki hak redistribusi ke Git.
+- Revisi eksplisit pengguna: contoh media asli untuk smoke test publik diizinkan. Pengecualian terbatas pada manifest `reports/notebook_v3_media_publication.json`: contoh Predi-COVID CC BY4.0 dan RAVDESS CC BY-NC-SA4.0, beserta atribusi, perubahan dan checksum. Izin pengguna tidak mengubah batas redistribusi ATCOSIM/DROZY atau lisensi lain yang belum jelas.
+- Pengguna telah meminta notebook demo beserta outputnya diunggah ke GitHub untuk tim. Pertahankan output tabel/grafik/preview fitur yang sudah ditinjau; jangan mengosongkan output secara otomatis. Token dan dump dataset/cache penuh tetap dilarang. Media contoh hanya diizinkan sesuai pengecualian yang telah ditinjau di atas.
 - Jangan mengubah atau menghapus pekerjaan kontributor lain tanpa izin.
 - Jangan force-push, menghapus repo, atau mengubah pengaturan keamanan tanpa persetujuan.
 - Jangan membuat lisensi proyek atau membagikan data terbatas tanpa keputusan pemilik.

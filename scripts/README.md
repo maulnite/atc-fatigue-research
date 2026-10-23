@@ -9,3 +9,5 @@ Gunakan Python `.venv` dari root proyek. Setiap script memiliki `--help`; parame
 `08_engineering_audit.py` memprofilkan artefak lokal dan membuat QC audio agregat. Gunakan `--output` baru untuk setiap pass; run canonical tidak ditimpa. Ini bukan pengukuran real-time atau studi cold-start.
 
 `09_execute_demo.py` menjalankan notebook 00–04 yang sudah ada, mempertahankan isi cell, membuat backup, dan menyimpan output langsung pada notebook lokal. Gunakan runner ini untuk melihat hasil di folder `notebooks/`; generator 07 membuat ulang source dan tidak mempertahankan edit lokal.
+
+`13_prepare_public_demo_media.py` membuat contoh berizin dari data lokal yang sudah ada, tanpa download/training. `10_execute_notebook_v3.py --mode DEMO --private-media --publish-licensed-media --notebook 01_audio_analysis.ipynb` mempertahankan dua player yang code hash/audio bytes-nya cocok manifest publikasi; media privat lain tetap dihapus pada salinan publik.

@@ -27,13 +27,28 @@ from atc_fatigue.research.runs import notebook_source_hash as source_hash  # noq
 NAMES = ["01_audio_analysis.ipynb", "02_visual_analysis.ipynb", "03_multimodal_fusion.ipynb"]
 
 
-def publication_copy(notebook):
+def publication_copy(notebook, *, notebook_name=None, publish_licensed_media=False):
     """Redact machine-specific paths in a copy; retain original execution evidence locally."""
     import copy
 
     public = copy.deepcopy(notebook)
+    from atc_fatigue.research.publication import approved_audio_cell, publication_policy
+
+    policy = publication_policy() if publish_licensed_media else None
+    approved_cells = 0
     for cell in public.cells:
         if cell.cell_type != "code":
+            continue
+        approved = bool(policy and approved_audio_cell(cell, notebook_name, policy))
+        if approved:
+            approved_cells += 1
+            cell.outputs.insert(0, nbformat.v4.new_output("display_data", data={"text/markdown":
+                "**Contoh audio publik berizin — Predi-COVID, CC BY 4.0.** "
+                "Kedua player berasal dari recording yang sama. Kredit: Abir Elbéji et al.; "
+                "[sumber](https://zenodo.org/records/5937844) · "
+                "[lisensi](https://creativecommons.org/licenses/by/4.0/) · "
+                "[file dan atribusi](../../assets/demo_media/README.md). "
+                "Clean telah diubah ke mono16kHz; versi radio memakai transformasi terkontrol."}))
             continue
         if "private-media" in cell.metadata.get("tags", []):
             cell.outputs = [nbformat.v4.new_output(
@@ -51,6 +66,10 @@ def publication_copy(notebook):
             if output.output_type == "stream":
                 output.text = output.text.replace(str(ROOT), "[proyek]")
                 output.text = re.sub(r"/home/[^/\s]+/", "[home]/", output.text)
+    if policy:
+        expected = sum(row['notebook'] == notebook_name for row in policy['notebook_audio_cells'])
+        if approved_cells != expected:
+            raise ValueError('Required licensed audio examples were not produced')
     return public
 
 
@@ -62,9 +81,13 @@ def main():
                         help="Enable authorized local media previews/playback; strip them from public copies")
     parser.add_argument("--deny-raw-media", action="store_true",
                         help="DEMO acceptance: deny every open/decode under data/raw in the kernel")
+    parser.add_argument("--publish-licensed-media", action="store_true",
+                        help="Keep only reviewed, checksum-verified CC BY audio examples in public outputs")
     args = parser.parse_args()
     if args.deny_raw_media and (args.mode != "DEMO" or args.private_media):
         parser.error("--deny-raw-media requires public DEMO without --private-media")
+    if args.publish_licensed_media and not args.private_media:
+        parser.error("--publish-licensed-media requires --private-media to compute the reviewed source example")
     session = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid.uuid4().hex[:6]
     os.environ["ATC_NOTEBOOK_MODE"] = args.mode
     os.environ["ATC_NOTEBOOK_SESSION"] = session
@@ -86,6 +109,7 @@ def main():
         result = {"notebook": name, "mode": args.mode, "session": session,
                   "private_media_enabled": args.private_media,
                   "raw_media_reads_denied": args.deny_raw_media,
+                  "licensed_media_published": args.publish_licensed_media,
                   "utc_started": datetime.now(timezone.utc).isoformat(), "source_hash": digest}
         try:
             client = NotebookClient(source, timeout=1200, kernel_name="atc-fatigue",
@@ -126,7 +150,8 @@ def main():
                 payload["history"].append({"session": session, "runs": current_runs})
                 write_json(registry, payload)
             # Source cells and exact executed outputs are already preserved in local evidence.
-            public = publication_copy(source)
+            public = publication_copy(source, notebook_name=name,
+                                      publish_licensed_media=args.publish_licensed_media)
             result["public_png_outputs"] = sum("image/png" in o.get("data", {})
                 for c in public.cells if c.cell_type == "code" for o in c.outputs)
             nbformat.write(public, path)
