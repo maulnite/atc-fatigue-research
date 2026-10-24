@@ -1,0 +1,84 @@
+{
+  "historical_cells_unchanged": 84,
+  "appended_cells": 35,
+  "fresh_kernel_scope": "new UTA suffix only; historical prefix never executed",
+  "historical_notebook_metadata_unchanged": true,
+  "notebook_sha256": "dada761aab3d175ea3578f29222e847d2a1e306f50baf3a56847c1c71fc98b3b",
+  "source_output_consistent": true,
+  "errors": 0,
+  "protected_historical_files_unchanged": 5895,
+  "new_uta_media_committed": false,
+  "run_id": "20261024T181239217688Z",
+  "metrics_sha256": "638588851ce01c8e196f519284c238c38a87b7bd820841432fc91aa8ca7285d0",
+  "all_original_cell_objects_equal": true,
+  "training_code_unchanged": true,
+  "source_video_sha256_verified": 72,
+  "source_video_duplicates": 0,
+  "prepared_recording_sha256_verified": 72,
+  "completed_model_stages_verified": 3,
+  "metrics_recomputed_from_actual_predictions": true,
+  "same_test_population_all_models": true,
+  "participant_overlap": 0,
+  "public_figures_sha256": {
+    "reports/figures/uta_pretrained/temporal_sampling.png": "262663c5d5dce4e6d2fda6667c0da6935b63e62c0e8fdd21d67b37abd9ee2914",
+    "reports/figures/uta_pretrained/fold_and_class_performance.png": "ffc98e8b5ef3f8def352d6affd080ef922e658637960064630bad3367a67decc",
+    "reports/figures/uta_pretrained/learning_curves.png": "73d88a717bc285ae3281f17623bbb091aabbf43a47ef43b48c340804a7079637",
+    "reports/figures/uta_pretrained/confusion_matrices.png": "3ac395c91e3e6eda01f4551a9a40b52ec24bf8356945f138f2c30a6033b12e93",
+    "reports/figures/uta_pretrained/participant_errors.png": "9b242a3be5c53cf50ebdff8e3b44764c4777edb84c5694bad0692d287ab87cfc",
+    "reports/figures/uta_pretrained/model_comparison.png": "e8da45c0a9322bfd6e0eaf054fe59a428a55842a70a713e4ad87af60020fe1c9",
+    "reports/figures/uta_pretrained/architectures.png": "159f2132b743feba08f8b093290a74ee53bb5c150f4f6a91c4de624efad2a7f5",
+    "reports/figures/uta_pretrained/complexity_vs_performance.png": "1075105f9ec0b94767482a039bcd6b54cb662bf42656cb756485ea6f209c0aaa"
+  },
+  "reviewed_figures_embedded_exactly": 8,
+  "source_matches_fresh_kernel_execution": true,
+  "new_uta_media_mime_outputs": 0,
+  "new_uta_private_paths": 0,
+  "tests": {
+    "passed": 105,
+    "failures": 0,
+    "errors": 0,
+    "warnings": 14,
+    "junit_sha256": "944169c5586269131754a7ad0196682514cb4548ba200a90e86491432f9827ea"
+  },
+  "ruff": "PASS \u2014 entire src/tests/scripts",
+  "dependency_checks": {
+    "project_private_venv": "PASS",
+    "isolated_torch_worker": "PASS",
+    "shared_dependencies_replaced": false
+  },
+  "visual_review": {
+    "reviewed_figures": 8,
+    "checked": [
+      "font readability",
+      "axis labels and units",
+      "legends",
+      "colorbars",
+      "text overlap",
+      "honest scales",
+      "PILOT scope",
+      "no biometric imagery"
+    ],
+    "refinements": [
+      "value labels above confidence intervals",
+      "shared count color scale",
+      "explicit single-split tick labels",
+      "purple visual palette",
+      "readable participant IDs",
+      "architecture box margins"
+    ]
+  },
+  "full_benchmark_status": "NOT RUN \u2014 DATA UNAVAILABLE; six official Google Drive archives return Quota exceeded",
+  "completed_execution_scope": "Three-model participant-disjoint real-video engineering pilot; 12 train /6 validation /6 test participants",
+  "completed_stage_resume": "PASS \u2014 three stages skipped; checkpoint/history/prediction hashes unchanged",
+  "model_training_seconds_total": 178.38674494970002,
+  "actual_checkpoint_freezing": {
+    "A_frozen_backbone_tensors_verified": 120,
+    "A_legacy_checkpoint_default_zero_batch_counters": 20,
+    "B_backbone_tensors_changed": 15,
+    "B_all_changes_restricted_to_layer4": true,
+    "B_earlier_backbone_tensors_unchanged": 90,
+    "B_BN_running_statistics_unchanged": 60,
+    "C_frozen_backbone_tensors_verified": 561,
+    "C_legacy_checkpoint_default_zero_batch_counters": 0
+  }
+}

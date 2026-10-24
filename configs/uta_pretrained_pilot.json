@@ -1,0 +1,97 @@
+{
+  "protocol": "uta-pretrained-engineering-pilot-incomplete-source-v1",
+  "models": [
+    "frozen_resnet18",
+    "finetuned_resnet18",
+    "x3d_xs"
+  ],
+  "seed": 42,
+  "data_root": "data/raw/uta_rldd/videos",
+  "worker_python": ".cache/uta-runtime/bin/python",
+  "asset_lock": "reports/uta_pretrained_assets.json",
+  "device": "cuda:0",
+  "gpu_memory_fraction": 0.1,
+  "threads": 4,
+  "sampling": {
+    "clips_per_recording": 12,
+    "clip_seconds": 1.6,
+    "frames_per_clip": 4,
+    "face_size": 256,
+    "face_detection_score": 0.85,
+    "face_margin": 1.3,
+    "max_native_gap_seconds": 0.25,
+    "minimum_usable_clips": 3,
+    "require_early_middle_late": true
+  },
+  "training": {
+    "hidden_channels": 64,
+    "dropout": 0.25,
+    "head_learning_rate": 0.001,
+    "backbone_learning_rate": 1e-05,
+    "finetune_head_learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "max_epochs": 30,
+    "finetune_max_epochs": 20,
+    "patience": 5,
+    "minimum_epochs": 5,
+    "augmented_training_views": 2,
+    "gradient_accumulation_videos": 4,
+    "mixed_precision": true,
+    "initial_loss_scale": 1024.0
+  },
+  "evaluation": {
+    "outer_folds": [
+      2
+    ],
+    "inner_validation": "PILOT: six smallest official-fold2 IDs validation, remaining six test; official-fold1 train",
+    "unit": "original participant-condition recording; fragmented files aggregated",
+    "aggregation": "equal mean valid-clip logits, one cross entropy per recording",
+    "label_codes": [
+      0,
+      5,
+      10
+    ],
+    "primary_metric": "macro_f1"
+  },
+  "notes": "Fixed before UTA test scores. All models use the same eligible recordings and48frames/recording maximum. B warm-starts only A checkpoint from the same fold, then unfreezes layer4 with frozen BN statistics. C frozen Kinetics encoder plus trainable linear head. No automatic dataset download or training from notebook rendering.",
+  "pilot": {
+    "available_official_folds": [
+      1,
+      2
+    ],
+    "participants": {
+      "train": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12"
+      ],
+      "validation": [
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18"
+      ],
+      "test": [
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24"
+      ]
+    },
+    "reason": "Official Google Drive Quota exceeded on six remaining archives; no official five-fold results",
+    "split_chosen_before_model_scores": true
+  }
+}

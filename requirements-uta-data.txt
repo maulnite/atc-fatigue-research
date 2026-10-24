@@ -1,0 +1,3 @@
+# Additional compatible dependency in the existing private project .venv.
+# All existing project dependencies remain unchanged.
+av==12.3.0
