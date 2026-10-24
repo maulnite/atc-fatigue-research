@@ -114,3 +114,9 @@ Resume approved remaining downloads when the official source permits access, the
 **105 tests passed**, Ruff passed across src/tests/scripts, both private environments passed pip dependency checks. Fresh-kernel execution covered only the35new UTA cells, with zeroerrors and eight reviewed PNG figures. All84original cell objects (IDs, sources, outputs, metadata, order) and5895historical protected files matched the baseline. All72source-video SHA256 values and completed-stage artifact hashes were rechecked. Resume skipped allthreecompleted stages without changing epochs, checkpoint, history or prediction hashes.
 
 [Machine-readable validation](uta_pretrained_validation.json) and [actual execution evidence](uta_pretrained_execution.json) include source/pretrained/model/checkpoint hashes, runtime versions, quota responses and training resource measurements.
+
+## Coordinated workflow update — 2026-10-24
+
+**NOT RUN — SOURCE QUOTA.** One bounded retry per missing official archive still returned HTTP200 HTML quota errors, rejected as ZIP. Missing: Fold3_part1, Fold3_part2, Fold4_part1, Fold4_part2, Fold5_part1, Fold5_part2;110physical files/36participants. Four completed archives were SHA256-verified and reused, with no re-download. Approved120GiB download/260GiB workspace limits remain respected; no quota bypass or unofficial source used.
+
+Pilot metrics/checkpoints/manifests and allDROZY artifacts are unchanged. No official full five-fold results are claimed. Independent [RAVDESS late/dual-stream experiments](fusion_extension_research.md) completed; they use emotion labels and do not fill the missing drowsiness benchmark. [New acquisition evidence](coordinated_uta_status.json).

@@ -1,0 +1,54 @@
+{
+  "run": "runs/ravdess_fusion_extension/20261024T191513667258Z",
+  "training_source_checksums": {
+    "/home/nafisnaufal1426/competition/orie/src/atc_fatigue/fusion/extension/artifacts.py": "4e0a6f73f07f8462ceb0263eabf23bba23b54b72bc915a1291e322aadb04ec12",
+    "/home/nafisnaufal1426/competition/orie/src/atc_fatigue/fusion/extension/protocol.py": "ca9caa0c5dfb39aa89da58993a6aa7128eca47a5f1c01c74e7f9012136225966",
+    "/home/nafisnaufal1426/competition/orie/src/atc_fatigue/fusion/extension/data.py": "98b0ac2473e3979bda03b597154c5e18bcc8927aadf709462ea261cf9ba9e208",
+    "/home/nafisnaufal1426/competition/orie/src/atc_fatigue/fusion/extension/encode.py": "b8cf2874c98b37dc3f7e0e8603809c24f9d9ca2e4cbe2864b4ea3fa04c9257df",
+    "src/atc_fatigue/uta/data.py": "a08d00f760bc57606daff5f52a6a2188cd5a55435f7e650803c50bd54beb403d",
+    "src/atc_fatigue/uta/models.py": "80d0b72f7fa21209351135e88d9a1ecab7ae95a8297084911c8ad50fec6063df",
+    "/home/nafisnaufal1426/competition/orie/src/atc_fatigue/fusion/extension/classical.py": "65521d248de3ff9269d6bca227df368270dd3d82ee6717e0464eae6ce8a758c8",
+    "/home/nafisnaufal1426/competition/orie/src/atc_fatigue/fusion/extension/models.py": "de78b3d515198db30e15a8e6010a33cf51eab834079c184533013ec5fdf9c71f",
+    "/home/nafisnaufal1426/competition/orie/src/atc_fatigue/fusion/extension/worker.py": "5a272f3714479efb53849eabed002eec6bd7b3cfcbdf0f5cbaf7255baecd41d9"
+  },
+  "stage_signatures": {
+    "prepared": "9ae30a0e17f674ed9baf1e4cd2b8037c8cf3c6e4c905231e6d7ca32632e204be",
+    "classical": "9eee1cb234dba02f77a9975f58ffb858507f752f0f293ad4f083b21152632e28",
+    "neural": "f22d65a71eac44033ae94687d5aa987b012e33354b5a6ab7f14b4f550f04bf7f"
+  },
+  "input_manifest_sha256": "d3d4cdc672be1fb61a6adc06a02cdf1d8d9a695c71febc9f18a3eb10bb17764f",
+  "fixed_folds_sha256": "30271c7399dcd0dc4b669922e7bdaa6789f149c1cee1f183b2b4c8fe73ee4bc8",
+  "historical_feature_cache_sha256": "c41280a162bc0ed8627038dfc11812ef1ac88c6197fa791497a4ba0e724e6a73",
+  "runtime": {
+    "project_python": "3.10.4",
+    "worker": {
+      "pretrained": "official ImageNet1K_V1 ResNet18, strict state loading; no UTA-trained weights",
+      "pretrained_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+      "frozen_parameters": 11176512,
+      "dataset_sha256": "767b613f12436500c5a0528af9ec2021b0db2b70e1ff5717f604c1c5a72fc73b",
+      "seconds": 5.764705250039697,
+      "recordings": 128,
+      "audio_shape": [
+        128,
+        1,
+        64,
+        598
+      ],
+      "visual_shape": [
+        128,
+        8,
+        512
+      ],
+      "python": "3.10.4",
+      "torch": "1.13.1+cu116",
+      "torchvision": "0.14.1+cu116",
+      "source_pairing": "two streams from the same original AV file",
+      "study_label_fitting": false
+    }
+  },
+  "base_commit": {
+    "returncode": 0,
+    "stdout": "448b59050aa40c5f3a9d6a5753dea748e224fef7"
+  },
+  "note": "Training code was uncommitted at execution; explicit source SHA identifies it. Base commit is not a claim that new code existed in that commit."
+}

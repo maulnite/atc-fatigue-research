@@ -1,0 +1,57 @@
+{
+  "architectures": {
+    "file": "reports/figures/fusion_extension_20261024/architectures.png",
+    "interpretation": "Early menggabungkan angka, late menggabungkan probabilitas, dual-stream mempelajari embedding. Ketiganya memprediksi emotion RAVDESS, bukan fatigue.",
+    "sha256": "204229a86c365df0ca852305d22147fafd54c179fec869e1f0c578346de18b03"
+  },
+  "folds": {
+    "file": "reports/figures/fusion_extension_20261024/folds.png",
+    "interpretation": "Setiap fold memiliki5aktor train,2 validation,1 test. Validation bergeser secara siklik, bukan dipilih dari skor test. Actor overlap antarpartisi =0.",
+    "sha256": "a9174ef3afe9e261a67d8916fe1ec9e99594a3b9decf4a47c5ed3420285dcefd"
+  },
+  "comparison": {
+    "file": "reports/figures/fusion_extension_20261024/comparison.png",
+    "interpretation": "Late50/50=0.5071 vs audioLR=0.4952. Selisih+0.0119 dengan interval paired actor-bootstrap[\u22120.1056,+0.1257] belum mendukung peningkatan yang pasti. Errorbar adalah interval deskriptif dari prediksi OOF tetap.",
+    "sha256": "48b5f4219a216a1f774d1a77037336c08f05f68133e787cab0fd60310b559e8b"
+  },
+  "actor_performance": {
+    "file": "reports/figures/fusion_extension_20261024/actor_performance.png",
+    "interpretation": "Late50/50 mengungguli audio pada6dari8aktor, tetapi mengalami penurunan besar padaaktor06dan08. Dual-stream mengungguli audioLR hanya1dari8aktor. Enam belas rekaman peraktor membatasi ketelitian skor.",
+    "sha256": "0fb95f314146861e0535ac9ae58e4600d6417396e646d76719e13964e8272407"
+  },
+  "confusions": {
+    "file": "reports/figures/fusion_extension_20261024/confusions.png",
+    "interpretation": "Confusion matrix menampilkan jumlah absolut dan persentase untuk setiap kelas. Kesalahan tidak otomatis membuktikan kegagalan membaca keadaan fisiologis; emotion diperagakan dan banyak ciri perekaman dapat memengaruhi prediksi.",
+    "sha256": "85a61c4c696b8c7105390825d1b6747d13eea18073a2097325002c6160cde4a0"
+  },
+  "class_recall": {
+    "file": "reports/figures/fusion_extension_20261024/class_recall.png",
+    "interpretation": "Recall memperlihatkan proporsi rekaman setiap emotion yang dikenali benar. Semua kelas memiliki16rekaman sehingga balanced accuracy sama dengan accuracy; variasi kelas tetap terlihat pada recall/F1.",
+    "sha256": "0363bf540921d2053e14674b3ce2871a1e54d0cc78a7573e88cc1e17bc385678"
+  },
+  "learning_curves": {
+    "file": "reports/figures/fusion_extension_20261024/learning_curves.png",
+    "interpretation": "Kurva memakai fold01 yang dipilih berdasarkan nomor, bukan kualitas hasil. Checkpoint dipilih dengan validation-actor MacroF1; validation CE hanya pemecah seri. Semua riwayat48training tersedia lokal, bukan hanya contoh ini.",
+    "sha256": "cd6a31fb4385f0f97d22c5a1ebb114ccb1edfeb89c9b36264719e4ad9463e272"
+  },
+  "seed_sensitivity": {
+    "file": "reports/figures/fusion_extension_20261024/seed_sensitivity.png",
+    "interpretation": "Dual-stream=0.2916 pada seed42 dan0.2753 pada seed43. Dua seed belum mencakup seluruh ketidakpastian training, tetapi memperlihatkan bahwa ranking satu run bukan bukti universal.",
+    "sha256": "7c288e5809ad10ecc5bb5c8ace7c4d14dbfa9adf77a1c8ea8e26158d8d404730"
+  },
+  "missing_modalities": {
+    "file": "reports/figures/fusion_extension_20261024/missing_modalities.png",
+    "interpretation": "Late fusion mengalihkan bobot ke sensor yang tersedia; keduanya hilang menggunakan train prior. Dual-stream mendapat modality dropout saat training. Early fusion hanya stress test inference dengan median train danmask; ini tidak menjadikannya model yang dilatih untuk sensor hilang.",
+    "sha256": "8ae8cccb44b20551d04b5447cf1e08eca3c61815042d585754652aeed42e7456"
+  },
+  "complementarity": {
+    "file": "reports/figures/fusion_extension_20261024/complementarity.png",
+    "interpretation": "Audio saja benar pada36rekaman, visual saja benar pada21. Ada peluang informasi pelengkap, tetapi mengetahui cabang mana yang benar membutuhkan ground truth; hitungan oracle bukan performa fusion yang dapat digunakan.",
+    "sha256": "2a124f43c46b0627a142913bfb6ecc3072175d23348e45e1623fa183e5d22315"
+  },
+  "actual_embeddings": {
+    "file": "reports/figures/fusion_extension_20261024/actual_embeddings.png",
+    "interpretation": "Embedding berasal dari checkpoint dual-stream dan rekaman test yang sama, dipilih deterministik. Dua komponen terakhir adalah availability mask. Embedding mempelajari representasi untuk emotion; setiap komponen bukan fitur fisiologis yang langsung dapat dinamai.",
+    "sha256": "b16b6f5cfedaa305829c2af0f621f2331d73a545adb5a9de55355b91540237e5"
+  }
+}

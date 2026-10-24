@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "uta": "NOT RUN \u2014 SOURCE QUOTA",
+  "fusion": "COMPLETED \u2014 RAVDESS EXPERIMENT",
+  "notebooks": {
+    "01_audio_analysis.ipynb": {
+      "original_cells": 71,
+      "appended_cells": 0,
+      "historical_objects_unchanged": true,
+      "file_sha256": "b86ba4b9f27f9bee10e351a4563e7d1c3c432764c8206f971e05143dcfff8218"
+    },
+    "02_visual_analysis.ipynb": {
+      "original_cells": 119,
+      "appended_cells": 3,
+      "historical_objects_unchanged": true,
+      "file_sha256": "0551d3357bacf717d829f912f408eb337ef3267e5ea63de8d7cb015609db297c"
+    },
+    "03_multimodal_fusion.ipynb": {
+      "original_cells": 45,
+      "appended_cells": 40,
+      "historical_objects_unchanged": true,
+      "file_sha256": "ad3e665691fa3864ff9933a529bc5b15680357f0bfb32db495a97ae9429e1004"
+    }
+  },
+  "original_cell_total": 235,
+  "protected_files_verified": 6481,
+  "intentional_append_only_exceptions": [
+    "notebooks/v3/02_visual_analysis.ipynb",
+    "notebooks/v3/03_multimodal_fusion.ipynb",
+    "reports/uta_pretrained_benchmark.md"
+  ],
+  "all_historical_report_bytes_preserved": true,
+  "neural_train_only_normalization_recomputed": 48,
+  "checks": {
+    "ruff": {
+      "passed": true,
+      "summary": "All checks passed!"
+    },
+    "project_dependencies": {
+      "passed": true,
+      "summary": "No broken requirements found."
+    },
+    "worker_dependencies": {
+      "passed": true,
+      "summary": "No broken requirements found."
+    },
+    "pytest": {
+      "passed": true,
+      "summary": "117 passed, 14 warnings in 13.61s"
+    }
+  },
+  "predictions": {
+    "prediction_rows": 6144,
+    "unique_test_recordings_per_model_seed_scenario": 128,
+    "actor_recording_overlap": 0,
+    "class_order_verified": true,
+    "classical_checkpoint_replays": 8,
+    "neural_checkpoint_replays": 48,
+    "preprocessing_fit": "train actors only",
+    "validation_only_selection": true
+  },
+  "reviewed_figures": 11,
+  "visual_review": "All11plots inspected for labels, fonts, legend/colorbar, overlap and meaning. Confusion matrices corrected to a common colormap matching their colorbar.",
+  "public_output_audit": "New outputs contain only reviewed PNG plots and numeric/text tables; no audio/video MIME, source faces, credentials or private paths. Historical approved media outputs unchanged.",
+  "baseline_inventory_sha256": "f22f3ed68391ab2315197aea80074a61be28317f4be6afb170b6357ad5e5269c",
+  "protected_inventory_sha256": "5cdc1577ee1723467aa4a1ef8ab525f1e317cf2ea2a422a69f33f39919f0a648",
+  "coordinator": "runs/coordinated_research/20261024T190009342388Z",
+  "fusion_run": "runs/ravdess_fusion_extension/20261024T191513667258Z"
+}
