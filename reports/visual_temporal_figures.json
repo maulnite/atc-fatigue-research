@@ -1,0 +1,237 @@
+[
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/native_sampling_audit__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "native_sampling_audit",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "1041 gap >150 ms ditemukan pada 36 test; gap terbesar 1257 ms.",
+    "meaning": "Waktu asli menentukan durasi dan coverage; model tidak menerima sampel hasil interpolasi untuk menutupi gap.",
+    "caveat": "Finite EAR tidak menjamin landmark akurat. Perbedaan FPS berkaitan dengan test dan berpotensi menjadi confound.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "Urutan 36 test (manifest tetap)",
+        "y": "Interval antar-frame (ms)",
+        "title": "DROZY: sampling native tidak seragam antar-test"
+      },
+      {
+        "x": "Urutan 36 test (manifest tetap)",
+        "y": "Jumlah gap >150 ms",
+        "title": "Gap ditandai invalid, tanpa interpolasi"
+      }
+    ],
+    "sha256": "4381067b4c444a0e598ac6454d3d0e80026c38deffc37bcf270bd2dd2758a1d9"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/same_test_two_resolutions__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "same_test_two_resolutions",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "Kedua panel berasal dari test pertama yang sama; bin 1 detik memperlihatkan variasi yang diratakan oleh window 60 detik.",
+    "meaning": "Urutan posisi tetap dipertahankan, termasuk posisi invalid; \u00b1std merangkum variasi dalam bin, bukan interval keyakinan.",
+    "caveat": "A2 masih ringkasan per detik dan kehilangan urutan subdetik. Semua test dipakai offline sampai akhir.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "Waktu sejak awal rekaman (detik)",
+        "y": "EAR (rasio tanpa satuan)",
+        "title": "DROZY: test pertama yang sama, bin 60 detik; merah = tidak memenuhi coverage"
+      },
+      {
+        "x": "Waktu sejak awal rekaman (detik)",
+        "y": "EAR (rasio tanpa satuan)",
+        "title": "DROZY: test pertama yang sama, bin 1 detik; merah = tidak memenuhi coverage"
+      }
+    ],
+    "sha256": "fdfd2af0549bc6dbe0349a18414a0dfda783b18658964808b2c03729b01107b0"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/actual_cnn_input__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "actual_cnn_input",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "Heatmap menampilkan lima channel nilai dari tensor holdout yang sama dengan input checkpoint fold0/seed42.",
+    "meaning": "Warna membandingkan nilai relatif terhadap skala training; lima mask fitur dan satu mask posisi tetap masuk jaringan meski tidak dicampur ke colorbar z.",
+    "caveat": "Warna saturasi \u00b13 hanya untuk keterbacaan. Nilai model tidak di-clip; imputasi dan kualitas landmark tetap merupakan keterbatasan.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "Posisi urutan bin 1 detik (bukan frame native)",
+        "y": "Lima channel nilai",
+        "title": "Input CNN nyata: test holdout pertama / LOSO fold0 / train-only scaling"
+      },
+      {
+        "x": "",
+        "y": "Nilai z; warna dibatasi \u00b13, nilai model tetap utuh",
+        "title": ""
+      }
+    ],
+    "sha256": "ce13d03b3f4e669c561bdad350afdc7cb79cbfbfa67f50123cb33061535da658"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/cnn_architecture__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "cnn_architecture",
+    "synthetic": true,
+    "private": false,
+    "origin": "SCHEMATIC / architecture actually trained",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "Jaringan mempunyai 553 parameter; output [B] berisi satu KSS untuk masing-masing test dalam batch.",
+    "meaning": "Mask menghalangi padding/posisi invalid menjadi bukti teramati dan mengecualikannya dari rata-rata temporal.",
+    "caveat": "Diagram konseptual, bukan sinyal sintetis atau bukti peningkatan skor; 553 parameter tetap banyak untuk sekitar 30 test training.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "",
+        "y": "",
+        "title": "Arsitektur tetap: satu urutan test menghasilkan satu prediksi KSS"
+      }
+    ],
+    "sha256": "b852d4d4008ea97ac33dae2a6837352d9ab6199f793f42e155782db5616cc323"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/inner_validation_curves__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "inner_validation_curves",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "Kurva berasal dari fold0/seed42 yang dipilih deterministik; garis vertikal menunjukkan epoch dari inner validation.",
+    "meaning": "Ketika error validasi tidak membaik, menambah epoch tidak otomatis membantu orang yang tidak masuk training.",
+    "caveat": "Sumbu y diperbesar untuk memperlihatkan perubahan kecil; bukan bukti perbaikan besar. Hanya satu contoh fold dan tiga orang validation; seluruh84log inner tersimpan.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "Epoch training inner",
+        "y": "MAE pada 3 subjek validasi (poin KSS)",
+        "title": "CNN 60 detik: inner fold0/seed42; sumbu y diperbesar"
+      },
+      {
+        "x": "Epoch training inner",
+        "y": "MAE pada 3 subjek validasi (poin KSS)",
+        "title": "CNN 1 detik: inner fold0/seed42; sumbu y diperbesar"
+      }
+    ],
+    "sha256": "04d9b0597d5c9a81286c5a559a44a4e168c229ae34d2e6550e5a0a3d4f9d3cdc"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/ridge_vs_temporal_cnn__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "ridge_vs_temporal_cnn",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "MAE seed42: Ridge EAR 1.351, CNN60s 1.870, CNN1s 1.777 poin.",
+    "meaning": "Pada protokol tetap ini CNN belum memperbaiki baseline EAR; tambahan resolusi/parameter tidak otomatis memperbaiki generalisasi.",
+    "caveat": "LOSO mencegah overlap orang dalam fold, tetapi korpus kecil dan sudah dipakai pengembangan; ini feasibility study, bukan validasi eksternal.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "Metode / CNN primary seed42",
+        "y": "MAE (poin KSS; lebih kecil lebih baik)",
+        "title": "DROZY KSS: MAE pada 36 test / 14 fold LOSO"
+      },
+      {
+        "x": "Metode / CNN primary seed42",
+        "y": "RMSE (poin KSS; lebih kecil lebih baik)",
+        "title": "DROZY KSS: RMSE pada 36 test / 14 fold LOSO"
+      }
+    ],
+    "sha256": "8abc8ca6977c8a72a27f5b4c1676a64c26d45dc2c21db54a9c36cc10bf467561"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/cnn_seed_sensitivity__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "cnn_seed_sensitivity",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "Ketiga seed yang ditetapkan sebelum eksperimen ditampilkan, dengan fold inner yang identik antar-seed.",
+    "meaning": "Variasi inisialisasi/training menunjukkan bahwa satu skor jaringan dapat tidak stabil pada dataset kecil.",
+    "caveat": "Tiga seed bukan tiga dataset independen; tidak memilih seed berdasarkan outer test dan tidak menambah jumlah peserta.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "Seed inisialisasi/training (fold inner tetap)",
+        "y": "MAE LOSO (poin KSS)",
+        "title": "Sensitivitas seed: seluruh hasil dilaporkan, tanpa memilih seed terbaik"
+      }
+    ],
+    "sha256": "dac34019b19ef7b0389955b0ae6be4bb6a674c829694184c05dd67599f0b489b"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/actual_vs_predicted_temporal__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "actual_vs_predicted_temporal",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "Seluruh36test ditampilkan pada setiap model; titik jauh dari diagonal adalah kesalahan yang benar-benar terjadi.",
+    "meaning": "Plot memperlihatkan apakah prediksi menyusut ke rerata atau melewatkan KSS tinggi, yang dapat tertutup oleh skor agregat.",
+    "caveat": "Target subjektif, test berulang dan landmark otomatis membatasi interpretasi; ini sleepiness offline, bukan deteksi fatigue ATC.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "KSS asli (poin)",
+        "y": "KSS prediksi (poin)",
+        "title": "Ridge EAR"
+      },
+      {
+        "x": "KSS asli (poin)",
+        "y": "KSS prediksi (poin)",
+        "title": "CNN 60 detik"
+      },
+      {
+        "x": "KSS asli (poin)",
+        "y": "KSS prediksi (poin)",
+        "title": "CNN 1 detik"
+      }
+    ],
+    "sha256": "9d9905987b6e43529cfb3e47a39c0ec4d1fd09a80f5e2c677ca5a46842af4693"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/subject_wise_temporal_errors__20261024T164444510164Z_seed42_47f50c.png",
+    "topic": "subject_wise_temporal_errors",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / FRESH extraction + nested training",
+    "source_run_id": "20261024T164444510164Z_seed42_47f50c",
+    "seen": "Error diringkas per14orang; setiap titik hanya memakai prediksi saat orang tersebut ditahan dari training.",
+    "meaning": "Pembaca dapat melihat apakah perubahan skor konsisten antarorang atau didominasi beberapa peserta.",
+    "caveat": "Fold LOSO berbagi sebagian besar peserta training sehingga error fold tidak sepenuhnya independen.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "ID subjek DROZY (setiap orang hanya diuji saat held out)",
+        "y": "MAE per peserta (poin KSS)",
+        "title": "Error antar 14 peserta: perbaikan tidak boleh dinilai dari satu orang"
+      }
+    ],
+    "sha256": "e5ef691c8a5d6382cfbdf89a11859e299320a91357587b3c6aa8067a741dc514"
+  },
+  {
+    "file": "reports/figures/visual_temporal/20261024T164444510164Z_seed42_47f50c/fatigueview_actual_annotation_counts__20261024T163204505429Z.png",
+    "topic": "fatigueview_actual_annotation_counts",
+    "synthetic": false,
+    "private": false,
+    "origin": "REAL / CACHED official JSON audit; FRESH count figure",
+    "source_run_id": "20261024T163204505429Z",
+    "seen": "Grafik menghitung isi JSON resmi yang benar-benar diunduh; beberapa file tidak mempunyai event.",
+    "meaning": "Anotasi event dapat diaudit walaupun video belum tersedia; jumlah event berbeda dari jumlah klip/subjek berlabel fatigue.",
+    "caveat": "Hanya20file kategoriFatigue tersedia; clock dan identitas belum terverifikasi. Tidak ada hasil klasifikasi.",
+    "pixel_dpi": 160,
+    "axis_labels": [
+      {
+        "x": "Urutan file JSON sumber (bukan nomor peserta terverifikasi)",
+        "y": "Jumlah pasangan event yawning",
+        "title": "FatigueView: audit nyata20file anotasi /266event; bukan distribusi kelas fatigue"
+      }
+    ],
+    "sha256": "16d0d50b4f06be160d62349e643a17837f6b5788cf6ea8df7596ea1a4a4901eb"
+  }
+]

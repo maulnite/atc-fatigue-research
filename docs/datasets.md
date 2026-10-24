@@ -1,3 +1,7 @@
+**Audit visual tambahan — 24 Oktober 2026:** [feasibility/provenance](visual_dataset_feasibility.md) dan [audit JSON](../reports/visual_dataset_feasibility.json) memisahkan label drowsiness UTA-RLDD0/5/10, kategori/event FatigueView, kondisi sleep-deprivation DriverFatigueDetection, observer-rated LFD/DLFD, serta mental-fatigue self-report klinis CCT. UTA mempunyai link arsip resmi (~111,3GB), tetapi tidak ada video lokal/download besar yang diizinkan. FatigueView20JSON/266event berhasil diaudit; video, clock, hak penggunaan dan identitas belum tersedia/terverifikasi. Driver/LFD melalui penulis, CCT dibatasi IRB; tidak ada email yang dikirim. Tidak ada classifier tambahan atau skor buatan. DROZY lokal mendukung CNN60s/1s yang benar-benar dievaluasi dengan satu label per test; lihat [hasil](../reports/visual_temporal_research.md).
+
+---
+
 # Dataset dan batas penggunaan
 
 **Pembaruan publikasi media — 23 Oktober 2026:** pengguna mengizinkan contoh asli untuk smoke test publik. [Galeri media](../assets/demo_media/README.md) kini menyediakan source/clean/radio Predi-COVID (CC BY4.0), tiga grafik transformasi, serta genuine paired AV/frame RAVDESS (CC BY-NC-SA4.0). Dua player audio boleh tertanam hanya jika cell dan audio bytes cocok dengan [manifest izin/checksum](../reports/notebook_v3_media_publication.json). Dataset lengkap/cache/models tetap lokal; ATCOSIM/DROZY dan media lain yang hak redistribusinya belum jelas tetap tidak dibagikan. Pernyataan lama “semua media hanya lokal” di bagian historis dibatasi oleh pengecualian terbaru ini.

@@ -1,0 +1,129 @@
+{
+  "utc": "2026-10-24T16:47:24.659987+00:00",
+  "status": "passed",
+  "run_id": "20261024T164444510164Z_seed42_47f50c",
+  "metrics_recomputed": true,
+  "historical_ridge_scores_reproduced": true,
+  "original_KSS_labels_verified": 36,
+  "folds": 14,
+  "participant_overlap": 0,
+  "neural_checkpoints_replayed": 84,
+  "normalization_fits_verified": 168,
+  "epoch_selection_from_inner_only": true,
+  "target_scaling_train_only": true,
+  "ridge_dummy_checkpoints_replayed": 42,
+  "protected_files_checked": 4411,
+  "intentional_notebook_update": [
+    "notebooks/v3/02_visual_analysis.ipynb"
+  ],
+  "unexpected_protected_changes": 0,
+  "audio_fusion_notebooks_unchanged": true,
+  "all_input_and_run_artifact_checksums": "passed",
+  "fresh_kernel_executions": [
+    {
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "FULL",
+      "session": "20261024T164352Z_d55617",
+      "private_media_enabled": false,
+      "raw_media_reads_denied": false,
+      "licensed_media_published": false,
+      "utc_started": "2026-10-24T16:43:52.738735+00:00",
+      "source_hash": "ee384ba26d8f7a12e237d93b775bfbd9c1e769cd011a704523648a94e7d70bf2",
+      "status": "passed",
+      "seconds": 143.30823485483415,
+      "code_cells": 55,
+      "outputs": 137,
+      "png_outputs": 35,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [
+        {
+          "experiment": "cogbeacon_audit",
+          "run_id": "20261024T164613827795Z_seed42_be9da7"
+        },
+        {
+          "experiment": "drozy_feature_ablation",
+          "run_id": "20261024T164441991561Z_seed42_1fbd3f"
+        },
+        {
+          "experiment": "drozy_kss",
+          "run_id": "20261024T164409996849Z_seed42_ae9238"
+        },
+        {
+          "experiment": "drozy_temporal",
+          "run_id": "20261024T164444510164Z_seed42_47f50c"
+        },
+        {
+          "experiment": "mrl_eye_state",
+          "run_id": "20261024T164355883823Z_seed42_91ed89"
+        }
+      ],
+      "public_png_outputs": 35
+    },
+    {
+      "notebook": "02_visual_analysis.ipynb",
+      "mode": "DEMO",
+      "session": "20261024T164719Z_1f42ad",
+      "private_media_enabled": false,
+      "raw_media_reads_denied": true,
+      "licensed_media_published": false,
+      "utc_started": "2026-10-24T16:47:19.696970+00:00",
+      "source_hash": "ee384ba26d8f7a12e237d93b775bfbd9c1e769cd011a704523648a94e7d70bf2",
+      "status": "passed",
+      "seconds": 24.809369189897552,
+      "code_cells": 55,
+      "outputs": 131,
+      "png_outputs": 35,
+      "errors": 0,
+      "sources_unchanged": true,
+      "fresh_runs": [],
+      "public_png_outputs": 35
+    }
+  ],
+  "tests": {
+    "passed": 91,
+    "warnings": 14,
+    "warning_scope": "existing Matplotlib/Pyparsing deprecations"
+  },
+  "ruff_python_sources_tests_scripts": "passed",
+  "pip_check": "passed",
+  "notebook_lint": {
+    "existing_diagnostics": 119,
+    "new_diagnostics": 0,
+    "by_file_rule_counts_match_prechange_HEAD": true
+  },
+  "repeatability": {
+    "rows": 324,
+    "max_absolute_prediction_delta": 0.0,
+    "independent_runs": 3
+  },
+  "visual_review": {
+    "new_figures": 10,
+    "reviewed": true,
+    "method": "contact sheets plus full-size architecture inspection",
+    "checks": [
+      "axis units",
+      "font size",
+      "legend/colorbar",
+      "no blank images",
+      "before/after shared scale",
+      "y zoom explicitly labeled",
+      "no overlap"
+    ],
+    "presentation_source_session": "20261024T164352Z_d55617",
+    "public_figures_manifest_sha256": "7b0cc495be4345c665095feab92ae92f426af0759cf14e3fad9acf70323ca8dc"
+  },
+  "publication": {
+    "new_source_audio_video_or_faces": 0,
+    "model_or_full_feature_cache_committed": false,
+    "audio_fusion_files_preserved": true
+  },
+  "candidate_benchmarks": {
+    "UTA-RLDD": "NOT RUN \u2014 DATA UNAVAILABLE",
+    "FatigueView": "NOT RUN \u2014 DATA UNAVAILABLE",
+    "DriverFatigueDetection": "NOT RUN \u2014 DATA UNAVAILABLE",
+    "LFD/DLFD": "NOT RUN \u2014 DATA UNAVAILABLE",
+    "CCT/RVT": "NOT RUN \u2014 DATA UNAVAILABLE",
+    "UTA_to_DROZY_transfer": "NOT IMPLEMENTED \u2014 source encoder/data unavailable"
+  }
+}

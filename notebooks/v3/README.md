@@ -1,3 +1,22 @@
+**Ekstensi visual temporal — 24 Oktober 2026:** notebook02 yang sama kini memuat dua CNN1D DROZY, tensor aktual/mask, nested subject validation dan sensitivitas tiga seed. Ridge EAR-only tetap lebih baik pada eksperimen ini. UTA-RLDD/FatigueView serta kandidat fatigue-specific diaudit tanpa membuat skor ketika video/label/izin belum tersedia. [Laporan hasil](../../reports/visual_temporal_research.md) · [protokol/akses](../../docs/visual_dataset_feasibility.md).
+
+Untuk training CPU terpisah dari notebook atau validasi cache:
+
+```bash
+# FULL notebook02 juga menjalankan seluruh baseline visual lama dan temporal CNN baru.
+.venv/bin/python scripts/10_execute_notebook_v3.py --mode FULL --notebook 02_visual_analysis.ipynb
+.venv/bin/python scripts/10_execute_notebook_v3.py --mode DEMO --deny-raw-media --notebook 02_visual_analysis.ipynb
+# Alternatif CLI untuk eksperimen temporal saja.
+.venv/bin/python scripts/14_visual_temporal.py --mode FULL
+.venv/bin/python scripts/14_visual_temporal.py --mode DEMO
+```
+
+Training memerlukan interpreter yang sudah mempunyai PyTorch. Gunakan `ATC_TORCH_PYTHON` bila berbeda dari base Python environment proyek. Server ini memakai PyTorch1.13.1+cu116/NumPy1.24.1 pada subprocess CPU, sedangkan preprocessing/evaluasi tetap pada `.venv` proyek. Tidak ada paket shared yang diubah. [Konfigurasi tetap](../../configs/visual_temporal.json) mencatat tiga seed dan batas epoch. Registry temporal terpisah, seluruh run append-only; model/cache tetap memerlukan data lokal berizin. Clone GitHub dapat langsung melihat output notebook dan laporan, tetapi tidak otomatis menyediakan runtime model/data.
+
+Status terbaru di atas melengkapi snapshot historis di bawah; pernyataan lama sembilan run kini bertambah dengan eksperimen temporal.
+
+---
+
 # Tiga notebook riset untuk presentasi
 
 **Pembaruan publikasi media — 23 Oktober 2026:** pengguna mengizinkan contoh asli untuk smoke test publik. [Galeri media](../../assets/demo_media/README.md) kini menyediakan source/clean/radio Predi-COVID (CC BY4.0), tiga grafik transformasi, serta genuine paired AV/frame RAVDESS (CC BY-NC-SA4.0). Dua player audio boleh tertanam hanya jika cell dan audio bytes cocok dengan [manifest izin/checksum](../../reports/notebook_v3_media_publication.json). Dataset lengkap/cache/models tetap lokal; ATCOSIM/DROZY dan media lain yang hak redistribusinya belum jelas tetap tidak dibagikan. Pernyataan lama “semua media hanya lokal” di bagian historis dibatasi oleh pengecualian terbaru ini.

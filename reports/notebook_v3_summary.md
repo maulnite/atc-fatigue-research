@@ -1,3 +1,13 @@
+# Ekstensi visual temporal — 24 Oktober 2026
+
+[Notebook visual02](../notebooks/v3/02_visual_analysis.ipynb) diperluas langsung; notebook audio/fusion dan semua completed experiment assets sebelumnya tetap utuh. Penjelasan tensor/feature masks, CNN kecil, nested subject validation, seluruh seed dan error peserta kini terlihat di notebook. **Dua CNN telah dilatih pada data nyata dan belum memperbaiki Ridge EAR-only**: MAE seed42 Ridge1,3508, CNN60s1,8704, CNN1s1,7771 poinKSS. Semua memakai36test/14orang LOSO yang sama; KSS adalah sleepiness, bukan fatigue ATC.
+
+[Laporan lengkap](visual_temporal_research.md), [hasil machine-readable](visual_temporal_results.json), [prediksi](visual_temporal_predictions.csv), [audit dataset tambahan](visual_dataset_feasibility.json) dan [panduan reproduksi/akses](../docs/visual_dataset_feasibility.md) menjelaskan eksperimen dan blocker. UTA-RLDD/FatigueView belum dilatih; DriverFatigueDetection/LFD memerlukan akses penulis dan CCT dibatasi IRB. Adapter diuji menggunakan fixture engineering, bukan pengganti hasil penelitian. Tidak ada download video besar, GPU training atau perubahan environment shared.
+
+Snapshot historis di bawah dipertahankan; klaim lama tidak ada training baru berlaku pada pembaruan publikasi23Oktober, **bukan** ekstensi24Oktober ini.
+
+---
+
 # Pembaruan publikasi media berizin — 23 Oktober 2026
 
 Pengguna telah merevisi preferensi sebelumnya dan mengizinkan repo publik memuat contoh media smoke test.

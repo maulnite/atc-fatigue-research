@@ -1,3 +1,7 @@
+**Ekstensi visual — 24 Oktober 2026:** RQ1 telah dieksekusi pada36test/14orang DROZY: duaCNN553parameter, nested subject-independent LOSO dan3seed. CNN belum mengungguli Ridge EAR-only; hasil negatif dipertahankan. RQ2 UTA-RLDD dan RQ3 FatigueView memiliki audit/adapter ingestion teruji, tetapi training **NOT RUN — DATA UNAVAILABLE**. RQ4 membandingkan kualitas label DriverFatigueDetection, LFD/DLFD, CCT dan CogBeacon; belum ada baseline fatigue-specific baru yang sah. Transfer UTA→DROZY belum diimplementasikan karena encoder sumber/data tidak tersedia. [Hasil, batasan, dan langkah berikutnya](../reports/visual_temporal_research.md) · [akses/provenance](visual_dataset_feasibility.md). Tetap tiga notebook v3, tanpa mengganti hasil lama atau mengubah main.
+
+---
+
 # Roadmap penelitian dan implementasi
 
 **Publikasi contoh berizin — 23 Oktober 2026:** revisi pengguna diimplementasikan melalui galeri 8 asset Predi-COVID/RAVDESS dan dua embedded player audio yang di-whitelist. Code cells training/score tidak berubah; DEMO dieksekusi ulang dan QA membedakan exact scientific code dari perubahan Markdown. 82 tests lulus. Media ATCOSIM/DROZY tetap mengikuti larangan redistribusi pemilik; tidak ada full dataset/model/cache yang diunggah. [Galeri dan atribusi](../assets/demo_media/README.md).

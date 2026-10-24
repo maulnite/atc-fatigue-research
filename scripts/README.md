@@ -11,3 +11,20 @@ Gunakan Python `.venv` dari root proyek. Setiap script memiliki `--help`; parame
 `09_execute_demo.py` menjalankan notebook 00–04 yang sudah ada, mempertahankan isi cell, membuat backup, dan menyimpan output langsung pada notebook lokal. Gunakan runner ini untuk melihat hasil di folder `notebooks/`; generator 07 membuat ulang source dan tidak mempertahankan edit lokal.
 
 `13_prepare_public_demo_media.py` membuat contoh berizin dari data lokal yang sudah ada, tanpa download/training. `10_execute_notebook_v3.py --mode DEMO --private-media --publish-licensed-media --notebook 01_audio_analysis.ipynb` mempertahankan dua player yang code hash/audio bytes-nya cocok manifest publikasi; media privat lain tetap dihapus pada salinan publik.
+
+Ekstensi visual temporal tetap memakai notebook02. `14_visual_temporal.py --mode FULL`
+menjalankan persiapan urutan DROZY, nested subject-LOSO, dua CNN × tiga seed, serta
+baseline Ridge/Dummy; `--mode DEMO` memverifikasi artefak dan menjalankan inference
+ulang tanpa training. Set `ATC_TORCH_PYTHON` ke interpreter existing yang memiliki
+PyTorch jika base interpreter proyek belum menyediakannya. Tidak ada instalasi atau
+perubahan environment otomatis. Parameter tetap berada di `configs/visual_temporal.json`.
+
+`15_ingest_visual_candidates.py` memvalidasi video UTA-RLDD/FatigueView lokal yang
+sudah diakses secara sah; tidak mengunduh atau melatih classifier. FatigueView
+mengharuskan pemetaan peserta/sesi yang terverifikasi. `16_audit_visual_sources.py`
+mengambil metadata dan JSON event kecil dari sumber resmi, tanpa video atau pesan
+kepada penulis. `17_validate_visual_temporal.py --output <file-baru.json>` melakukan
+replay seluruh84checkpoint CNN, pemeriksaan168fit normalisasi dan42checkpoint
+Ridge/Dummy, label asli, metrik, split serta preservation. Lihat
+[hasil temporal](../reports/visual_temporal_research.md) dan
+[akses/ingestion dataset](../docs/visual_dataset_feasibility.md).

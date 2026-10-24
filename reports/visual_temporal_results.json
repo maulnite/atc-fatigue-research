@@ -1,0 +1,228 @@
+{
+  "target": "KSS",
+  "unit": "one original test; outer subject held out",
+  "tests": 36,
+  "subjects": 14,
+  "models": [
+    {
+      "model": "cnn_1s",
+      "seed": 42,
+      "mae": 1.777143332693312,
+      "rmse": 2.126645768829101,
+      "subject_macro_mae": 1.7438379980268934,
+      "reload_verified": true
+    },
+    {
+      "model": "cnn_1s",
+      "seed": 43,
+      "mae": 1.8864462508095636,
+      "rmse": 2.090623943997285,
+      "subject_macro_mae": 1.8936928340366908,
+      "reload_verified": true
+    },
+    {
+      "model": "cnn_1s",
+      "seed": 44,
+      "mae": 2.0238672892252603,
+      "rmse": 2.3473607534715235,
+      "subject_macro_mae": 2.0082297325134277,
+      "reload_verified": true
+    },
+    {
+      "model": "cnn_60s",
+      "seed": 42,
+      "mae": 1.870384203063117,
+      "rmse": 2.1419831656030177,
+      "subject_macro_mae": 1.885651094572885,
+      "reload_verified": true
+    },
+    {
+      "model": "cnn_60s",
+      "seed": 43,
+      "mae": 1.9658280081219144,
+      "rmse": 2.1426607354981755,
+      "subject_macro_mae": 2.0002051308041526,
+      "reload_verified": true
+    },
+    {
+      "model": "cnn_60s",
+      "seed": 44,
+      "mae": 1.9998772276772394,
+      "rmse": 2.2703703436602716,
+      "subject_macro_mae": 2.0253501392546154,
+      "reload_verified": true
+    },
+    {
+      "model": "dummy_mean",
+      "seed": 42,
+      "mae": 2.0518659989248227,
+      "rmse": 2.2704238708865025,
+      "subject_macro_mae": 2.1082020687062704,
+      "reload_verified": true
+    },
+    {
+      "model": "ridge_combined",
+      "seed": 42,
+      "mae": 1.4544404230466665,
+      "rmse": 1.8170156032301952,
+      "subject_macro_mae": 1.4405102105732717,
+      "reload_verified": true
+    },
+    {
+      "model": "ridge_ear",
+      "seed": 42,
+      "mae": 1.3508392720166047,
+      "rmse": 1.6524382178631947,
+      "subject_macro_mae": 1.357059749709452,
+      "reload_verified": true
+    }
+  ],
+  "primary_seed": 42,
+  "bootstrap": [
+    {
+      "model": "cnn_60s",
+      "baseline": "ridge_ear",
+      "subjects": 14,
+      "subject_macro_mae_difference": 0.5285913448634326,
+      "descriptive_cluster_bootstrap_95": [
+        0.22290995895543955,
+        0.798481647035142
+      ],
+      "draws": 2000,
+      "seed": 42,
+      "unit": "subject; negative difference favors CNN",
+      "caveat": "14 people; overlapping LOSO training sets; exploratory, not significance proof"
+    },
+    {
+      "model": "cnn_1s",
+      "baseline": "ridge_ear",
+      "subjects": 14,
+      "subject_macro_mae_difference": 0.38677824831744123,
+      "descriptive_cluster_bootstrap_95": [
+        -0.0007800366180131427,
+        0.7110037632925321
+      ],
+      "draws": 2000,
+      "seed": 42,
+      "unit": "subject; negative difference favors CNN",
+      "caveat": "14 people; overlapping LOSO training sets; exploratory, not significance proof"
+    }
+  ],
+  "seconds": 71.64883572305553,
+  "environment": {
+    "torch": "1.13.1+cu116",
+    "numpy": "1.24.1",
+    "device": "cpu",
+    "threads": 2
+  },
+  "shapes": {
+    "cnn_60s": [
+      36,
+      10,
+      5
+    ],
+    "cnn_1s": [
+      36,
+      600,
+      5
+    ]
+  },
+  "input_channels": 11,
+  "neural_parameters": 553,
+  "checks": {
+    "outer_subject_overlap": 0,
+    "inner_subject_overlap": 0,
+    "one_prediction_per_test_per_model_seed": true,
+    "all_84_neural_checkpoints_replayed": true
+  },
+  "run_id": "20261024T164444510164Z_seed42_47f50c",
+  "parent_run": "20261024T164409996849Z_seed42_ae9238",
+  "repeatability": {
+    "rows": 324,
+    "max_absolute_prediction_delta": 0.0,
+    "independent_runs": 3
+  },
+  "training_summary": {
+    "('selected_epochs', 'min')": {
+      "cnn_1s": 1,
+      "cnn_60s": 1
+    },
+    "('selected_epochs', 'median')": {
+      "cnn_1s": 83.0,
+      "cnn_60s": 58.0
+    },
+    "('selected_epochs', 'max')": {
+      "cnn_1s": 150,
+      "cnn_60s": 141
+    },
+    "('seconds', 'min')": {
+      "cnn_1s": 0.1201048039,
+      "cnn_60s": 0.039051549
+    },
+    "('seconds', 'median')": {
+      "cnn_1s": 1.243891216,
+      "cnn_60s": 0.2635004075
+    },
+    "('seconds', 'max')": {
+      "cnn_1s": 2.2789357391,
+      "cnn_60s": 0.5931276481
+    },
+    "('checkpoint_bytes', 'min')": {
+      "cnn_1s": 6737,
+      "cnn_60s": 6747
+    },
+    "('checkpoint_bytes', 'median')": {
+      "cnn_1s": 6737.0,
+      "cnn_60s": 6747.0
+    },
+    "('checkpoint_bytes', 'max')": {
+      "cnn_1s": 6737,
+      "cnn_60s": 6747
+    }
+  },
+  "source_provenance": {
+    "git_base_at_execution": "3e987300f713f1e070304a4c63330612172e58c6",
+    "worktree_contained_new_implementation": true,
+    "identity": "Exact source file SHA256 checksums identify the executed implementation; git base alone predates the enhancement.",
+    "source_code_checksums": {
+      "src/atc_fatigue/__init__.py": "f45f4a6ad706cf417a7dba255fd824ad226c06d91bbc5163f1d8079d10b6c4de",
+      "src/atc_fatigue/audio/__init__.py": "b679fa9257e416951587c874ccdb8563f3f7a31d7bc5f657be0c73c36d805d5d",
+      "src/atc_fatigue/audio/features.py": "34b6683067283281aac3ad1c4ea76925c94282780b91ba4ea4bb2e46fc1123dd",
+      "src/atc_fatigue/audio/radio.py": "9ed6d8b4ad69913a44efdaf96bb85d94da164dbe67824136ae6e2ec7c6dec4f8",
+      "src/atc_fatigue/cli.py": "3eb91e8df6e070904892936502cf28ac70a3477741061359aa1e28a19358f679",
+      "src/atc_fatigue/evaluation/__init__.py": "362a082368b6d139c8db9b877ab4433bd7e5fcbc4e317ecb34ced07cab8e089c",
+      "src/atc_fatigue/evaluation/engineering.py": "f9ec14f0acd34107503b43f6c8ea6ca195142a6e9ce056101c690513ef2c9d3f",
+      "src/atc_fatigue/evaluation/reports.py": "9d195ceecfc8ee69a9ff192ad7c5ce4696cd6cfeaf9e4170c35c1a7521c7e27e",
+      "src/atc_fatigue/fusion/__init__.py": "f250f4368836a66ce13cbb3a8362b88d759357ac9293dd0d882fea7e895b28d3",
+      "src/atc_fatigue/fusion/align.py": "1f508f110693703661bbbd21d1849275bf0e6f005d575e5ac7ce6b4389f4f1de",
+      "src/atc_fatigue/fusion/demo.py": "f5925bfed7bd8b24090c2cc463b9a2f32aebf140f50fedebde012d272113947d",
+      "src/atc_fatigue/io/__init__.py": "ae41df6cfd9c4ebd374b77767addb29bd83d762920ed0309564c4d501bd31ce2",
+      "src/atc_fatigue/io/atcosim.py": "2368f2f63ebddf4c211ca848375187d38d6193f95436bb9b5087f330d1331a83",
+      "src/atc_fatigue/io/download.py": "9e5fc74f2b13885166d6189c6024b25ad683af3e919204caa21ee87c06d2dccd",
+      "src/atc_fatigue/io/drozy.py": "f36680ac33555d1c15540555bcc193be979635c9ff94f8ccfd57fc23d4f52784",
+      "src/atc_fatigue/io/mrl.py": "ac6d1f1a926c351c6fee5a0a315d51c294326373cbdc366c6221337c0b454389",
+      "src/atc_fatigue/io/ravdess.py": "646f2931ff562f8bc9a7b8f3a7c23d9464c160f6d8784c7a6aed946985dc2e27",
+      "src/atc_fatigue/io/validation.py": "719d1099c37d604085262a57e21451a89df136fdf2941952e3d34725a0874794",
+      "src/atc_fatigue/io/visual_candidates.py": "4dafc79a6d07b62887f324cb25f0a7e7c7debfd0b9aa7f575069bc061e9f78ed",
+      "src/atc_fatigue/models/__init__.py": "60942db43b0d7b54bd5f173de58d3966b2e5073fcce235b3a4e448e3e5f3755d",
+      "src/atc_fatigue/models/baselines.py": "6f5d84c28ebffea794db6c484eb67ba7230571bb5c9a655fee3f917b17184da7",
+      "src/atc_fatigue/models/sleepiness.py": "d80a6555a6fc468525de08cdfbaa5025530c7d6ca5b5957eacbb9506f00ab238",
+      "src/atc_fatigue/research/__init__.py": "8f30c0f9485498c9210811175037776cad7f815ec235f22c46497063e1884fea",
+      "src/atc_fatigue/research/data.py": "f4d7161e0b9ce19b3e711cc8dbde9cf5f319d30572a131701aa87e6b8e7e1ffb",
+      "src/atc_fatigue/research/plots.py": "fc2324fffdf39387ab99293ee54c58f8c7bb59fba7059e9fd1d92f64d957f0b1",
+      "src/atc_fatigue/research/publication.py": "2bdd2cf30edd565a80acfad0c8cca5f40c44ca916719daab741f182a4871b170",
+      "src/atc_fatigue/research/representations.py": "ba86145ba2231ae400d6fa7871d0f20a08d367f9adef94af486253db008d8a71",
+      "src/atc_fatigue/research/runs.py": "65c01f1328746b4041b4d3388f00edcdf80b2b84f7dfe1a403b45945262a4155",
+      "src/atc_fatigue/research/temporal.py": "55b26d36f4db3c840dd8fc34077a909cecfd15c47a807af3007179c2af7b3fb8",
+      "src/atc_fatigue/research/temporal_plots.py": "e0feaf76ded5214be3f928801979f4a4154afef0a15f6490ad0ca35ac8dda136",
+      "src/atc_fatigue/research/temporal_runs.py": "7722a85bfdc3ef0e32c9f27e3d4f632dfd34791431bf7a570a7efac598419495",
+      "src/atc_fatigue/research/temporal_worker.py": "fa4fea8421ddd92c67a3d25761937ceaeab9a1207ef22048927123831a700b36",
+      "src/atc_fatigue/utils/__init__.py": "3d443007c0d8ebdc28cc9a9f03e83cce1ae99a2676508deed07f7feebdec23f5",
+      "src/atc_fatigue/utils/runtime.py": "22337dfef9df93414214784aed856080395e0e1633c6fc84a29a536078e3e781",
+      "src/atc_fatigue/vision/__init__.py": "e892509cb7441b9b3404ed92fe2e227bcedeec340e6d922c7e6ca6c63e65568f",
+      "src/atc_fatigue/vision/appearance.py": "349b737e4d5dfa54bad5c3dbf330adfde4390f8788c0d88b0d4aca3417ed6702",
+      "src/atc_fatigue/vision/eye_features.py": "5bd8e06e19e2beccf07b8b7b6f2908163343e255188e22102824bfa268b19a58"
+    },
+    "config_sha256": "f91a31e5ce2e6ea604552f7ddc20fb27105a3101f18233dcd7f82062d5f141a2"
+  }
+}
