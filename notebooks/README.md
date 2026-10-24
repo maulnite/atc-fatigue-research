@@ -1,5 +1,9 @@
 # Notebook demo
 
+**Mulai dari [tiga notebook utama v3](v3/README.md)** untuk riset notebook-first: audio, visual, serta fusion dan sintesis. V3 menyediakan DEMO/FULL dengan ekstraksi, training, evaluasi, dan run baru yang terpisah. [Laporan v3](../reports/notebook_v3_summary.md) mencatat hasil dan bukti eksekusi.
+
+## Arsip demo awal
+
 **Kelima notebook sudah berisi output eksekusi dan dapat dibaca langsung di GitHub.** Tim dapat melihat tabel, grafik, dan hasil prediksi tanpa menjalankan kode atau memiliki dataset di laptop masing-masing.
 
 | Notebook | Isi |

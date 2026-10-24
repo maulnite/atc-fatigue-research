@@ -1,0 +1,70 @@
+notebook_version: v3
+seed: 42
+mode_default: DEMO
+threads: 4
+opencv_threads: 2
+allow_network_download: false
+allow_gpu_training: false
+max_demo_examples: 3
+artifact_root: runs
+cached_run_registry: reports/notebook_v3_runs.json
+figure_dpi: 160
+publication_policy: safe_aggregates_and_synthetic_media
+radio_channel:
+  band_hz: [300, 3400]
+  filter_order: 4
+  gain_db: -3.0
+  snr_db: 20.0
+  stress_snr_db: 10.0
+  peak_limit: 0.98
+  filter_mode: forward_backward_offline
+  codec: none
+  augmentation: clean_plus_radio20_training_subjects_only
+presentation:
+  private_audio_default: false
+  private_audio_environment: ATC_NOTEBOOK_PRIVATE_MEDIA
+additional_datasets:
+  audit_summary: reports/fatigue_dataset_audit.json
+  predi_manifest: data/manifests/predi_covid_subset.parquet
+  cogbeacon_root: data/raw/cogbeacon/extracted
+  cogbeacon_audit: data/interim/cogbeacon/audit.json
+fusion_sensitivity:
+  strategy: leave_one_actor_out
+  status: exploratory
+  tune_hyperparameters: false
+historical_runs:
+  atcosim_audio: 20261022T081753373596Z_seed42_72a678
+  mrl_eye_state: 20261022T082130453246Z_seed42_6453bd
+  drozy_kss: 20261022T082144167968Z_seed42_60423d
+  ravdess_emotion: 20261022T081858104344Z_seed42_75d379
+audio:
+  source_manifest: data/manifests/atcosim_subset.parquet
+  sample_rate: 16000
+  min_duration_seconds: 0.5
+  silence_rms: 0.00001
+  n_mfcc: 13
+visual:
+  mrl_manifest: data/manifests/mrl_eye_subset.parquet
+  drozy_root: data/raw/drozy/subset/DROZY
+  window_ms: 60000
+  max_gap_ms: 150
+  ear_threshold: 0.21
+  blink_min_ms: 50
+  blink_max_ms: 500
+  perclos_min_closure_ms: 500
+  min_coverage: 0.8
+  sensitivity_thresholds: [0.18, 0.21, 0.24]
+  mrl_image_size: [32, 64]
+  svm_c: 1.0
+fusion:
+  ravdess_manifest: data/manifests/ravdess_subset.parquet
+  samples_per_second: 2
+  logistic_c: 1.0
+  max_iter: 2000
+frozen_splits:
+  mrl_eye_state: reports/metrics/mrl_eye_seed42_v1/split_manifest.csv
+  ravdess_emotion: reports/metrics/ravdess_emotion_seed42_v1/split_manifest.csv
+canonical_references:
+  mrl_eye_state: mrl_eye_seed42_v1
+  drozy_kss: drozy_kss_loso_v1
+  ravdess_emotion: ravdess_emotion_seed42_v1

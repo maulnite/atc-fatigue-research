@@ -1,0 +1,159 @@
+{
+  "date_utc": "2026-10-23",
+  "authorization": "User explicitly revised prior no-public-media preference; research smoke-test examples",
+  "scope": "one Predi-COVID test recording and one genuine paired RAVDESS test recording; no full dataset/cache/models",
+  "selection": "first test sample sorted by sample_id; identical to existing notebook demonstrations",
+  "sources": {
+    "predi_covid": {
+      "record": "https://zenodo.org/records/5937844",
+      "doi": "10.5281/zenodo.5937844",
+      "title": "Audio recordings of COVID-19 positive individuals from the prospective Predi-COVID cohort study with their fatigue status",
+      "creators": [
+        "Abir Elbéji",
+        "Lu Zhang",
+        "Eduardo Higa",
+        "Aurélie Fischer",
+        "Vladimir Despotovic",
+        "Petr V. Nazarov",
+        "Gloria A. Aguayo",
+        "Guy Fagherazzi"
+      ],
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "sample": "contoh-21b227f7",
+      "source_sha256": "2d3de29590766520925a911df2e9f08e5e2488d8178831fadb9c7b2873371f34",
+      "source_run": "20261023T105608840284Z_seed42_0d3b34",
+      "source_rate_hz": 44100,
+      "source_channels": 1,
+      "duration_seconds": 26.9680625,
+      "modifications": "source WAV unchanged under generic filename; clean is mono/resampled16k PCM16; radio adds configured voice-channel simulation; plots derive from same source",
+      "radio_parameters": {
+        "band_hz": [
+          300,
+          3400
+        ],
+        "filter_order": 4,
+        "gain_db": -3.0,
+        "snr_db": 20.0,
+        "stress_snr_db": 10.0,
+        "peak_limit": 0.98,
+        "filter_mode": "forward_backward_offline",
+        "codec": "none",
+        "augmentation": "clean_plus_radio20_training_subjects_only"
+      },
+      "radio_qc": {
+        "seed": 942192710,
+        "requested_snr_db": 20.0,
+        "measured_snr_db": 20.000000002751715,
+        "gain_db": -3.0,
+        "peak_attenuation": 1.0,
+        "sample_rate": 16000,
+        "duration_seconds": 26.9680625,
+        "source_rms": 0.08170185175450477,
+        "radio_rms": 0.03953486937182911,
+        "source_peak": 0.9888895153999329,
+        "radio_peak": 0.5920044779777527,
+        "source_clipping_fraction": 0.0,
+        "radio_clipping_fraction": 0.0,
+        "source_inband_energy_fraction": 0.4845465170044995,
+        "radio_inband_energy_fraction": 0.9796950727819557,
+        "codec_simulated": false,
+        "filter": "butterworth_sos_forward_backward_offline"
+      }
+    },
+    "ravdess": {
+      "record": "https://zenodo.org/records/1188976",
+      "doi": "10.5281/zenodo.1188976",
+      "title": "The Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS)",
+      "creators": [
+        "Steven R. Livingstone",
+        "Frank A. Russo"
+      ],
+      "license": "CC-BY-NC-SA-4.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "sample": "contoh-61881241",
+      "source_sha256": "478adf8c0bf4b51f8a7962c2aea37b34c3b193fd4bfb2fa8ffb0d556d013d335",
+      "source_run": "20261023T104859625424Z_seed42_cce30b",
+      "duration_seconds": 3.648,
+      "stream_offset_seconds": 0.0,
+      "modifications": "AV MP4 unchanged under generic filename; frame sampled at500ms, JPEG encoding, no crop or image alteration"
+    }
+  },
+  "excluded_sources": {
+    "atcosim": "technical report prohibits third-party redistribution",
+    "drozy": "written approval required for redistribution; image publication restricted",
+    "mrl_eye": "no explicit redistribution license verified; current official page timeout",
+    "cogbeacon": "software MIT does not establish a clear redistribution grant for biometric media"
+  },
+  "assets": [
+    {
+      "file": "assets/demo_media/predi_clean.wav",
+      "sha256": "eaf01c2dcd96aa08a6022da1a89cd1538eb137652a3a5765092dc488dd71cd12",
+      "bytes": 863022,
+      "dataset": "predi_covid",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "file": "assets/demo_media/predi_frequency_energy.png",
+      "sha256": "aeec0ee22dc1062e814bec4a96a1700b3d788011b85d82101f4a20622564d03f",
+      "bytes": 174205,
+      "dataset": "predi_covid",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "file": "assets/demo_media/predi_radio20.wav",
+      "sha256": "f10a3dbcdad4c8b8b68770ac321cee47bb8ac8513be381f1f0ed36f8bf9c0fd3",
+      "bytes": 863022,
+      "dataset": "predi_covid",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "file": "assets/demo_media/predi_source.wav",
+      "sha256": "2d3de29590766520925a911df2e9f08e5e2488d8178831fadb9c7b2873371f34",
+      "bytes": 2378622,
+      "dataset": "predi_covid",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "file": "assets/demo_media/predi_spectrograms.png",
+      "sha256": "59b65f5009dd5fad19233b3ec7914e0b79f80f754033c895e9e5f1b3122ef671",
+      "bytes": 2022432,
+      "dataset": "predi_covid",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "file": "assets/demo_media/predi_waveforms.png",
+      "sha256": "41900dd6014068d338ae6cdfb0f53de633c8ed760c947d6ddf25871051491a88",
+      "bytes": 156571,
+      "dataset": "predi_covid",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "file": "assets/demo_media/ravdess_frame.jpg",
+      "sha256": "aac4ffbed98a4a094b62dc26860883e90cbf93558b0742bd3135f5bf3ffe28ed",
+      "bytes": 62654,
+      "dataset": "ravdess",
+      "license": "CC-BY-NC-SA-4.0"
+    },
+    {
+      "file": "assets/demo_media/ravdess_paired_example.mp4",
+      "sha256": "478adf8c0bf4b51f8a7962c2aea37b34c3b193fd4bfb2fa8ffb0d556d013d335",
+      "bytes": 4667551,
+      "dataset": "ravdess",
+      "license": "CC-BY-NC-SA-4.0"
+    }
+  ],
+  "notebook_audio_cells": [
+    {
+      "notebook": "01_audio_analysis.ipynb",
+      "cell_id": "6619291b",
+      "code_sha256": "7d4d61cb7fb41583fa3be42cb90ddf2a3e4e089876514d403ba8b8752bf3f0e4",
+      "dataset": "predi_covid",
+      "license": "CC-BY-4.0",
+      "audio_sha256": [
+        "eaf01c2dcd96aa08a6022da1a89cd1538eb137652a3a5765092dc488dd71cd12",
+        "f10a3dbcdad4c8b8b68770ac321cee47bb8ac8513be381f1f0ed36f8bf9c0fd3"
+      ]
+    }
+  ]
+}

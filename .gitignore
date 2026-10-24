@@ -69,3 +69,6 @@ htmlcov/
 *.tar
 *.tar.gz
 *.7z
+
+# Append-only notebook-first experiments remain local
+/runs/

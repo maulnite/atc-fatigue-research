@@ -16,11 +16,20 @@ Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Contro
 
 ---
 
+
+**Pembaruan publikasi media — 23 Oktober 2026:** pengguna mengizinkan contoh asli untuk smoke test publik. [Galeri media](assets/demo_media/README.md) kini menyediakan source/clean/radio Predi-COVID (CC BY4.0), tiga grafik transformasi, serta genuine paired AV/frame RAVDESS (CC BY-NC-SA4.0). Dua player audio boleh tertanam hanya jika cell dan audio bytes cocok dengan [manifest izin/checksum](reports/notebook_v3_media_publication.json). Dataset lengkap/cache/models tetap lokal; ATCOSIM/DROZY dan media lain yang hak redistribusinya belum jelas tetap tidak dibagikan. Pernyataan lama “semua media hanya lokal” di bagian historis dibatasi oleh pengecualian terbaru ini.
+
 > **Status — smoke test dataset publik telah dijalankan.** Ekstraksi audio/visual, baseline berlabel asli, paired emotion fusion, model reload, serta lima notebook dengan fresh-kernel Run All tersedia. Benchmark **multimodal ATC fatigue belum terukur**; akses IEEE audio fatigue dan dataset ATC berpasangan masih diperlukan.
+
+**Pengembangan v3 — notebook-first research:** [tiga notebook utama](notebooks/v3/README.md) memperlihatkan proses dari EDA, ekstraksi fitur, training, evaluasi, sampai interpretasi. Mode **DEMO** memakai cache FULL terverifikasi dan menjalankan inference checkpoint; contoh media asli hanya opt-in lokal; **FULL** mengulang eksperimen ke run baru. Lihat [laporan eksperimen dan validasi v3](reports/notebook_v3_summary.md). Lima notebook lama beserta seluruh output/model/hasilnya dipertahankan. **Performa multimodal fatigue ATC belum diukur.**
+
+**Enhancement v3 — 22 Oktober 2026:** notebook yang sama menambahkan transformasi audio ATCOSIM asli untuk sesi lokal berizin, benchmark fatigue/unwell klinis Predi-COVID (207 rekaman / 120 peserta), audit deskriptif CogBeacon, dan sensitivity analysis LOAO RAVDESS. Pada LOAO, audio-only lebih tinggi daripada fusion; hasil ini membatasi kesimpulan split historis. [Hasil, grafik, run IDs dan QA terbaru](reports/notebook_v3_summary.md) · [Audit dataset tambahan](reports/fatigue_dataset_audit.json).
+
+**Three-track feasibility — 23 Oktober 2026:** ketiga notebook menampilkan actual feature vectors, bentuk `X`/`y` dan preprocessing train-only. Audio menambahkan uji clean/radio terkontrol serta playback privat; visual menambahkan transparansi HOG/EAR/window→test dan ablation LOSO; fusion menelusuri concatenation serta prediksi benar/salah dari paired AV. DEMO publik dapat diuji tanpa membaca raw media. [Hasil aktual dan batas ilmiah](reports/notebook_v3_summary.md).
 
 Status tersebut berlaku untuk **MVP**, bukan seluruh detail handoff. Lihat [checklist pemenuhan handoff](reports/handoff_coverage.md) untuk bukti, kekurangan, dan pekerjaan bersyarat, serta [pelengkapan teknis](reports/engineering_audit.md) untuk profiling/QC terbaru.
 
-**Untuk tim:** buka [notebook demo beserta outputnya](notebooks/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.
+**Untuk tim:** buka [tiga notebook v3 beserta outputnya](notebooks/v3/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.
 
 **Laporan progres:** [pekerjaan yang sudah dilakukan, hasil, dan tindak lanjut — 21 Oktober 2026](reports/progress_report_2026-10-21.md).
 
