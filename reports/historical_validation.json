@@ -1,0 +1,553 @@
+{
+  "utc": "2026-10-24T16:47:20.122241+00:00",
+  "notebooks": [
+    {
+      "path": "notebooks/v3/01_audio_analysis.ipynb",
+      "cells": 71,
+      "code_cells": 47,
+      "outputs": 112,
+      "figures": 27,
+      "errors": 0,
+      "source_hash": "9dcc33f2cc672688bbe1811ab0e46509d53ed481f24f368b376fe891b9aab63f"
+    },
+    {
+      "path": "notebooks/v3/02_visual_analysis.ipynb",
+      "cells": 84,
+      "code_cells": 55,
+      "outputs": 137,
+      "figures": 35,
+      "errors": 0,
+      "source_hash": "ee384ba26d8f7a12e237d93b775bfbd9c1e769cd011a704523648a94e7d70bf2"
+    },
+    {
+      "path": "notebooks/v3/03_multimodal_fusion.ipynb",
+      "cells": 45,
+      "code_cells": 27,
+      "outputs": 80,
+      "figures": 17,
+      "errors": 0,
+      "source_hash": "35b9a75ac4d38ce912e3f6bfe0ea6cf21d2ad843615c2040facad9c14c189731"
+    }
+  ],
+  "runs": [
+    {
+      "experiment": "atcosim_audio",
+      "run_id": "20261023T105347534495Z_seed42_49cb09",
+      "target": null,
+      "status": "completed",
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
+      "replayed_checkpoints": 0,
+      "recomputed_metrics": {},
+      "unique_checkpoints": 0,
+      "figures": 8,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 3,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "mrl_eye_state",
+      "run_id": "20261024T164355883823Z_seed42_91ed89",
+      "target": "eye_state",
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
+      "replayed_checkpoints": 2,
+      "recomputed_metrics": {
+        "dummy_majority": {
+          "macro_f1": 0.3557531962201223,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5522001725625539
+        },
+        "hog_linear_svm": {
+          "macro_f1": 0.7876650826572456,
+          "balanced_accuracy": 0.7872064667630058,
+          "accuracy": 0.7903364969801553
+        }
+      },
+      "unique_checkpoints": 2,
+      "figures": 8,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 1,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "drozy_kss",
+      "run_id": "20261024T164409996849Z_seed42_ae9238",
+      "target": "KSS",
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
+      "replayed_checkpoints": 28,
+      "recomputed_metrics": {
+        "dummy_mean": {
+          "mae": 2.0518659989248227,
+          "rmse": 2.2704238708865025,
+          "subject_macro_mae": 2.1082020687062704
+        },
+        "ridge_alpha1": {
+          "mae": 1.4544404230466665,
+          "rmse": 1.8170156032301952,
+          "subject_macro_mae": 1.4405102105732717
+        }
+      },
+      "unique_checkpoints": 28,
+      "figures": 14,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 2,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "ravdess_emotion",
+      "run_id": "20261023T104859625424Z_seed42_cce30b",
+      "target": "emotion",
+      "status": "completed",
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
+      "replayed_checkpoints": 4,
+      "recomputed_metrics": {
+        "audio_only": {
+          "macro_f1": 0.3116013071895425,
+          "balanced_accuracy": 0.375,
+          "accuracy": 0.375
+        },
+        "audio_visual": {
+          "macro_f1": 0.45489926739926734,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5
+        },
+        "dummy_majority": {
+          "macro_f1": 0.027777777777777776,
+          "balanced_accuracy": 0.125,
+          "accuracy": 0.125
+        },
+        "visual_only": {
+          "macro_f1": 0.27965686274509804,
+          "balanced_accuracy": 0.34375,
+          "accuracy": 0.34375
+        }
+      },
+      "unique_checkpoints": 4,
+      "figures": 13,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 0,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "ravdess_emotion_loao",
+      "run_id": "20261023T105052302183Z_seed42_0d6280",
+      "target": "emotion",
+      "status": "completed",
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
+      "replayed_checkpoints": 32,
+      "recomputed_metrics": {
+        "audio_only": {
+          "macro_f1": 0.5452186969101187,
+          "balanced_accuracy": 0.546875,
+          "accuracy": 0.546875
+        },
+        "audio_visual": {
+          "macro_f1": 0.4267915918485839,
+          "balanced_accuracy": 0.4609375,
+          "accuracy": 0.4609375
+        },
+        "dummy_majority": {
+          "macro_f1": 0.027777777777777776,
+          "balanced_accuracy": 0.125,
+          "accuracy": 0.125
+        },
+        "visual_only": {
+          "macro_f1": 0.40713559557252754,
+          "balanced_accuracy": 0.4296875,
+          "accuracy": 0.4296875
+        }
+      },
+      "unique_checkpoints": 32,
+      "figures": 4,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 0,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "predi_covid_fatigue",
+      "run_id": "20261023T105402224766Z_seed42_880107",
+      "target": "clinical_fatigue_binary",
+      "status": "completed",
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
+      "replayed_checkpoints": 3,
+      "recomputed_metrics": {
+        "dummy_majority": {
+          "macro_f1": 0.36363636363636365,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5714285714285714
+        },
+        "linear_svm_c1": {
+          "macro_f1": 0.5258467023172906,
+          "balanced_accuracy": 0.5277777777777778,
+          "accuracy": 0.5476190476190477
+        },
+        "logistic_c1": {
+          "macro_f1": 0.4857142857142857,
+          "balanced_accuracy": 0.48611111111111116,
+          "accuracy": 0.5
+        }
+      },
+      "unique_checkpoints": 3,
+      "figures": 9,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 0,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "cogbeacon_audit",
+      "run_id": "20261024T164613827795Z_seed42_be9da7",
+      "target": null,
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
+      "replayed_checkpoints": 0,
+      "recomputed_metrics": {},
+      "unique_checkpoints": 0,
+      "figures": 2,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 0,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "predi_covid_radio",
+      "run_id": "20261023T105608840284Z_seed42_0d3b34",
+      "target": "clinical_fatigue_binary",
+      "status": "completed",
+      "source_hash_matches_current_notebook": false,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": true,
+      "replayed_checkpoints": 15,
+      "recomputed_metrics": {
+        "aug20_to_radio10__dummy_majority": {
+          "macro_f1": 0.36363636363636365,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5714285714285714
+        },
+        "aug20_to_radio10__linear_svm_c1": {
+          "macro_f1": 0.4589830508474576,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5476190476190477
+        },
+        "aug20_to_radio10__logistic_c1": {
+          "macro_f1": 0.4457478005865103,
+          "balanced_accuracy": 0.5138888888888888,
+          "accuracy": 0.5714285714285714
+        },
+        "aug20_to_radio20__dummy_majority": {
+          "macro_f1": 0.36363636363636365,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5714285714285714
+        },
+        "aug20_to_radio20__linear_svm_c1": {
+          "macro_f1": 0.4814814814814815,
+          "balanced_accuracy": 0.4930555555555556,
+          "accuracy": 0.5238095238095238
+        },
+        "aug20_to_radio20__logistic_c1": {
+          "macro_f1": 0.5757575757575757,
+          "balanced_accuracy": 0.5763888888888888,
+          "accuracy": 0.5952380952380952
+        },
+        "clean_to_clean__dummy_majority": {
+          "macro_f1": 0.36363636363636365,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5714285714285714
+        },
+        "clean_to_clean__linear_svm_c1": {
+          "macro_f1": 0.5258467023172906,
+          "balanced_accuracy": 0.5277777777777778,
+          "accuracy": 0.5476190476190477
+        },
+        "clean_to_clean__logistic_c1": {
+          "macro_f1": 0.4857142857142857,
+          "balanced_accuracy": 0.48611111111111116,
+          "accuracy": 0.5
+        },
+        "clean_to_radio10__dummy_majority": {
+          "macro_f1": 0.36363636363636365,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5714285714285714
+        },
+        "clean_to_radio10__linear_svm_c1": {
+          "macro_f1": 0.5654290931223371,
+          "balanced_accuracy": 0.5694444444444444,
+          "accuracy": 0.5952380952380952
+        },
+        "clean_to_radio10__logistic_c1": {
+          "macro_f1": 0.5073313782991202,
+          "balanced_accuracy": 0.5625,
+          "accuracy": 0.6190476190476191
+        },
+        "clean_to_radio20__dummy_majority": {
+          "macro_f1": 0.36363636363636365,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.5714285714285714
+        },
+        "clean_to_radio20__linear_svm_c1": {
+          "macro_f1": 0.5757575757575757,
+          "balanced_accuracy": 0.5763888888888888,
+          "accuracy": 0.5952380952380952
+        },
+        "clean_to_radio20__logistic_c1": {
+          "macro_f1": 0.6298305084745763,
+          "balanced_accuracy": 0.6458333333333334,
+          "accuracy": 0.6904761904761905
+        }
+      },
+      "unique_checkpoints": 6,
+      "figures": 10,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 1,
+      "artifact_integrity": "passed"
+    },
+    {
+      "experiment": "drozy_feature_ablation",
+      "run_id": "20261024T164441991561Z_seed42_1fbd3f",
+      "target": "KSS",
+      "status": "completed",
+      "source_hash_matches_current_notebook": true,
+      "scientific_code_matches_full_execution": true,
+      "markdown_only_publication_update": false,
+      "replayed_checkpoints": 70,
+      "recomputed_metrics": {
+        "blink_only": {
+          "mae": 1.5362413353764697,
+          "rmse": 1.9033125976844738,
+          "subject_macro_mae": 1.5422002303030098
+        },
+        "closure_only": {
+          "mae": 1.910911357181065,
+          "rmse": 2.1040431478115997,
+          "subject_macro_mae": 1.9552111638568308
+        },
+        "combined": {
+          "mae": 1.4544404230466665,
+          "rmse": 1.8170156032301952,
+          "subject_macro_mae": 1.4405102105732717
+        },
+        "dummy_mean": {
+          "mae": 2.0518659989248227,
+          "rmse": 2.2704238708865025,
+          "subject_macro_mae": 2.1082020687062704
+        },
+        "ear_only": {
+          "mae": 1.3508392720166047,
+          "rmse": 1.6524382178631947,
+          "subject_macro_mae": 1.3570597497094519
+        }
+      },
+      "unique_checkpoints": 70,
+      "figures": 1,
+      "captions_complete": true,
+      "private_figures_local_only": 0,
+      "synthetic_illustrations": 0,
+      "artifact_integrity": "passed"
+    }
+  ],
+  "privacy_scope": "new v3 notebooks and figures; legacy notebooks preserved",
+  "preservation_incremental_v3": {
+    "checked": 1367,
+    "unchanged": 1367,
+    "unexpected_changes": 0
+  },
+  "preservation_three_track": {
+    "checked": 3284,
+    "unchanged": 3284,
+    "unexpected_changes": 0
+  },
+  "historical_runs": [
+    {
+      "experiment": "atcosim_audio",
+      "run_id": "20261022T081753373596Z_seed42_72a678",
+      "integrity": "passed",
+      "metrics_reproduced": true
+    },
+    {
+      "experiment": "mrl_eye_state",
+      "run_id": "20261022T082130453246Z_seed42_6453bd",
+      "integrity": "passed",
+      "metrics_reproduced": true
+    },
+    {
+      "experiment": "drozy_kss",
+      "run_id": "20261022T082144167968Z_seed42_60423d",
+      "integrity": "passed",
+      "metrics_reproduced": true
+    },
+    {
+      "experiment": "ravdess_emotion",
+      "run_id": "20261022T081858104344Z_seed42_75d379",
+      "integrity": "passed",
+      "metrics_reproduced": true
+    }
+  ],
+  "legacy": {
+    "checked": 318,
+    "unchanged": 317,
+    "intentional_index_update": [
+      "notebooks/README.md"
+    ],
+    "unexpected_changes": 0
+  },
+  "status": "passed",
+  "licensed_media_publication": {
+    "manifest": "reports/notebook_v3_media_publication.json",
+    "assets": 8,
+    "assets_bytes": 11188079,
+    "approved_audio_cells": 1,
+    "source_and_audio_checksums": "passed",
+    "publication_helper_sha256": "2bdd2cf30edd565a80acfad0c8cca5f40c44ca916719daab741f182a4871b170"
+  },
+  "visual_temporal": {
+    "utc": "2026-10-24T16:47:24.659987+00:00",
+    "status": "passed",
+    "run_id": "20261024T164444510164Z_seed42_47f50c",
+    "metrics_recomputed": true,
+    "historical_ridge_scores_reproduced": true,
+    "original_KSS_labels_verified": 36,
+    "folds": 14,
+    "participant_overlap": 0,
+    "neural_checkpoints_replayed": 84,
+    "normalization_fits_verified": 168,
+    "epoch_selection_from_inner_only": true,
+    "target_scaling_train_only": true,
+    "ridge_dummy_checkpoints_replayed": 42,
+    "protected_files_checked": 4411,
+    "intentional_notebook_update": [
+      "notebooks/v3/02_visual_analysis.ipynb"
+    ],
+    "unexpected_protected_changes": 0,
+    "audio_fusion_notebooks_unchanged": true,
+    "all_input_and_run_artifact_checksums": "passed",
+    "fresh_kernel_executions": [
+      {
+        "notebook": "02_visual_analysis.ipynb",
+        "mode": "FULL",
+        "session": "20261024T164352Z_d55617",
+        "private_media_enabled": false,
+        "raw_media_reads_denied": false,
+        "licensed_media_published": false,
+        "utc_started": "2026-10-24T16:43:52.738735+00:00",
+        "source_hash": "ee384ba26d8f7a12e237d93b775bfbd9c1e769cd011a704523648a94e7d70bf2",
+        "status": "passed",
+        "seconds": 143.30823485483415,
+        "code_cells": 55,
+        "outputs": 137,
+        "png_outputs": 35,
+        "errors": 0,
+        "sources_unchanged": true,
+        "fresh_runs": [
+          {
+            "experiment": "cogbeacon_audit",
+            "run_id": "20261024T164613827795Z_seed42_be9da7"
+          },
+          {
+            "experiment": "drozy_feature_ablation",
+            "run_id": "20261024T164441991561Z_seed42_1fbd3f"
+          },
+          {
+            "experiment": "drozy_kss",
+            "run_id": "20261024T164409996849Z_seed42_ae9238"
+          },
+          {
+            "experiment": "drozy_temporal",
+            "run_id": "20261024T164444510164Z_seed42_47f50c"
+          },
+          {
+            "experiment": "mrl_eye_state",
+            "run_id": "20261024T164355883823Z_seed42_91ed89"
+          }
+        ],
+        "public_png_outputs": 35
+      },
+      {
+        "notebook": "02_visual_analysis.ipynb",
+        "mode": "DEMO",
+        "session": "20261024T164719Z_1f42ad",
+        "private_media_enabled": false,
+        "raw_media_reads_denied": true,
+        "licensed_media_published": false,
+        "utc_started": "2026-10-24T16:47:19.696970+00:00",
+        "source_hash": "ee384ba26d8f7a12e237d93b775bfbd9c1e769cd011a704523648a94e7d70bf2",
+        "status": "passed",
+        "seconds": 24.809369189897552,
+        "code_cells": 55,
+        "outputs": 131,
+        "png_outputs": 35,
+        "errors": 0,
+        "sources_unchanged": true,
+        "fresh_runs": [],
+        "public_png_outputs": 35
+      }
+    ],
+    "tests": {
+      "passed": 91,
+      "warnings": 14,
+      "warning_scope": "existing Matplotlib/Pyparsing deprecations"
+    },
+    "ruff_python_sources_tests_scripts": "passed",
+    "pip_check": "passed",
+    "notebook_lint": {
+      "existing_diagnostics": 119,
+      "new_diagnostics": 0,
+      "by_file_rule_counts_match_prechange_HEAD": true
+    },
+    "repeatability": {
+      "rows": 324,
+      "max_absolute_prediction_delta": 0.0,
+      "independent_runs": 3
+    },
+    "visual_review": {
+      "new_figures": 10,
+      "reviewed": true,
+      "method": "contact sheets plus full-size architecture inspection",
+      "checks": [
+        "axis units",
+        "font size",
+        "legend/colorbar",
+        "no blank images",
+        "before/after shared scale",
+        "y zoom explicitly labeled",
+        "no overlap"
+      ],
+      "presentation_source_session": "20261024T164352Z_d55617",
+      "public_figures_manifest_sha256": "7b0cc495be4345c665095feab92ae92f426af0759cf14e3fad9acf70323ca8dc"
+    },
+    "publication": {
+      "new_source_audio_video_or_faces": 0,
+      "model_or_full_feature_cache_committed": false,
+      "audio_fusion_files_preserved": true
+    },
+    "candidate_benchmarks": {
+      "UTA-RLDD": "NOT RUN \u2014 DATA UNAVAILABLE",
+      "FatigueView": "NOT RUN \u2014 DATA UNAVAILABLE",
+      "DriverFatigueDetection": "NOT RUN \u2014 DATA UNAVAILABLE",
+      "LFD/DLFD": "NOT RUN \u2014 DATA UNAVAILABLE",
+      "CCT/RVT": "NOT RUN \u2014 DATA UNAVAILABLE",
+      "UTA_to_DROZY_transfer": "NOT IMPLEMENTED \u2014 source encoder/data unavailable"
+    }
+  },
+  "validation_scope_note": "Existing nine-task QA plus separate fully-audited temporal experiment; audio/fusion unchanged, visual FULL+DEMO reexecuted."
+}

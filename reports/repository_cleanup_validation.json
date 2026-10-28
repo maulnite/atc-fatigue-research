@@ -1,0 +1,122 @@
+{
+  "utc": "2026-10-28T09:44:39.491829+00:00",
+  "status": "passed",
+  "source_commit": "2c20e198549e6c692bf77b690bb251cc7baf4224",
+  "canonical_notebooks": {
+    "01_audio_analysis.ipynb": 71,
+    "02_visual_analysis.ipynb": 122,
+    "03_multimodal_fusion.ipynb": 85
+  },
+  "preservation_scope": "Every original cell ID, order, metadata and output unchanged. Only published file-location and relative-link source literals were updated.",
+  "original_cells_preserved": 278,
+  "completed_private_artifact_checksums_verified": 6762,
+  "public_artifacts_metrics_media_verified": 230,
+  "unexpected_artifact_changes": [],
+  "legacy_tracked_files_retired_with_exact_backups": {
+    "ATC_Notebook_First_3_Notebooks_Agent_Prompt_v3.md": "6ceb13105f8fc6ce71893f5ffb4dc604e2c3cfc9489804ecbf874022e7769754",
+    "ATC_Notebook_First_3_Notebooks_Spec_v3.md": "7a2ff23863c55c9226bae5c640c8b751db8277ddf39f909f48a3b32b12d8bc82",
+    "notebooks/00_project_overview.ipynb": "e1ca0fec530cda28942e4256ffd5445c708d7fce859680942125ee933dabc8ef",
+    "notebooks/01_audio_atc_pipeline.ipynb": "4f30c1fe9bb5ff946f25167b4fcb2f3259585ffd8b09fbf76cd2a6494435ff0d",
+    "notebooks/02_visual_eye_pipeline.ipynb": "35fd74989c945648072151c6cd8ffa3a6091f412b51f940881fd6e6ecb92f8c7",
+    "notebooks/03_benchmark_results.ipynb": "f2f6b27a6fb5b5763ae5cab048326e2ad748696c23149bbaaeec325d352a070c",
+    "notebooks/04_multimodal_fusion_demo.ipynb": "150cfd143c9f53efaac294e5de29bdfb7048f1dab523da06641796ce2daac91a",
+    "notebooks/v3/README.md": "5af7e8e08c878d801f921d35d6ac83f54ba2b11e9959a131f423f713f90404ea",
+    "scripts/07_build_notebooks.py": "64f8f039947b01f2d8a93b7cb8f5ea128d1c97ddaca0e7c93735e48263ab97d2",
+    "scripts/09_execute_demo.py": "92cf1fb959def7042244af2fabb6fa3a18d8d6e360014790a2b398277e2b18a0"
+  },
+  "editor_checkpoints_preserved": 7,
+  "active_raw_datasets": 7,
+  "raw_datasets_deleted": 0,
+  "new_model_training": false,
+  "gpu_used": false,
+  "shared_dependencies_changed": false,
+  "dataset_audit": "reports/dataset_usage.json",
+  "layout_manifest": "reports/repository_layout.json",
+  "qa": {
+    "pytest": {
+      "status": "passed",
+      "tests": 118,
+      "warnings": 14
+    },
+    "ruff": "passed — src tests scripts",
+    "dependency_checks": {
+      "project": "passed",
+      "private_neural_runtime": "passed; existing shared invalid-distribution warning, no broken requirements"
+    },
+    "fresh_kernel_demo": {
+      "status": "passed",
+      "mode": "DEMO; raw reads denied; evidence-only; no in-place output replacement",
+      "evidence": "runs/executions/20261028T092321Z_53c8b0/execution.json",
+      "notebooks": [
+        {
+          "name": "01_audio_analysis.ipynb",
+          "code_cells": 47,
+          "figures": 27,
+          "seconds": 17.34545540669933,
+          "errors": 0
+        },
+        {
+          "name": "02_visual_analysis.ipynb",
+          "code_cells": 69,
+          "figures": 43,
+          "seconds": 24.781107188668102,
+          "errors": 0
+        },
+        {
+          "name": "03_multimodal_fusion.ipynb",
+          "code_cells": 46,
+          "figures": 28,
+          "seconds": 14.642239258624613,
+          "errors": 0
+        }
+      ],
+      "code_cells": 162,
+      "figures": 98
+    },
+    "cached_classical_and_audio_replay": {
+      "status": "passed",
+      "checkpoints": 154,
+      "figures_in_recorded_full_runs": 69,
+      "evidence": "reports/run_logs/repository_cleanup_final_notebook_validation.json"
+    },
+    "drozy_temporal_replay": {
+      "utc": "2026-10-28T09:35:16.019051+00:00",
+      "status": "passed",
+      "run_id": "20261024T164444510164Z_seed42_47f50c",
+      "metrics_recomputed": true,
+      "historical_ridge_scores_reproduced": true,
+      "original_KSS_labels_verified": 36,
+      "folds": 14,
+      "participant_overlap": 0,
+      "neural_checkpoints_replayed": 84,
+      "normalization_fits_verified": 168,
+      "epoch_selection_from_inner_only": true,
+      "target_scaling_train_only": true,
+      "ridge_dummy_checkpoints_replayed": 42,
+      "protected_files_checked": 4411,
+      "intentional_notebook_update": [],
+      "unexpected_protected_changes": 0,
+      "audio_fusion_scientific_cells_unchanged": true,
+      "canonical_preservation": {
+        "01_audio_analysis.ipynb": 71,
+        "02_visual_analysis.ipynb": 122,
+        "03_multimodal_fusion.ipynb": 85
+      },
+      "all_input_and_run_artifact_checksums": "passed"
+    },
+    "uta_and_ravdess_training_signatures": "unchanged; original configurations, source fingerprints and inputs verified without training"
+  },
+  "publication": {
+    "outputs_preserved": true,
+    "new_raw_media_published": false,
+    "approved_media_assets_verified": 8,
+    "approved_audio_cells_verified": 1,
+    "raw_dataset_uploads": 0
+  },
+  "limitations": [
+    "No new model training or dataset acquisition in this cleanup.",
+    "UTA full five-fold remains NOT RUN; last source-quota evidence is dated 2026-10-25.",
+    "Original one-time appendix publishers retain their original immutable baseline gates. Use the canonical notebook validator for the relocated presentation.",
+    "Full datasets, feature caches and models stay local; a fresh public clone can read saved outputs but cannot replay all inference without these assets."
+  ]
+}

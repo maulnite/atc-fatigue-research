@@ -1,0 +1,312 @@
+{
+  "run_id": "20261024T181239217688Z",
+  "status": "COMPLETED ENGINEERING PILOT \u2014 official five-fold NOT RUN (source quota)",
+  "training_source_checksums": {
+    "src/atc_fatigue/uta/acquisition.py": "499a3df56992c0dfa519f1b29707d94b45ca5c286b487b24d7901cdbd644121c",
+    "src/atc_fatigue/uta/assets.py": "ea8c6f68457ce7d78945643720c2dcf5edb7e44964b691f2737aa2448462b116",
+    "src/atc_fatigue/uta/data.py": "a08d00f760bc57606daff5f52a6a2188cd5a55435f7e650803c50bd54beb403d",
+    "src/atc_fatigue/uta/models.py": "80d0b72f7fa21209351135e88d9a1ecab7ae95a8297084911c8ad50fec6063df",
+    "src/atc_fatigue/uta/worker.py": "8b5fa101460d1cf83519fd572e5a54e229a690ea244ac8ecab6b63de8e20a948",
+    "src/atc_fatigue/uta/workflow.py": "f02b6671d97cb87dba0205ce16d22663f16a38ecbbb9731574fb1b03a6b19425"
+  },
+  "postprocessing_source_checksums": {
+    "src/atc_fatigue/uta/notebook.py": "103a57b2bb6b8fb5f39f521cc48f5201efaae4a573638693e1536a19420a64b2",
+    "src/atc_fatigue/uta/preservation.py": "21e962eac84a675f59a9197e9bf1cdb5683b80de59b26e4e61d6b615284b4bae",
+    "src/atc_fatigue/uta/publication.py": "8a90daff48aeca0da5f07667978eb23f8e0778112b3343e79ffb3b23f7afa888",
+    "src/atc_fatigue/uta/__init__.py": "a9e173ed78e042c6aa619100f3c05f96d8e9392c814b18b4aff15dd7686ecf29",
+    "src/atc_fatigue/uta/training_smoke.py": "5b552302508ac6c9f19cedcb9d91efd866834a1c5861848c38ba9b2c360faab1",
+    "src/atc_fatigue/uta/evaluation.py": "58867673ad4040270a955ce66a1cfe7e4073aef60d6c60bf633abf81ce8dabf2",
+    "src/atc_fatigue/uta/preflight_worker.py": "eed77f1e9256398edfe205ace6d2499902f731b722e9bd82a829860b4a13c009"
+  },
+  "worker_environment": {
+    "python": "3.10.4",
+    "torch": "1.13.1+cu116",
+    "torchvision": "0.14.1+cu116",
+    "cuda": "11.6",
+    "cudnn": 8302,
+    "device": "NVIDIA A100-SXM4-80GB",
+    "packages": {
+      "pytorchvideo": "0.1.5",
+      "fvcore": "0.1.5.post20221221",
+      "iopath": "0.1.10",
+      "av": "12.3.0"
+    }
+  },
+  "actual_model_stages": [
+    {
+      "signature": "74948e28bacb3424597f98ccf5249c950bda73db9f225a66700b82a76b9c7b9d",
+      "model": "frozen_resnet18",
+      "fold": 2,
+      "selected_epoch": 6,
+      "validation_macro_f1": 0.37407407407407406,
+      "parameters": {
+        "total": 11287427,
+        "trainable": 110915
+      },
+      "training_and_inference_seconds": 31.62679512682371,
+      "test_inference_seconds": 2.44953077705577,
+      "recordings": 18,
+      "participants": {
+        "train": 12,
+        "validation": 6,
+        "test": 6
+      },
+      "warm_start_same_fold_sha256": null,
+      "checkpoint_replay": true,
+      "peak_gpu_allocated_bytes": 385765376,
+      "checksums": {
+        "training_finished.json": "77eebf5ddb88cd92a12fd2119a777b1bdcdb56cf5d3702c5b5d4b15f59b3d3b3",
+        "history.json": "b1b7779bb30a81caecda37c3ae24fad73446faf93f9aa1de634989b263b46a8d",
+        "predictions.json": "b95013f8b30779c62d4ed7a89df404f0462a65a50a7f6fec2dbfe241b614e232",
+        "best.pt": "74efa8597e96f7c78c5c7062808b9b21ced59d25c129bfd4c58486f3f8f7c432",
+        "last.pt": "02e864e12447aa6a4547a75a176547914037bc4cf3f54cdd05d2a7e3cd82f1ba"
+      }
+    },
+    {
+      "signature": "74948e28bacb3424597f98ccf5249c950bda73db9f225a66700b82a76b9c7b9d",
+      "model": "finetuned_resnet18",
+      "fold": 2,
+      "selected_epoch": 9,
+      "validation_macro_f1": 0.5578865578865578,
+      "parameters": {
+        "total": 11287427,
+        "trainable": 8504643
+      },
+      "training_and_inference_seconds": 118.84729661094025,
+      "test_inference_seconds": 2.180528827942908,
+      "recordings": 18,
+      "participants": {
+        "train": 12,
+        "validation": 6,
+        "test": 6
+      },
+      "warm_start_same_fold_sha256": "74efa8597e96f7c78c5c7062808b9b21ced59d25c129bfd4c58486f3f8f7c432",
+      "checkpoint_replay": true,
+      "peak_gpu_allocated_bytes": 487342080,
+      "checksums": {
+        "training_finished.json": "3215cd933162f134a06340a70a264d7e4ea122a5444048c5f1d1125ec094e958",
+        "history.json": "3cd7a532a8ff4cc2463b504b5a574987219b0acefa1dc9df11ad77c482530ed0",
+        "predictions.json": "e70a0992e2a8538f778e6b88f8487a79b472415b390e36d395ec2398c264765b",
+        "best.pt": "8b76447eadec356f588657bbe20d6bda54de1dfe9fc3e54a5cb1aad1706b685f",
+        "last.pt": "6260bbbf9787a7bb2554f77f0a32954fa103623a25f27bf61e1fba6187f73734"
+      }
+    },
+    {
+      "signature": "74948e28bacb3424597f98ccf5249c950bda73db9f225a66700b82a76b9c7b9d",
+      "model": "x3d_xs",
+      "fold": 2,
+      "selected_epoch": 4,
+      "validation_macro_f1": 0.45384615384615384,
+      "parameters": {
+        "total": 2980821,
+        "trainable": 6147
+      },
+      "training_and_inference_seconds": 27.912653211969882,
+      "test_inference_seconds": 2.432031858013943,
+      "recordings": 18,
+      "participants": {
+        "train": 12,
+        "validation": 6,
+        "test": 6
+      },
+      "warm_start_same_fold_sha256": null,
+      "checkpoint_replay": true,
+      "peak_gpu_allocated_bytes": 165538816,
+      "checksums": {
+        "training_finished.json": "0c448a357b689743558a8c7b87ed5ae04c39a4f1b8ab5dd19366e4a43d863f46",
+        "history.json": "a4452a8ca2095f2dbdade01a732b5145bc096e1a518bdc7598c35008c53c935f",
+        "predictions.json": "f39c3c70544ce5c15376c7381e3742fe2ecf463b860645813f5cd80bedd272eb",
+        "best.pt": "c9950336cbb23ad5f0ed2c02793e63b087c0b0132e8290926c28adbc26d8bebe",
+        "last.pt": "8e947ccf41965dbf5798dca6e39a1b35da5ed9a1e6c430d1bc4ddd3d0a4ccd44"
+      }
+    }
+  ],
+  "pretrained_real_video_forward": {
+    "status": "SUCCESS \u2014 real licensed video forward only; NO UTA training or benchmark score",
+    "source": "existing approved RAVDESS engineering fixture; no UTA labels attached",
+    "python": "3.10.4",
+    "torch": "1.13.1+cu116",
+    "torchvision": "0.14.1+cu116",
+    "device": "cuda:0",
+    "models": {
+      "frozen_resnet18": {
+        "strict_official_pretrained_initialization": true,
+        "input_shape": [
+          1,
+          4,
+          3,
+          224,
+          224
+        ],
+        "output_shape": [
+          3
+        ],
+        "parameters": {
+          "total": 11287427,
+          "trainable": 110915
+        },
+        "seconds": 2.658201843034476
+      },
+      "finetuned_resnet18": {
+        "strict_official_pretrained_initialization": true,
+        "input_shape": [
+          1,
+          4,
+          3,
+          224,
+          224
+        ],
+        "output_shape": [
+          3
+        ],
+        "parameters": {
+          "total": 11287427,
+          "trainable": 8504643
+        },
+        "seconds": 0.23797265416942537
+      },
+      "x3d_xs": {
+        "strict_official_pretrained_initialization": true,
+        "input_shape": [
+          1,
+          3,
+          4,
+          182,
+          182
+        ],
+        "output_shape": [
+          3
+        ],
+        "parameters": {
+          "total": 2980821,
+          "trainable": 6147
+        },
+        "seconds": 0.22965134191326797
+      }
+    }
+  },
+  "real_uta_optimizer_smoke": {
+    "status": "SUCCESS \u2014 one Alert recording, no independent evaluation or benchmark score",
+    "scientific_benchmark": false,
+    "weights_not_reused_in_cross_validation": true,
+    "models": [
+      {
+        "model": "frozen_resnet18",
+        "pretrained_initialized": true,
+        "one_actual_optimizer_step": true,
+        "cache_raw_replay": true,
+        "parameters": {
+          "total": 11287427,
+          "trainable": 110915
+        },
+        "peak_gpu_allocated_bytes": 294366208
+      },
+      {
+        "model": "finetuned_resnet18",
+        "pretrained_initialized": true,
+        "one_actual_optimizer_step": true,
+        "cache_raw_replay": true,
+        "parameters": {
+          "total": 11287427,
+          "trainable": 8504643
+        },
+        "peak_gpu_allocated_bytes": 411819520
+      },
+      {
+        "model": "x3d_xs",
+        "pretrained_initialized": true,
+        "one_actual_optimizer_step": true,
+        "cache_raw_replay": true,
+        "parameters": {
+          "total": 2980821,
+          "trainable": 6147
+        },
+        "peak_gpu_allocated_bytes": 411819520
+      }
+    ]
+  },
+  "resume_verified": {
+    "completed_stages_skipped": 3,
+    "training_artifact_checksums_unchanged": true,
+    "no_extra_epochs": true
+  },
+  "acquisition": {
+    "downloaded_bytes": 48086029857,
+    "archives": {
+      "Fold1_part1.zip": {
+        "sha256": "21848e232efe663cca99b7ba897fab69b5b39c84608264672f284220500e9e8d",
+        "status": "downloaded_and_extracted"
+      },
+      "Fold1_part2.zip": {
+        "sha256": "305518acd85daefc016c407eafa5239a7a83220bab16819834baec389510e01c",
+        "status": "downloaded_and_extracted"
+      },
+      "Fold2_part1.zip": {
+        "sha256": "6b9efd2d114c56997b434d7d7caaaaffa97f424e8f1b6a106553baaad49cdd16",
+        "status": "downloaded_and_extracted"
+      },
+      "Fold2_part2.zip": {
+        "sha256": "b80874ba0d359b83e2cbcab7cd03aa31ff1baaa0006419759130a6ecdf8a9878",
+        "status": "downloaded_and_extracted"
+      }
+    }
+  },
+  "remaining_official_archive_access": [
+    {
+      "archive": "Fold3_part1.zip",
+      "status": 200,
+      "content_range": null,
+      "content_type": "text/html; charset=utf-8",
+      "quota_exceeded": true
+    },
+    {
+      "archive": "Fold3_part2.zip",
+      "status": 200,
+      "content_range": null,
+      "content_type": "text/html; charset=utf-8",
+      "quota_exceeded": true
+    },
+    {
+      "archive": "Fold4_part1.zip",
+      "status": 200,
+      "content_range": null,
+      "content_type": "text/html; charset=utf-8",
+      "quota_exceeded": true
+    },
+    {
+      "archive": "Fold4_part2.zip",
+      "status": 200,
+      "content_range": null,
+      "content_type": "text/html; charset=utf-8",
+      "quota_exceeded": true
+    },
+    {
+      "archive": "Fold5_part1.zip",
+      "status": 200,
+      "content_range": null,
+      "content_type": "text/html; charset=utf-8",
+      "quota_exceeded": true
+    },
+    {
+      "archive": "Fold5_part2.zip",
+      "status": 200,
+      "content_range": null,
+      "content_type": "text/html; charset=utf-8",
+      "quota_exceeded": true
+    }
+  ],
+  "full_cv_status": "NOT RUN \u2014 DATA UNAVAILABLE; official source quota",
+  "missing_source_files": 110,
+  "approved_download_limit_gib": 120,
+  "approved_additional_workspace_gib": 260,
+  "actual_checkpoint_freezing": {
+    "A_frozen_backbone_tensors_verified": 120,
+    "A_legacy_checkpoint_default_zero_batch_counters": 20,
+    "B_backbone_tensors_changed": 15,
+    "B_all_changes_restricted_to_layer4": true,
+    "B_earlier_backbone_tensors_unchanged": 90,
+    "B_BN_running_statistics_unchanged": 60,
+    "C_frozen_backbone_tensors_verified": 561,
+    "C_legacy_checkpoint_default_zero_batch_counters": 0
+  }
+}

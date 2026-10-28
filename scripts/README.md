@@ -1,9 +1,22 @@
-# Entry points
+# Entry points penelitian
 
-CLI utama: `atc-fatigue --help`. Scripts 00–06 adalah wrapper audit environment/dataset, ekstraksi audio, DROZY, training MRL, fusion RAVDESS, dan report builder. `07_build_notebooks.py --execute` membuat dan memvalidasi notebook demo.
+Jalankan dari root repository dengan environment proyek. Logika reusable berada di `src/atc_fatigue/`; script tidak mengganti shared environment secara otomatis.
 
-Gunakan Python `.venv` dari root proyek. Setiap script memiliki `--help`; parameter aktual mengikuti CLI, bukan contoh antarmuka rancangan dalam handoff. Logika utama berada di `src/atc_fatigue/`.
+| Tujuan | Perintah/script |
+|---|---|
+| DEMO/FULL tiga notebook | `execute_notebooks.py --mode DEMO --deny-raw-media --evidence-only` |
+| Notebook, media, source dan artifact QA | `validate_notebooks.py --output runs/qa/<file-baru>.json` |
+| Coordinated UTA + RAVDESS | `run_coordinated_research.py` |
+| Fusion tanpa download UTA | `run_coordinated_research.py --packages late cnn --no-acquisition` |
+| UTA full-data gate / actual five-fold training | `run_uta_pretrained_benchmark.py --index configs/manifests/uta_official_release.json` / tambah `--all-folds` setelah gate lolos |
+| Approved bounded UTA acquisition | `18_acquire_uta.py` |
+| Official pretrained weight preflight | `19_uta_model_preflight.py` |
+| DROZY temporal FULL/DEMO | `14_visual_temporal.py --mode FULL` / `--mode DEMO` |
+| Ingestion dan audit kandidat visual | `15_ingest_visual_candidates.py`, `16_audit_visual_sources.py` |
+| Pembuatan contoh media publik berizin | `13_prepare_public_demo_media.py` |
 
-`08_engineering_audit.py` memprofilkan artefak lokal dan membuat QC audio agregat. Gunakan `--output` baru untuk setiap pass; run canonical tidak ditimpa. Ini bukan pengukuran real-time atau studi cold-start.
+FULL berarti real extraction/training ke run baru; DEMO berarti verified cached artifacts dan real inference tanpa klaim training baru. `--evidence-only` menyimpan fresh-kernel copies tanpa menimpa output presentasi. [Panduan notebook](../notebooks/README.md).
 
-`09_execute_demo.py` menjalankan notebook 00–04 yang sudah ada, mempertahankan isi cell, membuat backup, dan menyimpan output langsung pada notebook lokal. Gunakan runner ini untuk melihat hasil di folder `notebooks/`; generator 07 membuat ulang source dan tidak mempertahankan edit lokal.
+CLI `atc-fatigue --help` dan wrapper 00–06 tetap menyediakan audit/extraction/baseline utilities yang dipakai pipeline. Generator lima notebook awal sudah tidak menjadi bagian working tree aktif; gunakan tiga notebook canonical, bukan membuat kembali demo lama.
+
+Setiap script memiliki `--help`. [Fusion reproducibility](../docs/fusion_extension.md) · [UTA reproducibility](../docs/uta_pretrained_benchmark.md) · [Dataset](../docs/datasets.md).

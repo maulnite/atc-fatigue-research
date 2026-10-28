@@ -1,0 +1,245 @@
+{
+  "utc": "20261024T163204505429Z",
+  "sources": [
+    {
+      "repo": "FatigueView/fatigueview",
+      "tree_sha": "2c7ddbf3bf9627ca7ab1b1088fa45c988c30ff8e",
+      "license_metadata": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "readme_sha256": "f270b19bdc493e9a7e25a26797bfaa5386501a77216016ec56f07d4271b03383",
+      "video_assets_in_git_tree": 0
+    },
+    {
+      "repo": "ChenDelong1999/DriverFatigueDetection",
+      "tree_sha": "27cb082abfc8219734bf5ca2532575f0f36bbc72",
+      "license_metadata": null,
+      "readme_sha256": "69bb54468890d7f2e05b1caa3ae97db562b1e5d9ab2cfb0ead89ecc8534d329d",
+      "video_assets_in_git_tree": 0
+    },
+    {
+      "repo": "zykev/facial_fatigue",
+      "tree_sha": "eabbe14887b957239ab2940b55d929163984f6f1",
+      "license_metadata": null,
+      "readme_sha256": "c862873766291154f8f2166a90e194a87266bdd20ce53bfc294c1d7c1c851174",
+      "video_assets_in_git_tree": 0
+    }
+  ],
+  "uta_drive_http": 200,
+  "uta_listed_archive_names": [
+    "Fold1_part1.zip",
+    "Fold1_part2.zip",
+    "Fold2_part1.zip",
+    "Fold2_part2.zip",
+    "Fold3_part1.zip",
+    "Fold3_part2.zip",
+    "Fold4_part1.zip",
+    "Fold4_part2.zip",
+    "Fold5_part1.zip",
+    "Fold5_part2.zip"
+  ],
+  "video_downloaded_bytes": 0,
+  "fatigueview_annotations": [
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0075_yawning.json",
+      "sha256": "b6b0c39e01b01b5f9aa843f3273357a5b488d150ad75e3b2ce7b515f5ae02477",
+      "events": 18,
+      "overlap_pairs": 0,
+      "first_index": 84066.0,
+      "last_index": 238421.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0076_yawning.json",
+      "sha256": "a4a14b51a05bb18cfbeb2c660fb9c141ad8d0fcca0e840df5a01a5b8af09e523",
+      "events": 2,
+      "overlap_pairs": 0,
+      "first_index": 142521.0,
+      "last_index": 234002.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0077_yawning.json",
+      "sha256": "93ae159b4ad25068522399a0e8c4312caa7d698634163ef8b7b376083ad17b44",
+      "events": 2,
+      "overlap_pairs": 0,
+      "first_index": 55406.0,
+      "last_index": 91905.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0078_yawning.json",
+      "sha256": "493bb4488eb9f58b7b0870d4077a030c62d48fc70c94dede20f540f0b4d7f2ed",
+      "events": 16,
+      "overlap_pairs": 0,
+      "first_index": 10389.0,
+      "last_index": 124777.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0079_yawning.json",
+      "sha256": "a9d7c20ee1f32a139798d12b93d2966713c0e43d6e14e0d9b58f197e37f03861",
+      "events": 48,
+      "overlap_pairs": 0,
+      "first_index": 34511.0,
+      "last_index": 264070.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0080_yawning.json",
+      "sha256": "9d9680ca6df1b72d9a7a774b81bbc3557d854694b2a9fbf635c60f27340ee87d",
+      "events": 9,
+      "overlap_pairs": 0,
+      "first_index": 94505.0,
+      "last_index": 238589.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0081_yawning.json",
+      "sha256": "0d25195370ebe69ea132dfa9dbca75367707782894590d29b2083aba53d29a95",
+      "events": 18,
+      "overlap_pairs": 0,
+      "first_index": 76139.0,
+      "last_index": 249676.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0082_yawning.json",
+      "sha256": "43614931d6bbf28dcfa7d0e4219831c401b44084661df037e1338fc1bf5ac133",
+      "events": 22,
+      "overlap_pairs": 0,
+      "first_index": 18861.0,
+      "last_index": 234079.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0083_yawning.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "events": 0,
+      "overlap_pairs": 0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Test/fatigue_id_0084_yawning.json",
+      "sha256": "cda1d4a1f33b619398a4d19df5d7b55d79e2ecf56c4167bd81547a30f15ad437",
+      "events": 14,
+      "overlap_pairs": 0,
+      "first_index": 133171.0,
+      "last_index": 234656.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0065_yawning.json",
+      "sha256": "035dea261bc51a20009e9d41d35825c4f418dd36615ad53d3573f243eae1e5d3",
+      "events": 2,
+      "overlap_pairs": 0,
+      "first_index": 161810.0,
+      "last_index": 220091.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0066_yawning.json",
+      "sha256": "91c0f485b6e2482c21a4e90dcb78fb2c731fa9bfd1450052f51458ae177aefa3",
+      "events": 25,
+      "overlap_pairs": 0,
+      "first_index": 2941.0,
+      "last_index": 244538.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0067_yawning.json",
+      "sha256": "37cd40c59d982e4e3bedf13259af20deee0eb5a69a8d4ef83830ab03ce6518b1",
+      "events": 25,
+      "overlap_pairs": 0,
+      "first_index": 1107.0,
+      "last_index": 230969.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0068_yawning.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "events": 0,
+      "overlap_pairs": 0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0069_yawning.json",
+      "sha256": "6cef2f84245546be67927ad2317b0474316d61a52516fa9e30d05ac1003058f4",
+      "events": 4,
+      "overlap_pairs": 0,
+      "first_index": 20879.0,
+      "last_index": 112160.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0070_yawning.json",
+      "sha256": "8ca9fecb285361bc821ca8533ed8dc1b506572f80d593a440460690957572f25",
+      "events": 3,
+      "overlap_pairs": 0,
+      "first_index": 20722.0,
+      "last_index": 251594.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0071_yawning.json",
+      "sha256": "432ab811625b435bbd3e70e53af6e1757b9d7cbbb544795dc7ee2a42a62df3bd",
+      "events": 6,
+      "overlap_pairs": 0,
+      "first_index": 2188.0,
+      "last_index": 225775.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0072_yawning.json",
+      "sha256": "5512bc26fe443416244e0ff3d41109f51aa094e67336b0de607d32e8b32a987c",
+      "events": 15,
+      "overlap_pairs": 0,
+      "first_index": 23325.0,
+      "last_index": 190635.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0073_yawning.json",
+      "sha256": "df6c804d11a62625b4ad7410f179fb6244aed4e88f67cd50d47579613c55f4a4",
+      "events": 32,
+      "overlap_pairs": 0,
+      "first_index": 1050.0,
+      "last_index": 260604.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    },
+    {
+      "path": "dataset/yawning/Train/fatigue_id_0074_yawning.json",
+      "sha256": "7ab701410de8b307bd186e6db54542b0698819e8783dcc0ca7ed4955340b01a6",
+      "events": 5,
+      "overlap_pairs": 0,
+      "first_index": 45363.0,
+      "last_index": 220041.0,
+      "units": "unverified source index; not seconds",
+      "schema_valid": true
+    }
+  ],
+  "scope": "bounded metadata and event JSON only; no videos or landmarks"
+}

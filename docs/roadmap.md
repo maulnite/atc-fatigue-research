@@ -1,42 +1,23 @@
-# Roadmap penelitian dan implementasi
+# Roadmap penelitian
 
-**Status 21 Oktober 2026:** jalur utama MVP publik M0–M4 dan M6 telah dijalankan; ini tidak berarti semua detail handoff selesai. Draft M7 tersedia. M5 belum memperoleh akses IEEE; belum ada permintaan akses yang dikirim. M8 menunggu data ATC berpasangan/protokol. Lihat [checklist per bagian handoff](../reports/handoff_coverage.md) dan [laporan hasil](../reports/smoke_test_report.md).
+## Sudah tersedia
 
-Lihat [rencana eksekusi lengkap](execution-plan.md) untuk pekerjaan, dependensi, output, kriteria selesai, dan penanganan akses dataset yang belum pasti.
+- Tiga notebook canonical pada `notebooks/`: audio, visual, dan multimodal fusion, beserta output presentasi.
+- Audio ATCOSIM→114 fitur dan Predi-COVID clinical-fatigue classification/channel-robustness.
+- MRL eye-state, DROZY temporal feature/KSS regression dan temporal CNN, serta audit CogBeacon.
+- UTA-RLDD engineering pilot: tiga pretrained models, 24 peserta, participant-disjoint evaluation. Completed pilot dan DROZY tetap dipertahankan.
+- RAVDESS emotion: classical baselines, early fusion, equal/validation-weighted late fusion, audio/visual CNN controls dan dual-stream fusion, 8 LOAO folds, 2 neural seeds.
+- Model replay, train-only preprocessing, run provenance, subject/actor leakage checks dan reviewed presentation figures.
 
-| Milestone | Fokus | Bukti penyelesaian | Status |
-| :--- | :--- | :--- | :--- |
-| Fondasi | Repo, README, aturan, struktur kerja | Commit awal dan dokumentasi tersedia | Selesai |
-| M0 | Audit environment dan akses dataset | Environment/dataset/storage audit | Selesai; akses IEEE terbatas |
-| M1 | Config, schema, loader, fixture, tests | Modul dan pengujian kritis | Selesai untuk scope smoke |
-| M2 | Audio ATCOSIM | 100 utterances, eGeMAPS/MFCC, quality masks, QC dan profiling | MVP berjalan; satu speaker, continuous speech timing/VAD belum diuji |
-| M3 | Visual MRL dan DROZY | MRL holdout; 360 windows / 36 tests DROZY dan LOSO KSS | Selesai; threshold visual belum dikalibrasi |
-| M4 | Paired fusion RAVDESS | 128 AV / 8 aktor, unimodal/fusion/ablation | Selesai untuk demo emotion kecil |
-| M5 | Audio fatigue jika akses tersedia | DOI dan gate akses telah diidentifikasi | Menunggu login/subscription IEEE |
-| M6 | Laporan dan demo | Lima notebook fresh-kernel Run All pada snapshot dan model reload | Demo MVP tervalidasi; review Prof dan kelengkapan akhir handoff belum selesai |
-| M7 | Rencana pengumpulan data ATC | Draft pada `docs/data-collection-plan.md` | Draft tersedia; belum disahkan Prof |
-| M8 | Benchmark fatigue multimodal ATC asli | Evaluasi unimodal/static/temporal pada pasangan dan label sah | Menunggu data dan protokol |
+[Hasil lengkap](../reports/README.md). Tidak ada klaim validated ATC fatigue performance.
 
-## Functional acceptance
+## Berikutnya
 
-- [x] Environment dan akses dataset diaudit.
-- [x] Audio ATC dan data visual berhasil diproses menjadi fitur.
-- [x] Unit/integration tests kritis lulus.
-- [x] Setidaknya satu model dinilai pada label asli dengan tugas yang disebutkan jelas.
-- [x] Fusion berjalan pada pasangan sah RAVDESS.
-- [x] Model tersimpan dapat di-reload dan memprediksi holdout.
-- [x] Lima notebook demo lulus fresh-kernel Run All.
-- [x] Laporan hanya memuat hasil yang benar-benar dieksekusi.
+1. **Akses source UTA penuh.** Pada pemeriksaan 25 Oktober enam arsip Fold 3–5 masih quota-blocked. Setelah source resmi tersedia, jalankan parameter tetap pada lima official outer folds. Jangan memilih arsitektur/hyperparameter berdasarkan pilot test ranking.
+2. **Replikasi dan external validation.** RAVDESS hanya 8 aktor dan telah digunakan dalam pengembangan; peningkatan late fusion masih belum kuat. Hindari unrestricted tuning pada test yang sudah dipublikasikan.
+3. **Ground truth fatigue ATC.** Tinjau instrumen bersama Prof, akses data, dan genuine pairing operator/sesi/timestamp. Bedakan fatigue, sleepiness, emotion dan eye state.
+4. **Paired ATC evaluation.** Bandingkan unimodal/fusion pada data nyata setelah izin dan label tersedia; laporkan coverage, missing modality dan uncertainty dengan unit peserta.
 
-## Scientific readiness
+## Pemeliharaan
 
-- [x] Provenance, definisi label, jumlah subjek, metadata waktu, dan missing rates tercatat.
-- [x] Split subject/actor-independent diverifikasi pada benchmark.
-- [x] Majority baseline dan metrik imbalance tersedia untuk klasifikasi; mean baseline/MAE untuk KSS.
-- [x] Checks leakage diterapkan; keterbatasan near-duplicate dan domain shift tetap dicatat.
-- [x] Batasan label per sesi dan domain shift ke ATC fatigue dijelaskan.
-- [ ] Kebutuhan dataset nyata dan keputusan ground truth dibahas dengan Prof.
-
-## Keputusan yang masih terbuka
-
-Tipe audio akhir (headset atau radio), video RGB/NIR dan frame rate, simulator atau operasional, instrumen dan interval ground truth fatigue, akses IEEE corpus, serta izin/resource pengumpulan data belum final. Keputusan tersebut tidak perlu menghambat audit awal dan smoke test yang lingkupnya jelas.
+`main` menjadi entry point implementasi yang dipakai; tidak ada folder notebook versi alternatif. Riwayat tetap pada Git. Dataset aktif, source checksums, models dan completed experiment runs dipertahankan. Perubahan tampilan/path tidak boleh dianggap training atau skor eksperimen baru.

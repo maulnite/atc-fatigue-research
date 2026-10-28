@@ -1,0 +1,28 @@
+{
+  "resnet18": {
+    "url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+    "filename": "resnet18-f37072fd.pth",
+    "sha256_prefix": "f37072fd",
+    "pretraining": "ImageNet-1K; torchvision ResNet18_Weights.IMAGENET1K_V1",
+    "path": "models/pretrained/uta/resnet18-f37072fd.pth",
+    "sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+    "bytes": 46830571
+  },
+  "x3d_xs": {
+    "url": "https://dl.fbaipublicfiles.com/pytorchvideo/model_zoo/kinetics/X3D_XS.pyth",
+    "filename": "X3D_XS.pyth",
+    "pretraining": "Kinetics-400; official PyTorchVideo X3D-XS",
+    "path": "models/pretrained/uta/X3D_XS.pyth",
+    "sha256": "6dafc96144c88f800b190d2cb179ff69b8fd48c40afd4deca6c1e61f76fdfe86",
+    "bytes": 30779313
+  },
+  "yunet": {
+    "url": "https://media.githubusercontent.com/media/opencv/opencv_zoo/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
+    "filename": "face_detection_yunet_2023mar.onnx",
+    "sha256_prefix": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+    "pretraining": "OpenCV Zoo YuNet face detector; official Git LFS SHA256 verified",
+    "path": "models/pretrained/uta/face_detection_yunet_2023mar.onnx",
+    "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+    "bytes": 232589
+  }
+}

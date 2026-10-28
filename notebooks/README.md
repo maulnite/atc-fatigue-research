@@ -1,19 +1,31 @@
-# Notebook demo
+# Tiga notebook penelitian
 
-**Kelima notebook sudah berisi output eksekusi dan dapat dibaca langsung di GitHub.** Tim dapat melihat tabel, grafik, dan hasil prediksi tanpa menjalankan kode atau memiliki dataset di laptop masing-masing.
+Buka notebook sesuai urutan berikut. Ketiganya sudah menyimpan output tabel/grafik; GitHub tidak memerlukan dataset lokal untuk menampilkannya.
 
 | Notebook | Isi |
-| :--- | :--- |
-| [00 — Overview](00_project_overview.ipynb) | Target dan run tersedia |
-| [01 — Audio](01_audio_atc_pipeline.ipynb) | Waveform nyata, tabel fitur, rerun ekstraksi satu utterance |
-| [02 — Visual](02_visual_eye_pipeline.ipynb) | EAR, blink/PERCLOS, coverage, dan rekalkulasi |
-| [03 — Benchmark](03_benchmark_results.ipynb) | Eye-state metrics, confusion matrix, reload, KSS regression |
-| [04 — Fusion](04_multimodal_fusion_demo.ipynb) | Paired emotion results, actor split, inference, ablation |
+|---|---|
+| [01 — Audio Analysis](01_audio_analysis.ipynb) | ATCOSIM, eGeMAPS/MFCC 114 D, clinical fatigue Predi-COVID, radio-channel robustness, actual X/y dan prediction walkthrough |
+| [02 — Visual Analysis](02_visual_analysis.ipynb) | Eye-state MRL, EAR/blink/closure DROZY, KSS Ridge/temporal CNN, audit CogBeacon, pretrained UTA-RLDD pilot dan full-data gate |
+| [03 — Multimodal Fusion](03_multimodal_fusion.ipynb) | Genuine paired RAVDESS, handcrafted baselines, late fusion, dual-stream CNN, LOAO, actor/seed sensitivity, actual learned embeddings |
 
-Gunakan kernel **Python (ATC Fatigue)** setelah setup dan menghasilkan cache data/model. Untuk menjalankan notebook yang ada dan menyimpan output langsung pada file 00–04, jalankan `python scripts/09_execute_demo.py` dari root proyek. Runner mempertahankan isi cell, membuat backup, serta menolak menimpa perubahan yang terdeteksi selama eksekusi.
+Notebook adalah pusat penjelasan dan eksplorasi. Implementasi reusable berada di `src/atc_fatigue/`; konfigurasi utama pada [`configs/research.yaml`](../configs/research.yaml). Tidak ada notebook atau folder versi alternatif yang menjadi entry point aktif.
 
-Notebook 00–04 beserta output yang sudah ditinjau disimpan di Git agar tim dapat membacanya melalui GitHub. Salinan eksekusi/log/backup tambahan tetap lokal di `reports/run_logs/notebooks/`. Raw media, dataset, model, dan cache fitur lengkap tidak disertakan; menjalankan ulang tetap memerlukan setup serta data/model lokal sesuai panduan.
+## Membaca dan menjalankan
 
-`07_build_notebooks.py` adalah generator template yang membuat ulang source notebook; jangan gunakan untuk sekadar Run All pada notebook yang sudah diedit.
+- **Presentasi:** output tersimpan dapat dibaca langsung. Narasi membedakan data REAL, hasil CACHED, perhitungan FRESH, dan diagram/ilustrasi.
+- **DEMO lokal:** memakai cache/model terverifikasi dan menjalankan inference, tanpa training baru. Clone GitHub tidak menyertakan cache/model lengkap.
+- **FULL:** memerlukan dataset berizin dan menulis run baru. Training UTA/fusion CNN melalui runner terpisah; tidak otomatis dijalankan ketika membuka notebook.
 
-Notebook memanggil modul Python, tidak mengunduh data atau melatih semua model ulang. Gambar wajah DROZY tidak ditampilkan. Target asli dan keterbatasan subset tetap dijelaskan.
+```bash
+PYTHONPATH=src .venv/bin/python scripts/execute_notebooks.py \
+  --mode DEMO --deny-raw-media --evidence-only
+# Tambahkan --notebook 03_multimodal_fusion.ipynb untuk satu notebook saja.
+```
+
+`--evidence-only` mengeksekusi fresh-kernel copies ke `runs/executions/`; source, metadata dan output notebook yang dibagikan tidak diganti. Jangan menjalankan FULL untuk sekadar membaca hasil atau menimpa completed experiment. Kernel: **Python (ATC Fatigue)**.
+
+[Setup](../docs/getting-started.md) · [Hasil dan keterbatasan](../reports/README.md) · [Fusion training](../docs/fusion_extension.md) · [UTA training](../docs/uta_pretrained_benchmark.md) · [Media berizin](../assets/demo_media/README.md).
+
+## Batas kesimpulan
+
+Fatigue, KSS sleepiness, video-level drowsiness, emotion, dan eye state berbeda. RAVDESS menunjukkan engineering feasibility multimodal, bukan fatigue detection ATC. UTA full lima fold belum dijalankan karena source quota pada pemeriksaan terakhir; pilot 24 peserta tidak boleh disebut hasil 60 peserta.

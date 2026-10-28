@@ -2,155 +2,93 @@
 
 # ATC Fatigue Research
 
-### Memahami kelelahan operator melalui suara dan perilaku visual.
+**Audio · Visual · Multimodal Fusion**
 
-Fondasi riset **temporal multimodal fatigue detection** untuk Air Traffic Controller.
+Riset yang dapat ditelusuri dari data mentah, fitur, dan training sampai prediksi serta batas kesimpulannya.
 
-![Stage: Public dataset smoke test](https://img.shields.io/badge/stage-public_dataset_smoke_test-2563eb?style=flat-square)
-![Modalities: Audio + Vision](https://img.shields.io/badge/modalities-audio_%2B_vision-7c3aed?style=flat-square)
-![Focus: Reproducibility](https://img.shields.io/badge/focus-reproducibility-059669?style=flat-square)
+![Audio](https://img.shields.io/badge/audio-blue?style=flat-square)
+![Visual](https://img.shields.io/badge/visual-purple?style=flat-square)
+![Fusion](https://img.shields.io/badge/fusion-teal?style=flat-square)
+![Research](https://img.shields.io/badge/status-feasibility_study-64748b?style=flat-square)
 
-[Visi](#visi-riset) · [Pipeline](#pipeline-yang-direncanakan) · [Dataset](#dataset-dan-batas-klaim) · [Mulai](#mulai-di-sini) · [Rencana eksekusi](docs/execution-plan.md) · [Roadmap](docs/roadmap.md)
+[Buka notebook](notebooks/README.md) · [Hasil penelitian](reports/README.md) · [Menjalankan proyek](docs/getting-started.md) · [Dataset](docs/datasets.md)
 
 </div>
 
 ---
 
-> **Status — smoke test dataset publik telah dijalankan.** Ekstraksi audio/visual, baseline berlabel asli, paired emotion fusion, model reload, serta lima notebook dengan fresh-kernel Run All tersedia. Benchmark **multimodal ATC fatigue belum terukur**; akses IEEE audio fatigue dan dataset ATC berpasangan masih diperlukan.
+Repositori ini memiliki **tepat tiga notebook utama**, langsung di `notebooks/`. Tabel, grafik, dan output eksperimen sudah tersimpan sehingga dapat dibaca di GitHub. Riwayat pengembangan tersedia melalui Git; folder utama menampilkan implementasi penelitian yang dipakai sekarang.
 
-Status tersebut berlaku untuk **MVP**, bukan seluruh detail handoff. Lihat [checklist pemenuhan handoff](reports/handoff_coverage.md) untuk bukti, kekurangan, dan pekerjaan bersyarat, serta [pelengkapan teknis](reports/engineering_audit.md) untuk profiling/QC terbaru.
+| Track | Notebook | Pertanyaan penelitian |
+|---|---|---|
+| 🔵 Audio | [01_audio_analysis.ipynb](notebooks/01_audio_analysis.ipynb) | Bagaimana suara menjadi 114 fitur, bagaimana model memprediksi clinical fatigue/unwell, dan bagaimana kanal radio simulatif memengaruhi hasil? |
+| 🟣 Visual | [02_visual_analysis.ipynb](notebooks/02_visual_analysis.ipynb) | Apa yang dapat dipelajari dari eye state, dinamika mata, KSS sleepiness, dan pretrained video models untuk drowsiness? |
+| 🟢 Fusion | [03_multimodal_fusion.ipynb](notebooks/03_multimodal_fusion.ipynb) | Apakah early, late, atau learned dual-stream fusion membantu emotion recognition pada aktor yang belum dilihat? |
 
-**Untuk tim:** buka [notebook demo beserta outputnya](notebooks/README.md). Tabel, grafik, dan prediksi sudah tersimpan dan dapat dilihat di GitHub tanpa menjalankan notebook.
+**Targetnya berbeda:** eye state, sleepiness, drowsiness, clinical fatigue/unwell, dan emotion tidak dapat dipertukarkan. Penelitian ini belum mengukur akurasi deteksi fatigue operator ATC dari paired ATC audio-video.
 
-**Laporan progres:** [pekerjaan yang sudah dilakukan, hasil, dan tindak lanjut — 21 Oktober 2026](reports/progress_report_2026-10-21.md).
+## Hasil utama yang benar-benar dijalankan
 
-## Hasil smoke test
+RAVDESS menggunakan 128 rekaman audio-video asli, 8 aktor, 8 kelas emotion. Semua model di bawah dibandingkan pada delapan outer Leave-One-Actor-Out folds yang sama: 5 aktor train, 2 validation, 1 test; seed 42 utama. Bobot/checkpoint dipilih dari validation actors, tidak dari test.
 
-Snapshot 21 Oktober 2026; hasil pada subset, bukan performa target akhir ATC fatigue.
+| RAVDESS model | Macro F1 |
+|---|---:|
+| Audio Logistic Regression |0.4952|
+| Visual HOG Logistic Regression |0.3658|
+| Early Feature Fusion |0.3949|
+| **Late Fusion 50/50** |**0.5071**|
+| Validation-weighted Late Fusion |0.4721|
+| Audio CNN |0.1670|
+| Frozen ImageNet ResNet-18 + visual head |0.2624|
+| Dual-Stream CNN |0.2916|
 
-| Eksperimen | Data / evaluasi | Hasil |
-| :--- | :--- | :--- |
-| **Audio ATCOSIM** | 100 utterances / 1 speaker, HF variant | 88 eGeMAPS + 26 MFCC summaries; tanpa fatigue labels |
-| **MRL eye state** | 5.285 images / 37 subjects; holdout 8 subjects | Macro F1 **0,788**, balanced accuracy **0,787**; Dummy F1 0,356 |
-| **DROZY KSS** | 36 tests / 14 subjects; LOSO, test-level regression | Ridge MAE **1,45**; Dummy MAE 2,05 |
-| **RAVDESS emotion** | 128 AV recordings / 8 actors; holdout 2 actors | Fusion Macro F1 **0,455**; audio 0,312; visual 0,280 |
+Late 50/50 lebih baik dari audio pada 6/8 aktor, tetapi paired actor-bootstrap interval untuk selisih Macro F1 mencakup nol: **[−0.1056,+0.1257]**. Neural fusion belum mengungguli audio handcrafted. Semua seed, per-actor errors, confusion matrices, probabilitas, serta biaya komputasi tersedia dalam [laporan fusion](reports/fusion_extension_research.md).
 
-RAVDESS adalah demo kecil dengan demographic shift pada split; DROZY memakai engineering threshold yang belum dikalibrasi. Detail, confusion matrices, dan batas interpretasi: **[laporan hasil](reports/smoke_test_report.md)**. [Panduan run](docs/getting-started.md) · [Notebook demo](notebooks/) · [Dataset audit](reports/dataset_audit.md)
+**UTA-RLDD engineering pilot:** 24 peserta/72 rekaman, participant-disjoint train/validation/test. Macro F1 frozen ResNet-18+TCN **0.4333**, partial layer 4 fine-tuning **0.4777**, frozen pretrained X3D-XS **0.5536**. Ini **bukan official full five-fold evaluation**. Terakhir diperiksa 25 Oktober: enam arsip Fold 3–5 masih terkena source quota; hasil full tidak dibuat. [Laporan UTA](reports/uta_pretrained_benchmark.md).
 
-## Visi riset
+Baseline pendukung MRL dan DROZY tetap tersedia dalam notebook visual. Pada DROZY, Ridge EAR-only **MAE 1.3508 KSS** lebih baik daripada temporal CNN yang diuji. [Hasil visual temporal](reports/visual_temporal_research.md). Audio memakai Predi-COVID berlabel klinis dan ATCOSIM untuk domain exploration; [hasil audio](reports/research_history.md).
 
-Membangun pipeline yang mempelajari indikasi **fatigue operator ATC** dari dua modalitas yang direkam secara sinkron:
-
-| Audio operator | Video wajah dan mata |
-| :--- | :--- |
-| Fitur akustik eGeMAPS/MFCC, prosodi, dan pola bicara yang dapat diverifikasi | Eye Aspect Ratio (EAR), kedipan, durasi penutupan mata, dan PERCLOS |
-| Mulai dari suara ATC saja; fitur CLC opsional jika komunikasi dua arah tersedia | Gunakan video atau landmark dengan timestamp dan resolusi temporal memadai |
-
-Baseline dimulai dari fitur tabular dan model sederhana. Pemodelan temporal menjadi tahap lanjutan setelah data dan ground truth mendukung. Sistem yang dituju adalah **decision support** yang memerlukan validasi.
-
-**Fatigue, sleepiness, workload, stress, emotion, dan eye state merupakan target berbeda.** Label dan laporan eksperimen harus selalu menyebut target yang benar.
-
-## Pipeline yang direncanakan
-
-```mermaid
-flowchart TD
-    A[Audio ATC] --> B[Quality checks dan speech segmentation]
-    B --> C[eGeMAPS / MFCC / speech behavior]
-    D[Video wajah / mata] --> E[Timestamp dan landmark checks]
-    E --> F[EAR / blink / PERCLOS]
-    C --> G[Window alignment dan modality masks]
-    F --> G
-    G --> H[Baseline tabular: Dummy / LR / XGBoost]
-    G --> I[Temporal lanjutan: GRU / TCN]
-    H --> J[Evaluasi pada subjek yang belum dilatih]
-    I --> J
-    J --> K[Model tersimpan / laporan / notebook demo]
-```
-
-Window harus berasal dari **subjek, sesi, dan timeline yang sama**. Modalitas yang hilang ditandai dengan quality/availability masks; fitur yang tidak tersedia tidak boleh diisi seolah merupakan pengukuran valid.
-
-## Dua tujuan fase awal
-
-| Functional smoke test | Scientific benchmark |
-| :--- | :--- |
-| Membuktikan raw input → fitur → model → reload → inference berjalan | Mengukur performa pada label asli, data sah, dan split yang tepat |
-| Fixture sintetis boleh dipakai untuk pengujian teknis dengan flag eksplisit | Fixture sintetis dan pasangan lintas dataset tidak menjadi bukti performa fatigue |
-| Output: pipeline modular, cache fitur, notebook, dan run logs | Output: metrik nyata, provenance, split manifest, serta batasan |
-
-## Dataset dan batas klaim
-
-Sumber, ukuran, label, lisensi, dan status akses telah diperiksa dalam [dataset audit](reports/dataset_audit.md). Data mentah tidak didistribusikan melalui repo.
-
-| Dataset | Peran yang direncanakan | Target yang boleh dilaporkan |
-| :--- | :--- | :--- |
-| **ATCOSIM** | Smoke test fitur audio domain ATC | Ekstraksi fitur; tidak memiliki label fatigue |
-| **MRL Eye** | Baseline classifier gambar mata | Eye state: open / closed |
-| **DROZY** | Landmark temporal, EAR, blink, PERCLOS | Sleepiness berbasis KSS dengan batasan label per test |
-| **RAVDESS AV** | Demo fusion audio-video yang benar-benar berpasangan | Emotion classification |
-| **IEEE ATC Fatigue Corpus** | DOI 10.21227/70sz-mj23; download memerlukan login/subscription | Fatigue / non-fatigue, setelah akses sah dan audit label |
-
-**Tidak ada klaim “multimodal ATC fatigue accuracy” sampai tersedia pasangan audio-video ATC dengan ground truth fatigue yang valid.** Menggabungkan ATCOSIM dan DROZY secara acak tidak menghasilkan benchmark tersebut.
-
-Detail sumber dan pemeriksaan yang diperlukan: [panduan dataset](docs/datasets.md).
-
-## Mulai di sini
-
-1. Baca [master handoff](ATC_Fatigue_Research_and_Smoke_Test_Master_Handoff.md) dan [aturan agent](AGENTS.md).
-2. Ikuti [panduan setup](docs/getting-started.md) untuk audit environment dan workspace.
-3. Lihat progres dan milestone berikutnya pada [roadmap](docs/roadmap.md).
-4. Catat sumber data, konfigurasi, seed, split, dan hasil nyata setiap eksperimen.
-
-Untuk checkout baru:
-
-```bash
-gh-orie repo clone maulnite/atc-fatigue-research
-cd atc-fatigue-research
-```
-
-Folder kerja sesi saat ini sudah menjadi checkout repo ini; tidak perlu clone ulang. Dependensi dipasang pada `.venv` pribadi dan dikunci di `requirements.lock.txt`. Jalankan setup serta CLI sesuai [panduan reproduksi](docs/getting-started.md).
-
-## Peta repositori
+## Menelusuri eksperimen
 
 ```text
-.
-├── README.md                    # Ikhtisar dan pintu masuk proyek
-├── AGENTS.md                    # Aturan kerja agent untuk proyek ini
-├── ATC_Fatigue_Research_and_Smoke_Test_Master_Handoff.md
-├── pyproject.toml               # Package, dependensi, dan CLI atc-fatigue
-├── requirements.lock.txt        # Versi lengkap environment smoke test
-├── docs/                        # Setup, dataset, dan roadmap
-├── configs/                     # Konvensi konfigurasi eksperimen
-├── src/atc_fatigue/              # Loader, audio, visual, fusion, model, evaluasi
-├── scripts/                     # CLI wrappers dan notebook builder
-├── notebooks/                   # Lima demo yang memanggil modul .py
-├── tests/                       # Pengujian guardrails dan fitur
-├── data/                        # Raw, manifests, interim, processed; lokal
-├── models/                      # Artefak model; lokal
-└── reports/                     # Audit, metrics, figures, dan run logs
+Raw data → preprocessing → actual feature vectors / tensors
+         → train-only normalization → model training
+         → prediction → subject-independent evaluation → interpretation
 ```
 
-## Standar eksperimen
+- **DEMO:** membaca artefak terverifikasi dan melakukan inference nyata; tidak mengklaim training baru. Output tersimpan dapat dibaca tanpa data lokal.
+- **FULL:** menjalankan ekstraksi/training ke run baru saat data berizin tersedia. Model dan completed runs tidak ditimpa.
+- Eksperimen UTA dan CNN fusion memiliki runner terpisah agar membuka notebook tidak memulai training mahal.
 
-- **Generalisasi:** pisahkan subjek/aktor antara train dan test jika metadata mendukung; cegah overlap sesi dan duplikasi.
-- **Preprocessing:** fit imputer, scaler, dan feature selection hanya pada training fold.
-- **Evaluasi:** majority-class baseline, Macro F1, balanced accuracy, confusion matrix, dan per-class recall.
-- **Reproduksibilitas:** simpan seed, konfigurasi, versi extractor, split manifest, feature schema, serta prediksi holdout jika diizinkan.
-- **Pelaporan:** angka baru ditulis setelah eksekusi; hasil paper dibedakan dari hasil proyek ini.
+```bash
+# Fresh-kernel DEMO pada salinan; output notebook yang dibagikan tetap terjaga.
+PYTHONPATH=src .venv/bin/python scripts/execute_notebooks.py \
+  --mode DEMO --deny-raw-media --evidence-only
 
-Kriteria penerimaan lengkap ada dalam [roadmap](docs/roadmap.md) dan master handoff.
+# Workflow classical/late + neural fusion; model/cache/source data harus tersedia lokal.
+PYTHONPATH=src .venv/bin/python scripts/run_coordinated_research.py \
+  --packages late cnn --no-acquisition
+```
 
-## Data, akses, dan lisensi
+[Setup dan dependency](docs/getting-started.md) · [Protokol fusion](docs/fusion_extension.md) · [Protokol UTA](docs/uta_pretrained_benchmark.md).
 
-Data mentah, cache fitur, checkpoints, dan model tidak dimasukkan ke Git. File contoh harus sintetis atau memiliki izin penggunaan yang jelas. Suara dan wajah operator memerlukan pengelolaan akses yang sesuai; dataset tidak otomatis mewarisi ketentuan repositori.
+## Struktur proyek
 
-Lisensi kode proyek belum ditentukan. Tidak ada lisensi open-source yang diberikan saat ini. Lisensi dan ketentuan setiap dataset wajib diperiksa sebelum penggunaan atau distribusi.
+```text
+notebooks/              tiga notebook penelitian dan panduan presentasi
+src/atc_fatigue/        loader, preprocessing, features, models, evaluation
+configs/               research.yaml dan konfigurasi eksperimen tetap
+scripts/               eksekusi, ingestion, training, dan validasi
+reports/               hasil nyata, prediksi, grafik, dan provenance
+assets/demo_media/     contoh kecil berlisensi yang sudah ditinjau
+data/                  dataset dan cache lokal; tidak diunggah
+models/ · runs/        checkpoint dan experiment runs lokal
+```
 
-Untuk kontribusi dan pencatatan eksperimen, lihat [CONTRIBUTING.md](CONTRIBUTING.md).
+## Data, reproduksi, dan batas ilmiah
 
----
+Dataset lengkap, feature caches, dan checkpoints tetap lokal. Contoh publik terbatas pada media Predi-COVID **CC BY 4.0** dan RAVDESS **CC BY-NC-SA 4.0** yang tercantum pada [manifest publikasi](reports/media_publication.json), dengan [atribusi dan checksum](assets/demo_media/README.md). Media UTA, ATCOSIM, dan DROZY tidak dipublikasikan.
 
-<div align="center">
+Semua skor harus dibaca bersama jumlah peserta, definisi label, split, dan domain gap. Predi-COVID bukan populasi ATC; RAVDESS mengukur emotion; UTA mengukur drowsiness. Tidak ada pasangan audio-video buatan lintas dataset yang dipakai sebagai benchmark fatigue.
 
-**Audio + visual · label yang tepat · evaluasi yang dapat diulang**
-
-</div>
+[Validasi eksperimen fusion](reports/fusion_extension_validation.json) · [Roadmap penelitian](docs/roadmap.md) · [Aturan kontribusi](CONTRIBUTING.md).

@@ -9,6 +9,8 @@ TARGETS = {
     "drozy": "KSS",
     "ravdess": "emotion",
     "ieee_atc_fatigue": "ATC_fatigue_binary",
+    "predi_covid": "clinical_fatigue_binary",
+    "cogbeacon": None,
 }
 
 
