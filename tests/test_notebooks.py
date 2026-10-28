@@ -130,7 +130,7 @@ def test_kss_rejects_conflicting_labels_in_one_test():
 
 def test_exact_three_new_notebooks_and_visible_training():
     root = Path(__file__).resolve().parents[1]
-    notebooks = sorted((root / "notebooks/v3").glob("*.ipynb"))
+    notebooks = sorted((root / "notebooks").glob("*.ipynb"))
     assert [p.name for p in notebooks] == ["01_audio_analysis.ipynb", "02_visual_analysis.ipynb",
                                          "03_multimodal_fusion.ipynb"]
     for path in notebooks:
@@ -175,7 +175,7 @@ def test_publication_copy_redacts_stream_paths_without_changing_source(monkeypat
     with monkeypatch.context() as context:
         context.setattr(os, "environ", dict(os.environ))
         context.chdir(root)
-        api = runpy.run_path(str(root / "scripts/10_execute_notebook_v3.py"))
+        api = runpy.run_path(str(root / "scripts/execute_notebooks.py"))
         original = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell("print('fixture')")])
         original.cells[0].outputs = [nbformat.v4.new_output(
             "stream", name="stderr", text=f"{root}/.venv/fixture.py: engineering warning")]
@@ -184,3 +184,24 @@ def test_publication_copy_redacts_stream_paths_without_changing_source(monkeypat
         assert "[proyek]" in public.cells[0].outputs[0].text
         assert str(root) in original.cells[0].outputs[0].text
         assert notebook_source_hash(original) == notebook_source_hash(public)
+
+
+def test_path_relocation_preserves_training_inputs_and_cell_order():
+    from atc_fatigue.research.layout import verify_training_cells_after_relocation
+    frozen = nbformat.v4.new_notebook(cells=[
+        nbformat.v4.new_code_cell("config = load('configs/notebook_v3.yaml')", id='config'),
+        nbformat.v4.new_code_cell('model.fit(X_train, y_train)', id='train'),
+    ])
+    expected = notebook_source_hash(frozen)
+    current = copy.deepcopy(frozen)
+    current.cells[0].source = "config = load('configs/research.yaml')"
+    current.cells.append(nbformat.v4.new_code_cell('new_experiment()', id='new'))
+    assert verify_training_cells_after_relocation(current, frozen, expected) == 2
+    altered = copy.deepcopy(current)
+    altered.cells[1].source = 'model.fit(X_test, y_test)'
+    with pytest.raises(ValueError, match='Scientific training cell'):
+        verify_training_cells_after_relocation(altered, frozen, expected)
+    altered = copy.deepcopy(current)
+    altered.cells[0], altered.cells[1] = altered.cells[1], altered.cells[0]
+    with pytest.raises(ValueError, match='cell order'):
+        verify_training_cells_after_relocation(altered, frozen, expected)

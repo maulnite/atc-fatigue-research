@@ -17,8 +17,8 @@ def validate(coordinator, root, run_tests=True):
     result = evaluate_run(root)
     protected = json.loads((coordinator / "protected_checksums.json").read_text())
     allowed = {
-        "notebooks/v3/02_visual_analysis.ipynb",
-        "notebooks/v3/03_multimodal_fusion.ipynb",
+        "notebooks/02_visual_analysis.ipynb",
+        "notebooks/03_multimodal_fusion.ipynb",
         "reports/uta_pretrained_benchmark.md",
     }
     mismatches = [
@@ -31,7 +31,7 @@ def validate(coordinator, root, run_tests=True):
     notebooks = {}
     figure_registry = json.loads(Path("reports/fusion_extension_figures.json").read_text())
     allowed_png = {entry["sha256"] for entry in figure_registry.values()}
-    for path in sorted(Path("notebooks/v3").glob("*.ipynb")):
+    for path in sorted(Path("notebooks").glob("*.ipynb")):
         before = json.loads((coordinator / path.name).read_text())
         after = json.loads(path.read_text())
         count = preserved(before, after)

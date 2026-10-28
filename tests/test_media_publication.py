@@ -70,7 +70,7 @@ def test_publication_profile_is_opt_in_and_keeps_private_original(monkeypatch):
         context.setattr(os, "environ", dict(os.environ))
         context.chdir(root)
         context.setattr(publication, "publication_policy", lambda: policy)
-        export = runpy.run_path(str(root / "scripts/10_execute_notebook_v3.py"))["publication_copy"]
+        export = runpy.run_path(str(root / "scripts/execute_notebooks.py"))["publication_copy"]
         default = export(notebook)
         assert "<audio" not in str(default)
         approved = export(notebook, notebook_name="fixture.ipynb", publish_licensed_media=True)

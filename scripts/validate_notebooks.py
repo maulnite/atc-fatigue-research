@@ -28,7 +28,11 @@ from atc_fatigue.research.runs import (  # noqa: E402
 )
 from atc_fatigue.research.representations import binary_ranking_metrics, positive_class_score  # noqa: E402
 from atc_fatigue.research.publication import (  # noqa: E402
-    POLICY, approved_audio_cell, publication_policy, verify_presentation_only_change,
+    POLICY, approved_audio_cell, publication_policy,
+)
+from atc_fatigue.research.layout import (  # noqa: E402
+    verify_training_cells_after_relocation, verify_relocated_source,
+    verify_canonical_notebook_preservation,
 )
 from atc_fatigue.utils.runtime import checksum, write_json  # noqa: E402
 
@@ -39,9 +43,11 @@ def main():
     args = parser.parse_args()
     config = project_config()
     report = {"utc": datetime.now(timezone.utc).isoformat(), "notebooks": [], "runs": [],
-              "privacy_scope": "new v3 notebooks and figures; legacy notebooks preserved"}
+              "privacy_scope": "canonical research notebooks; historical outputs and reviewed media preserved"}
+    if Path("reports/repository_layout.json").exists():
+        report["canonical_preservation"] = verify_canonical_notebook_preservation()
     policy = publication_policy() if POLICY.exists() else None
-    paths = sorted(Path("notebooks/v3").glob("*.ipynb"))
+    paths = sorted(Path("notebooks").glob("*.ipynb"))
     assert len(paths) == 3, "Exactly three main notebooks required"
     for path in paths:
         notebook = nbformat.read(path, as_version=4)
@@ -80,14 +86,14 @@ def main():
         if slug not in registry:
             continue
         run, metrics = cached_run(slug, config)
-        notebook = nbformat.read(Path("notebooks/v3") / run.manifest["notebook_name"], as_version=4)
+        notebook = nbformat.read(Path("notebooks") / run.manifest["notebook_name"], as_version=4)
         exact_source = notebook_source_hash(notebook) == run.manifest["notebook_source_hash"]
         if not exact_source:
             frozen_path = run.path / 'executed_notebooks' / f'{Path(run.manifest["notebook_name"]).stem}__{run.manifest["run_id"]}.ipynb'
             frozen = nbformat.read(frozen_path, as_version=4)
-            verify_presentation_only_change(notebook, frozen, run.manifest["notebook_source_hash"])
+            verify_training_cells_after_relocation(notebook, frozen, run.manifest["notebook_source_hash"])
         for path, expected in run.manifest["source_code_checksums"].items():
-            assert checksum(Path(path)) == expected, f"Current code differs from executed code: {path}"
+            verify_relocated_source(path, expected)
         split_path = run.path / "split_manifest.csv"
         if split_path.exists():
             split = pd.read_csv(split_path, dtype={"subject_id": str})
@@ -209,7 +215,7 @@ def main():
                                "target": metrics["target"], "status": run.manifest["status"],
                                "source_hash_matches_current_notebook": exact_source,
                                "scientific_code_matches_full_execution": True,
-                               "markdown_only_publication_update": not exact_source,
+                               "reviewed_source_relocation": not exact_source,
                                "replayed_checkpoints": replayed, "recomputed_metrics": compared,
                                "unique_checkpoints": len(list((run.path / "models").glob("*.joblib"))),
                                "figures": len(inventory), "captions_complete": True,
@@ -217,7 +223,7 @@ def main():
                                "synthetic_illustrations": sum(item["synthetic"] for item in inventory),
                                "artifact_integrity": "passed"})
 
-    for evidence_name in ("incremental_v3", "three_track"):
+    for evidence_name in (() if Path("reports/repository_layout.json").exists() else ("incremental_v3", "three_track")):
         pointer_file = Path(f"reports/run_logs/{evidence_name}_latest.json")
         if not pointer_file.exists():
             continue
@@ -243,14 +249,14 @@ def main():
     report["historical_runs"] = historical
 
     proof = Path("reports/run_logs/notebook_v3_preflight/protected_checksums.json")
-    if proof.exists():
+    if proof.exists() and not Path("reports/repository_layout.json").exists():
         protected = json.loads(proof.read_text())
         changed = [p for p, digest in protected.items() if not Path(p).exists() or checksum(p) != digest]
         assert set(changed) <= {"notebooks/README.md"}, changed
         report["legacy"] = {"checked": len(protected), "unchanged": len(protected)-len(changed),
                             "intentional_index_update": changed, "unexpected_changes": 0}
     else:
-        report["legacy"] = {"status": "original local preflight snapshot unavailable on this checkout"}
+        report["legacy"] = {"status": "historical snapshot retained; canonical relocation has its own preservation validation"}
     report["status"] = "passed"
     if policy:
         report['licensed_media_publication'] = {

@@ -156,7 +156,7 @@ def train_temporal(parent_path, config_path=Path("configs/visual_temporal.json")
 
         run_manifest.update(status="completed", seconds=metrics["seconds"],
                             notebook_source_hash=notebook_source_hash(nbformat.read(
-                                "notebooks/v3/02_visual_analysis.ipynb", as_version=4)))
+                                "notebooks/02_visual_analysis.ipynb", as_version=4)))
         write_json(path / "run_manifest.json", run_manifest)
         artifacts = {str(p.relative_to(path)): checksum(p) for p in path.rglob("*") if p.is_file()}
         write_json(path / "artifact_checksums.json", artifacts)

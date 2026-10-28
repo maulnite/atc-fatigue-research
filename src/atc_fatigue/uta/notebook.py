@@ -13,7 +13,7 @@ from nbclient import NotebookClient
 from atc_fatigue.uta.preservation import verify_prefix
 from atc_fatigue.utils.runtime import checksum, write_json
 
-NOTEBOOK = Path("notebooks/v3/02_visual_analysis.ipynb")
+NOTEBOOK = Path("notebooks/02_visual_analysis.ipynb")
 BASELINE = Path("reports/uta_notebook_baseline.json")
 
 

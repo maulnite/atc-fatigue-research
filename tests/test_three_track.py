@@ -78,7 +78,7 @@ def test_publication_removes_untagged_media_without_mutating_local_evidence(monk
     with monkeypatch.context() as context:
         context.setattr(os,'environ',dict(os.environ))
         context.chdir(root)
-        api=runpy.run_path(str(root/'scripts/10_execute_notebook_v3.py'))
+        api=runpy.run_path(str(root/'scripts/execute_notebooks.py'))
         notebook=nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell('fixture = True')])
         notebook.cells[0].outputs=[nbformat.v4.new_output('display_data',data=payload)]
         public=api['publication_copy'](notebook)

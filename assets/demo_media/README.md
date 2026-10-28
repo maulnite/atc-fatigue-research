@@ -8,7 +8,7 @@ Contoh berikut benar-benar berasal dari recording test yang dipakai notebook v3.
 - [Clean — mono 16 kHz sebelum simulasi kanal](predi_clean.wav)
 - [Radio-style — recording yang sama, SNR 20 dB](predi_radio20.wav)
 
-Kedua versi clean/radio juga tertanam sebagai player di [notebook audio](../../notebooks/v3/01_audio_analysis.ipynb). Jika renderer GitHub tidak menampilkan tombol play, gunakan **Download raw file** pada tautan WAV. Aplikasi Jupyter dapat memainkan embedded player.
+Kedua versi clean/radio juga tertanam sebagai player di [notebook audio](../../notebooks/01_audio_analysis.ipynb). Jika renderer GitHub tidak menampilkan tombol play, gunakan **Download raw file** pada tautan WAV. Aplikasi Jupyter dapat memainkan embedded player.
 
 Clean bukan jaminan bebas noise: istilah ini berarti sebelum simulasi tambahan. Transformasi: Butterworth SOS order 4, 300–3400 Hz, forward-backward offline, gain −3 dB, band-limited Gaussian noise 20 dB dengan seed per recording. Tidak ada codec. Content, label dan orangnya tidak berubah.
 
@@ -39,7 +39,7 @@ Frame ini memperlihatkan sumber visual aktual. Fitur HOG pada eksperimen adalah 
 
 **RAVDESS:** Steven R. Livingstone dan Frank A. Russo (2018), *The Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS)*. [Sumber/DOI](https://doi.org/10.5281/zenodo.1188976), [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). MP4 tidak diubah isinya; JPEG diekstrak sekitar500ms dan dikodekan JPEG tanpa cropping. Contoh ini untuk penggunaan nonkomersial; adaptasi frame dibagikan dengan lisensi CC BY-NC-SA 4.0 yang sama. Ini lisensi media terkait, bukan lisensi baru seluruh repository.
 
-Manifest [provenance/checksum](../../reports/notebook_v3_media_publication.json) mencatat sumber, license, hash, parameter transformasi dan run ID. Nama file publik tidak mengandung participant ID atau label klinis.
+Manifest [provenance/checksum](../../reports/media_publication.json) mencatat sumber, license, hash, parameter transformasi dan run ID. Nama file publik tidak mengandung participant ID atau label klinis.
 
 ## Media yang belum dibagikan
 

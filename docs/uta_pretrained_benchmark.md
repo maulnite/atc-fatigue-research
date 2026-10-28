@@ -4,7 +4,7 @@ Tujuan eksperimen adalah mengklasifikasikan **video-level drowsiness** pada pese
 
 **Status akses saat implementasi:** empat arsip Fold1–Fold2 berhasil diunduh dan diekstrak (24 peserta /72 rekaman). Keenam arsip Fold3–Fold5 mengembalikan **Google Drive Quota exceeded** untuk unduhan penuh, walaupun byte-range central-directory audit sebelumnya berhasil. Full benchmark 60 peserta/lima outer fold berstatus **NOT RUN — DATA UNAVAILABLE**. Tiga model tetap dieksekusi sebagai **engineering pilot**: peserta01–12 train,13–18 validation,19–24 test. Jangan menyebut hasil pilot ini official five-fold CV.
 
-Pusat presentasi tetap [notebook visual v3](../notebooks/v3/02_visual_analysis.ipynb). Bagian UTA ditambahkan setelah seluruh sel lama; MRL, DROZY, dan CogBeacon beserta hasilnya tidak dijalankan ulang atau diubah. Ringkasan training nyata tersedia di [laporan benchmark](../reports/uta_pretrained_benchmark.md), setelah run selesai dan tervalidasi.
+Pusat presentasi tetap [notebook visual v3](../notebooks/02_visual_analysis.ipynb). Bagian UTA ditambahkan setelah seluruh sel lama; MRL, DROZY, dan CogBeacon beserta hasilnya tidak dijalankan ulang atau diubah. Ringkasan training nyata tersedia di [laporan benchmark](../reports/uta_pretrained_benchmark.md), setelah run selesai dan tervalidasi.
 
 ## Sumber dan hak penggunaan
 

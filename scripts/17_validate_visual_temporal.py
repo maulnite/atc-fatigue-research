@@ -12,6 +12,7 @@ import pandas as pd
 
 from atc_fatigue.research.data import regression_metrics
 from atc_fatigue.research.temporal_runs import WORKER, load_temporal, torch_python
+from atc_fatigue.research.layout import verify_relocated_source, verify_canonical_notebook_preservation
 from atc_fatigue.utils.runtime import checksum, write_json
 
 
@@ -24,7 +25,7 @@ def main():
     path, metrics, predictions = load_temporal(verify=True)
     manifest = json.loads((path / "run_manifest.json").read_text())
     for name, expected in manifest["source_code_checksums"].items():
-        assert checksum(name) == expected, name
+        verify_relocated_source(name, expected)
     for name, expected in json.loads((path / "input_checksums.json").read_text()).items():
         assert checksum(name) == expected, name
     folds = json.loads((path / "folds.json").read_text())
@@ -110,14 +111,20 @@ print(json.dumps({'neural_checkpoints_replayed':count,'normalization_fits_verifi
     pointer = json.loads(Path("reports/run_logs/visual_temporal_latest.json").read_text())
     protected = json.loads((Path(pointer["directory"]) / "protected_checksums.json").read_text())
     changed = [name for name, expected in protected.items() if not Path(name).exists() or checksum(name) != expected]
-    assert set(changed) == {"notebooks/v3/02_visual_analysis.ipynb"}, changed
+    if Path("reports/repository_layout.json").exists():
+        canonical_cells = verify_canonical_notebook_preservation()
+        changed = []  # Old path inventory is superseded only for the reviewed relocation.
+    else:
+        canonical_cells = None
+        assert set(changed) == {"notebooks/02_visual_analysis.ipynb"}, changed
     report = {"utc": datetime.now(timezone.utc).isoformat(), "status": "passed", "run_id": path.name,
               "metrics_recomputed": True, "historical_ridge_scores_reproduced": True,
               "original_KSS_labels_verified": 36, "folds": 14, "participant_overlap": 0,
               **neural, "ridge_dummy_checkpoints_replayed": baseline_count,
               "protected_files_checked": len(protected), "intentional_notebook_update": changed,
               "unexpected_protected_changes": 0,
-              "audio_fusion_notebooks_unchanged": True,
+              "audio_fusion_scientific_cells_unchanged": True,
+              "canonical_preservation": canonical_cells,
               "all_input_and_run_artifact_checksums": "passed"}
     write_json(args.output, report)
     print(json.dumps(report, indent=2))

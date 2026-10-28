@@ -1,68 +1,23 @@
-**Ekstensi visual — 24 Oktober 2026:** RQ1 telah dieksekusi pada36test/14orang DROZY: duaCNN553parameter, nested subject-independent LOSO dan3seed. CNN belum mengungguli Ridge EAR-only; hasil negatif dipertahankan. RQ2 UTA-RLDD dan RQ3 FatigueView memiliki audit/adapter ingestion teruji, tetapi training **NOT RUN — DATA UNAVAILABLE**. RQ4 membandingkan kualitas label DriverFatigueDetection, LFD/DLFD, CCT dan CogBeacon; belum ada baseline fatigue-specific baru yang sah. Transfer UTA→DROZY belum diimplementasikan karena encoder sumber/data tidak tersedia. [Hasil, batasan, dan langkah berikutnya](../reports/visual_temporal_research.md) · [akses/provenance](visual_dataset_feasibility.md). Tetap tiga notebook v3, tanpa mengganti hasil lama atau mengubah main.
+# Roadmap penelitian
 
----
+## Sudah tersedia
 
-# Roadmap penelitian dan implementasi
+- Tiga notebook canonical pada `notebooks/`: audio, visual, dan multimodal fusion, beserta output presentasi.
+- Audio ATCOSIM→114 fitur dan Predi-COVID clinical-fatigue classification/channel-robustness.
+- MRL eye-state, DROZY temporal feature/KSS regression dan temporal CNN, serta audit CogBeacon.
+- UTA-RLDD engineering pilot: tiga pretrained models, 24 peserta, participant-disjoint evaluation. Completed pilot dan DROZY tetap dipertahankan.
+- RAVDESS emotion: classical baselines, early fusion, equal/validation-weighted late fusion, audio/visual CNN controls dan dual-stream fusion, 8 LOAO folds, 2 neural seeds.
+- Model replay, train-only preprocessing, run provenance, subject/actor leakage checks dan reviewed presentation figures.
 
-**Publikasi contoh berizin — 23 Oktober 2026:** revisi pengguna diimplementasikan melalui galeri 8 asset Predi-COVID/RAVDESS dan dua embedded player audio yang di-whitelist. Code cells training/score tidak berubah; DEMO dieksekusi ulang dan QA membedakan exact scientific code dari perubahan Markdown. 82 tests lulus. Media ATCOSIM/DROZY tetap mengikuti larangan redistribusi pemilik; tidak ada full dataset/model/cache yang diunggah. [Galeri dan atribusi](../assets/demo_media/README.md).
+[Hasil lengkap](../reports/README.md). Tidak ada klaim validated ATC fatigue performance.
 
+## Berikutnya
 
-**Three-track feasibility — 23 Oktober 2026:** implementasi tetap pada tiga notebook v3. Actual raw/transformed feature representations dan X/y ditampilkan; audio menjalankan radio-channel study, visual menjalankan fixed LOSO feature ablation, fusion memperlihatkan paired vectors dan prediction walkthrough. Final QA: 79 tests, 145 unique checkpoints / 154 replays, 9 fresh-kernel acceptance executions, 69 public plots + 9 local private plots. Sebanyak 50 prior plot topics dan 3.284 protected files dipertahankan.
+1. **Akses source UTA penuh.** Pada pemeriksaan 25 Oktober enam arsip Fold 3–5 masih quota-blocked. Setelah source resmi tersedia, jalankan parameter tetap pada lima official outer folds. Jangan memilih arsitektur/hyperparameter berdasarkan pilot test ranking.
+2. **Replikasi dan external validation.** RAVDESS hanya 8 aktor dan telah digunakan dalam pengembangan; peningkatan late fusion masih belum kuat. Hindari unrestricted tuning pada test yang sudah dipublikasikan.
+3. **Ground truth fatigue ATC.** Tinjau instrumen bersama Prof, akses data, dan genuine pairing operator/sesi/timestamp. Bedakan fatigue, sleepiness, emotion dan eye state.
+4. **Paired ATC evaluation.** Bandingkan unimodal/fusion pada data nyata setelah izin dan label tersedia; laporkan coverage, missing modality dan uncertainty dengan unit peserta.
 
-Temuan: Logistic clinical fatigue clean/radio20/augmented-radio20 Macro F1 = 0,4857/0,6298/0,5758 (recall positif 0,3889/0,3333/0,4444); augmentation belum konsisten membantu. DROZY EAR-only MAE 1,3508 versus combined 1,4544. Fusion RAVDESS tetap unggul di split lama, tetapi kalah dari audio dalam LOAO. CogBeacon belum mempunyai ground truth frame/window yang sah. Tidak ada benchmark fatigue ATC atau perubahan shared environment. [Hasil dan evidence](../reports/notebook_v3_summary.md).
+## Pemeliharaan
 
-**Enhancement incremental v3 — 22 Oktober 2026:** tiga notebook yang sama sekarang memuat audit/benchmark Predi-COVID, audit CogBeacon, visualisasi audio asli lokal, zoom EAR, dan LOAO actor-independent RAVDESS. Keunggulan fusion pada split historis tidak konsisten terhadap audio-only dalam LOAO; lihat [hasil dan batas interpretasi terbaru](../reports/notebook_v3_summary.md). Snapshot status sebelumnya tetap dipertahankan di bawah.
-
-| Prioritas enhancement | Implementasi dan bukti | Status |
-| :--- | :--- | :--- |
-| P0 Preserve & Audit | Snapshot checksum 1.367 berkas lama; branch/PR, environment, data dan hak akses diperiksa | Terverifikasi |
-| P1 Original Audio | Empat grafik ATCOSIM asli lokal, 114 fitur konsisten; ekspor publik menahan ilustrasi sintetis | Terimplementasi dan diuji |
-| P2 Fatigue Dataset Audits | Predi-COVID subset berizin + 3 model; CogBeacon 68.118 NPZ + audit 77 sesi | Training klinis / audit deskriptif selesai; label window CogBeacon belum valid |
-| P3 Multimodal Evaluation | Histori tetap, LOAO 8 fold / 32 checkpoint, actor metrics, dimensionality, per-class dan error analysis | Exploratory terverifikasi; bukan test konfirmatori |
-| P4 Presentation Polish | 50 grafik publik + 4 grafik audio privat lokal, caption, narasi dan review visual | Diperiksa visual |
-| P5 Validation | FULL/DEMO fresh kernel, replay 69 checkpoint, tests/Ruff/dependency checks, laporan/PR #1 | Bukti pada validation JSON; tanpa merge main |
-
-Prioritas penelitian berikutnya: protokol target bersama Prof, klarifikasi event/clock/jumlah peserta CogBeacon, kontrol confound klinis/perangkat/bahasa, dan pengumpulan pasangan ATC berlabel fatigue. Tidak ada klaim bahwa model emotion/eye-state/KSS telah mendeteksi fatigue ATC.
-
-**Pembaruan 22 Oktober 2026:** pengembangan [notebook-first v3](../notebooks/v3/README.md) menambahkan tepat tiga notebook utama, mode DEMO/FULL, dan run eksperimen terpisah. Hasil serta acceptance terbaru tercatat dalam [laporan v3](../reports/notebook_v3_summary.md). Seluruh artefak lama dipertahankan. Menurut dokumen v3 dari pengguna, permintaan akses IEEE telah dikirim; akses/data belum tersedia. Status 21 Oktober di bawah adalah snapshot historis.
-
-**Status 21 Oktober 2026:** jalur utama MVP publik M0–M4 dan M6 telah dijalankan; ini tidak berarti semua detail handoff selesai. Draft M7 tersedia. M5 belum memperoleh akses IEEE; belum ada permintaan akses yang dikirim. M8 menunggu data ATC berpasangan/protokol. Lihat [checklist per bagian handoff](../reports/handoff_coverage.md) dan [laporan hasil](../reports/smoke_test_report.md).
-
-Lihat [rencana eksekusi lengkap](execution-plan.md) untuk pekerjaan, dependensi, output, kriteria selesai, dan penanganan akses dataset yang belum pasti.
-
-| Milestone | Fokus | Bukti penyelesaian | Status |
-| :--- | :--- | :--- | :--- |
-| Fondasi | Repo, README, aturan, struktur kerja | Commit awal dan dokumentasi tersedia | Selesai |
-| M0 | Audit environment dan akses dataset | Environment/dataset/storage audit | Selesai; akses IEEE terbatas |
-| M1 | Config, schema, loader, fixture, tests | Modul dan pengujian kritis | Selesai untuk scope smoke |
-| M2 | Audio ATCOSIM | 100 utterances, eGeMAPS/MFCC, quality masks, QC dan profiling | MVP berjalan; satu speaker, continuous speech timing/VAD belum diuji |
-| M3 | Visual MRL dan DROZY | MRL holdout; 360 windows / 36 tests DROZY dan LOSO KSS | Selesai; threshold visual belum dikalibrasi |
-| M4 | Paired fusion RAVDESS | 128 AV / 8 aktor, unimodal/fusion/ablation | Selesai untuk demo emotion kecil |
-| M5 | Audio fatigue jika akses tersedia | DOI dan gate akses telah diidentifikasi | Menunggu login/subscription IEEE |
-| M6 | Laporan dan demo | Lima notebook fresh-kernel Run All pada snapshot dan model reload | Demo MVP tervalidasi; review Prof dan kelengkapan akhir handoff belum selesai |
-| M7 | Rencana pengumpulan data ATC | Draft pada `docs/data-collection-plan.md` | Draft tersedia; belum disahkan Prof |
-| M8 | Benchmark fatigue multimodal ATC asli | Evaluasi unimodal/static/temporal pada pasangan dan label sah | Menunggu data dan protokol |
-
-## Functional acceptance
-
-- [x] Environment dan akses dataset diaudit.
-- [x] Audio ATC dan data visual berhasil diproses menjadi fitur.
-- [x] Unit/integration tests kritis lulus.
-- [x] Setidaknya satu model dinilai pada label asli dengan tugas yang disebutkan jelas.
-- [x] Fusion berjalan pada pasangan sah RAVDESS.
-- [x] Model tersimpan dapat di-reload dan memprediksi holdout.
-- [x] Lima notebook demo lulus fresh-kernel Run All.
-- [x] Laporan hanya memuat hasil yang benar-benar dieksekusi.
-
-## Scientific readiness
-
-- [x] Provenance, definisi label, jumlah subjek, metadata waktu, dan missing rates tercatat.
-- [x] Split subject/actor-independent diverifikasi pada benchmark.
-- [x] Majority baseline dan metrik imbalance tersedia untuk klasifikasi; mean baseline/MAE untuk KSS.
-- [x] Checks leakage diterapkan; keterbatasan near-duplicate dan domain shift tetap dicatat.
-- [x] Batasan label per sesi dan domain shift ke ATC fatigue dijelaskan.
-- [ ] Kebutuhan dataset nyata dan keputusan ground truth dibahas dengan Prof.
-
-## Keputusan yang masih terbuka
-
-Tipe audio akhir (headset atau radio), video RGB/NIR dan frame rate, simulator atau operasional, instrumen dan interval ground truth fatigue, akses IEEE corpus, serta izin/resource pengumpulan data belum final. Keputusan tersebut tidak perlu menghambat audit awal dan smoke test yang lingkupnya jelas.
+`main` menjadi entry point implementasi yang dipakai; tidak ada folder notebook versi alternatif. Riwayat tetap pada Git. Dataset aktif, source checksums, models dan completed experiment runs dipertahankan. Perubahan tampilan/path tidak boleh dianggap training atau skor eksperimen baru.

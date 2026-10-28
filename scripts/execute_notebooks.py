@@ -1,4 +1,4 @@
-"""Execute only the three v3 notebooks, preserving sources and append-only run evidence."""
+"""Execute only the three research notebooks, preserving sources and append-only run evidence."""
 
 import argparse
 import ast
@@ -83,6 +83,8 @@ def main():
                         help="DEMO acceptance: deny every open/decode under data/raw in the kernel")
     parser.add_argument("--publish-licensed-media", action="store_true",
                         help="Keep only reviewed, checksum-verified CC BY audio examples in public outputs")
+    parser.add_argument("--evidence-only", action="store_true",
+                        help="Execute fresh copies and save local evidence without replacing notebook outputs")
     args = parser.parse_args()
     if args.deny_raw_media and (args.mode != "DEMO" or args.private_media):
         parser.error("--deny-raw-media requires public DEMO without --private-media")
@@ -98,7 +100,7 @@ def main():
     results = []
     selected = args.notebook or NAMES
     for name in selected:
-        path = ROOT / "notebooks/v3" / name
+        path = ROOT / "notebooks" / name
         source = nbformat.read(path, as_version=4)
         for index, cell in enumerate(source.cells):
             if cell.cell_type == "code":
@@ -143,7 +145,7 @@ def main():
                 current_runs.append({"experiment": manifest["experiment"], "run_id": manifest["run_id"]})
             result["fresh_runs"] = current_runs
             if args.mode == "FULL":
-                registry = ROOT / "reports/notebook_v3_runs.json"
+                registry = ROOT / "reports/research_runs.json"
                 payload = json.loads(registry.read_text()) if registry.exists() else {"runs": {}, "history": []}
                 for run in current_runs:
                     payload["runs"][run["experiment"]] = run["run_id"]
@@ -154,7 +156,9 @@ def main():
                                       publish_licensed_media=args.publish_licensed_media)
             result["public_png_outputs"] = sum("image/png" in o.get("data", {})
                 for c in public.cells if c.cell_type == "code" for o in c.outputs)
-            nbformat.write(public, path)
+            nbformat.write(public, evidence / ("public__" + name))
+            if not args.evidence_only:
+                nbformat.write(public, path)
         except Exception as exc:
             nbformat.write(source, evidence / (path.stem + "__failed.ipynb"))
             result.update(status="failed", seconds=time.perf_counter()-started, error_type=type(exc).__name__)

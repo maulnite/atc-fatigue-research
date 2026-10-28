@@ -8,7 +8,7 @@ import json
 import re
 from pathlib import Path
 
-POLICY = Path("reports/notebook_v3_media_publication.json")
+POLICY = Path("reports/media_publication.json")
 
 
 def code_cells(notebook: dict) -> list[str]:

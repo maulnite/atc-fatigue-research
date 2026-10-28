@@ -187,7 +187,9 @@ def test_metrics_original_codes_and_subject_bootstrap():
 
 def test_historical_notebook_prefix_is_immutable():
     baseline = json.loads(Path("reports/uta_notebook_baseline.json").read_text())
-    notebook = json.loads(Path(baseline["notebook"]).read_text())
+    from atc_fatigue.research.layout import restore_historical_cell
+    notebook = json.loads(Path("notebooks/02_visual_analysis.ipynb").read_text())
+    notebook["cells"] = [restore_historical_cell(cell) for cell in notebook["cells"]]
     assert verify_prefix(notebook, baseline) == 84
     for mutation in ["source", "metadata", "outputs"]:
         changed = copy.deepcopy(notebook)

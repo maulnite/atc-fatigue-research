@@ -77,7 +77,7 @@ Adapter UTA-RLDD/FatigueView telah diuji dengan fixture video sintetis kecil unt
 
 ## Validasi dan keterbatasan
 
-Bukti akhir berada pada [validationJSON](visual_temporal_validation.json) dan [QA tiga notebook](notebook_v3_validation.json). Pemeriksaan meliputi replay seluruh84 neural+42 classicalcheckpoints,168 fit normalisasi inner/outer, target scaling dan epoch selection,36 labelKSS asli,14 fold tanpa overlap, semua metrik dihitung ulang, checksum input/artifacts serta preservation4.411 file. Satu notebook visual diperbarui secara sengaja; audio/fusion dan seluruh protected experiment files tetap utuh.
+Bukti akhir berada pada [validationJSON](visual_temporal_validation.json) dan [QA tiga notebook](historical_validation.json). Pemeriksaan meliputi replay seluruh84 neural+42 classicalcheckpoints,168 fit normalisasi inner/outer, target scaling dan epoch selection,36 labelKSS asli,14 fold tanpa overlap, semua metrik dihitung ulang, checksum input/artifacts serta preservation4.411 file. Satu notebook visual diperbarui secara sengaja; audio/fusion dan seluruh protected experiment files tetap utuh.
 
 91 tests lulus;14warning berasal dari deprecation Matplotlib/Pyparsing. Ruff `src tests scripts` dan `pip check` lulus. Lint seluruh repository masih mempunyai119diagnostik notebook yang sudah ada padaHEAD; jumlah/jenisnya tidak bertambah. Filelegacy/audio/fusion tidak diubah untuk membersihkan warning lint di luar scope. FULL dan DEMO fresh-kernel visual wajib lulus; DEMO menolak pembacaan raw media dan menjalankan inference ulang fold0keduaCNN. Publik tidak mengandung mediaDROZY, audio/video baru atau private filesystem paths.
 

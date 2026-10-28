@@ -1,30 +1,22 @@
-# Entry points
+# Entry points penelitian
 
-Untuk v3, gunakan `10_execute_notebook_v3.py --mode DEMO` atau `--mode FULL`. Gunakan `--deny-raw-media` pada DEMO publik untuk acceptance tanpa raw source. Gunakan `--private-media` untuk player/preview lokal; salinan publik disanitasi dan evidence asli tetap lokal. Runner hanya mengeksekusi tiga notebook pada `notebooks/v3/` dan menyimpan evidence per sesi. `11_validate_notebook_v3.py` memeriksa source, cache, replay model/prediksi, metrik, gambar dan output secara read-only. Lihat [panduan v3](../notebooks/v3/README.md).
+Jalankan dari root repository dengan environment proyek. Logika reusable berada di `src/atc_fatigue/`; script tidak mengganti shared environment secara otomatis.
 
-CLI utama: `atc-fatigue --help`. Scripts 00–06 adalah wrapper audit environment/dataset, ekstraksi audio, DROZY, training MRL, fusion RAVDESS, dan report builder. `07_build_notebooks.py --execute` membuat dan memvalidasi notebook demo.
+| Tujuan | Perintah/script |
+|---|---|
+| DEMO/FULL tiga notebook | `execute_notebooks.py --mode DEMO --deny-raw-media --evidence-only` |
+| Notebook, media, source dan artifact QA | `validate_notebooks.py --output runs/qa/<file-baru>.json` |
+| Coordinated UTA + RAVDESS | `run_coordinated_research.py` |
+| Fusion tanpa download UTA | `run_coordinated_research.py --packages late cnn --no-acquisition` |
+| UTA full-data gate / actual five-fold training | `run_uta_pretrained_benchmark.py --index configs/manifests/uta_official_release.json` / tambah `--all-folds` setelah gate lolos |
+| Approved bounded UTA acquisition | `18_acquire_uta.py` |
+| Official pretrained weight preflight | `19_uta_model_preflight.py` |
+| DROZY temporal FULL/DEMO | `14_visual_temporal.py --mode FULL` / `--mode DEMO` |
+| Ingestion dan audit kandidat visual | `15_ingest_visual_candidates.py`, `16_audit_visual_sources.py` |
+| Pembuatan contoh media publik berizin | `13_prepare_public_demo_media.py` |
 
-Gunakan Python `.venv` dari root proyek. Setiap script memiliki `--help`; parameter aktual mengikuti CLI, bukan contoh antarmuka rancangan dalam handoff. Logika utama berada di `src/atc_fatigue/`.
+FULL berarti real extraction/training ke run baru; DEMO berarti verified cached artifacts dan real inference tanpa klaim training baru. `--evidence-only` menyimpan fresh-kernel copies tanpa menimpa output presentasi. [Panduan notebook](../notebooks/README.md).
 
-`08_engineering_audit.py` memprofilkan artefak lokal dan membuat QC audio agregat. Gunakan `--output` baru untuk setiap pass; run canonical tidak ditimpa. Ini bukan pengukuran real-time atau studi cold-start.
+CLI `atc-fatigue --help` dan wrapper 00–06 tetap menyediakan audit/extraction/baseline utilities yang dipakai pipeline. Generator lima notebook awal sudah tidak menjadi bagian working tree aktif; gunakan tiga notebook canonical, bukan membuat kembali demo lama.
 
-`09_execute_demo.py` menjalankan notebook 00–04 yang sudah ada, mempertahankan isi cell, membuat backup, dan menyimpan output langsung pada notebook lokal. Gunakan runner ini untuk melihat hasil di folder `notebooks/`; generator 07 membuat ulang source dan tidak mempertahankan edit lokal.
-
-`13_prepare_public_demo_media.py` membuat contoh berizin dari data lokal yang sudah ada, tanpa download/training. `10_execute_notebook_v3.py --mode DEMO --private-media --publish-licensed-media --notebook 01_audio_analysis.ipynb` mempertahankan dua player yang code hash/audio bytes-nya cocok manifest publikasi; media privat lain tetap dihapus pada salinan publik.
-
-Ekstensi visual temporal tetap memakai notebook02. `14_visual_temporal.py --mode FULL`
-menjalankan persiapan urutan DROZY, nested subject-LOSO, dua CNN × tiga seed, serta
-baseline Ridge/Dummy; `--mode DEMO` memverifikasi artefak dan menjalankan inference
-ulang tanpa training. Set `ATC_TORCH_PYTHON` ke interpreter existing yang memiliki
-PyTorch jika base interpreter proyek belum menyediakannya. Tidak ada instalasi atau
-perubahan environment otomatis. Parameter tetap berada di `configs/visual_temporal.json`.
-
-`15_ingest_visual_candidates.py` memvalidasi video UTA-RLDD/FatigueView lokal yang
-sudah diakses secara sah; tidak mengunduh atau melatih classifier. FatigueView
-mengharuskan pemetaan peserta/sesi yang terverifikasi. `16_audit_visual_sources.py`
-mengambil metadata dan JSON event kecil dari sumber resmi, tanpa video atau pesan
-kepada penulis. `17_validate_visual_temporal.py --output <file-baru.json>` melakukan
-replay seluruh84checkpoint CNN, pemeriksaan168fit normalisasi dan42checkpoint
-Ridge/Dummy, label asli, metrik, split serta preservation. Lihat
-[hasil temporal](../reports/visual_temporal_research.md) dan
-[akses/ingestion dataset](../docs/visual_dataset_feasibility.md).
+Setiap script memiliki `--help`. [Fusion reproducibility](../docs/fusion_extension.md) · [UTA reproducibility](../docs/uta_pretrained_benchmark.md) · [Dataset](../docs/datasets.md).

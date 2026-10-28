@@ -1,10 +1,10 @@
-# Menjalankan smoke test
+# Menjalankan penelitian
 
-Untuk alur riset dan presentasi terbaru, gunakan [tiga notebook utama v3 beserta mode DEMO/FULL](../notebooks/v3/README.md). Runner-nya adalah `scripts/10_execute_notebook_v3.py`. Perintah di bawah tetap mendokumentasikan pipeline dan demo awal; tidak perlu menjalankan ulang generator atau menimpa artefak canonical untuk menggunakan v3.
+Entry point aktif adalah [tiga notebook](../notebooks/README.md) dan [`configs/research.yaml`](../configs/research.yaml). Jalankan perintah dari root repository. Output notebook yang disimpan dapat langsung dibaca melalui GitHub; menjalankan kode memerlukan environment, dataset dan cache/model lokal yang sesuai.
 
-Jalankan dari root proyek dengan environment pribadi. Environment/data lokal sesi ini sudah tersedia; tidak perlu download ulang. Untuk checkout baru, gunakan Python 3.10 dan ffmpeg sistem.
+## Environment proyek
 
-## Setup
+Gunakan environment pribadi yang sudah tersedia. Untuk checkout baru, kebutuhan dasar adalah Python 3.10 dan ffmpeg:
 
 ```bash
 python3.10 -m venv .venv
@@ -12,76 +12,50 @@ source .venv/bin/activate
 python -m pip install -r requirements.lock.txt
 python -m pip install --no-build-isolation --no-deps -e .
 python -m ipykernel install --prefix="$VIRTUAL_ENV" --name atc-fatigue --display-name 'Python (ATC Fatigue)'
-export OPENBLAS_NUM_THREADS=4 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 NUMBA_NUM_THREADS=4
 ```
 
-Instalasi dan kernelspec hanya pada prefix environment proyek. Jangan mengganti paket shared. Pemeriksaan awal:
+Jangan mengganti dependency shared. Worker neural menggunakan runtime terisolasi yang dijelaskan pada [panduan UTA](uta_pretrained_benchmark.md) dan [panduan fusion](fusion_extension.md); tidak diperlukan untuk sekadar membaca output publik.
+
+## DEMO tanpa menimpa output
 
 ```bash
-atc-fatigue environment
-atc-fatigue audit
-pytest -q
-ruff check src tests scripts
+PYTHONPATH=src .venv/bin/python scripts/execute_notebooks.py \
+  --mode DEMO --deny-raw-media --evidence-only
 ```
 
-Audit source pages tidak membuktikan akses file/lisensi. Baca [dataset audit](../reports/dataset_audit.md), lalu cek free space/kuota sebelum download. GPU kosong pada snapshot tidak berarti ada reservasi GPU.
+Perintah ini memakai fresh kernels dan cache ber-checksum, menjalankan inference nyata, lalu menyimpan salinan/output ke `runs/executions/<session>/`. `--deny-raw-media` menolak pembacaan `data/raw`; contoh berizin di `assets/demo_media/` tetap mengikuti manifest publikasi. `--evidence-only` mempertahankan seluruh output notebook aktif.
 
-## Audio ATCOSIM
+Untuk satu notebook, tambahkan `--notebook 02_visual_analysis.ipynb`. Semua notebook berdiri sendiri dan memakai kernel **Python (ATC Fatigue)**. Clone publik tidak menyediakan full feature caches atau checkpoints; bila cache tidak tersedia, jangan menggantinya dengan prediksi fiktif.
+
+## FULL dan training
 
 ```bash
-atc-fatigue prepare-atcosim --limit 100
-atc-fatigue audio
+# Data/izin lokal wajib tersedia; hasil ditulis ke run baru.
+PYTHONPATH=src .venv/bin/python scripts/execute_notebooks.py \
+  --mode FULL --evidence-only --notebook 01_audio_analysis.ipynb
+
+# Eksperimen fusion classical/late dan neural yang terkoordinasi.
+PYTHONPATH=src .venv/bin/python scripts/run_coordinated_research.py \
+  --packages late cnn --no-acquisition
+
+# UTA: gate murah, tanpa training atau download.
+PYTHONPATH=src .venv/bin/python scripts/run_uta_pretrained_benchmark.py \
+  --index configs/manifests/uta_official_release.json
 ```
 
-HF `/first-rows` dipakai karena `/rows` corpus ini mengalami scan-size error. Output: `data/interim/atcosim_audio_features.parquet`. Source revision yang teramati, checksum, speaker/session, dan transcript dicatat. Dataset tidak memiliki fatigue labels.
+FULL tidak diperlukan untuk presentasi. Menjalankan tanpa `--evidence-only` secara eksplisit memasang hasil eksekusi ke notebook; gunakan hanya ketika memang ingin memperbarui output presentasi. Model/checkpoints dan completed experiment runs selalu append-only.
 
-## MRL eye-state benchmark
+Full UTA lima fold hanya boleh dijalankan setelah seluruh source resmi tersedia dan lolos gate. Empat arsip lokal tetap dibutuhkan untuk pilot dan resume. Gunakan parameter tetap pada [konfigurasi UTA](../configs/uta_pretrained_benchmark.json), bukan memilih hyperparameter dari pilot test scores. [Protokol lengkap](uta_pretrained_benchmark.md).
+
+## QA
 
 ```bash
-atc-fatigue fetch --dataset mrl_eye
-atc-fatigue prepare-mrl
-atc-fatigue train-mrl --output reports/metrics/mrl_eye_rerun --models models/mrl_eye_rerun
+PYTHONPATH=src .venv/bin/python -m pytest -q
+.venv/bin/ruff check src tests scripts
+.venv/bin/python -m pip check
+PYTHONPATH=src .venv/bin/python scripts/validate_notebooks.py --output runs/qa/<nama-baru>.json
 ```
 
-Arsip dibatasi 350 MiB dan hanya subset diekstrak. Seed/config ada di `configs/smoke.yaml`. Dummy dan HOG+LinearSVC memakai split subjek yang sama. Gunakan run directory baru; model/metrics existing tidak ditimpa.
+Validator memeriksa media, notebook, recorded training cells, checksum artefak, split dan actual checkpoint predictions. Perpindahan path diperiksa melalui [manifest layout](../reports/repository_layout.json), bukan dengan mengubah hash historical model runs. Scientific code di luar perubahan path yang ditinjau tetap ditolak.
 
-## DROZY temporal dan KSS
-
-Unduhan sekitar 2,46 GB sudah disetujui untuk sesi ini dengan batas workspace 6 GiB. Untuk workspace baru, periksa izin/resource sebelum `fetch`.
-
-```bash
-atc-fatigue fetch --dataset drozy
-atc-fatigue drozy --metrics reports/metrics/drozy_kss_rerun --models models/drozy_kss_rerun
-```
-
-Ekstraksi mengutamakan landmark/timestamp/metadata. KSS memakai regresi agregat per test dengan LOSO. Threshold mata masih pilihan engineering; jumlah window bukan jumlah label independen. Alignment frame/landmark ambigu ditolak.
-
-## Paired emotion fusion RAVDESS
-
-```bash
-atc-fatigue prepare-ravdess
-atc-fatigue fusion --output reports/metrics/ravdess_emotion_rerun --models models/ravdess_emotion_rerun
-```
-
-Subset 128 AV recordings dari delapan aktor diambil melalui HTTP ranges dengan budget 112 MiB per aktor per pemanggilan. File existing diperiksa CRC dan dipakai ulang. Audio dan face HOG berasal dari recording yang sama. Sampling visual 2 FPS hanya untuk appearance, bukan blink. Audio-only/visual-only/fusion memakai actor split yang sama. Ablation menutupi satu modalitas saat inference.
-
-## Laporan dan notebook
-
-```bash
-atc-fatigue report
-python scripts/09_execute_demo.py
-```
-
-Builder merangkum canonical run IDs pertama: `mrl_eye_seed42_v1`, `drozy_kss_loso_v1`, `ravdess_emotion_seed42_v1`. Run lain menyimpan metrics sendiri; tidak otomatis menggantikan hasil canonical.
-
-Runner 09 membaca notebook saat ini, membuat backup, dan menyimpan output langsung di `notebooks/00`–`04` setelah eksekusi sukses tanpa mengubah isi cell. Notebook beserta output tabel/grafik yang telah ditinjau di-commit sesuai permintaan pengguna agar tim dapat membacanya di GitHub. Salinan executed/log tambahan tersimpan lokal di `reports/run_logs/notebooks/`. Untuk rerun pilih kernel **Python (ATC Fatigue)**. Notebook memerlukan cache fitur/model dan tidak mengunduh atau melatih seluruh pipeline saat Run All. Generator 07 membuat ulang template dan bukan perintah untuk menjalankan notebook yang sudah diedit.
-
-Data mentah, cache fitur lengkap, model, dan raw prediction files tetap lokal. Notebook demo berisi output yang ditinjau, laporan ringkas, serta aggregate figures tersedia di GitHub. MRL adalah eye state, DROZY adalah sleepiness, dan RAVDESS adalah emotion. IEEE fatigue memerlukan akses sah; benchmark paired ATC fatigue belum tersedia.
-
-## Profiling dan QC tambahan
-
-```bash
-python scripts/08_engineering_audit.py --output reports/metrics/engineering_rerun
-```
-
-Menggunakan data/model lokal dan original splits, tanpa download atau tuning. Pengukuran meliputi seluruh subset audio/MRL serta contoh test/fold/clip yang disebutkan dalam laporan; jangan menafsirkannya sebagai runtime seluruh DROZY/RAVDESS atau validasi real-time. Lihat [checklist handoff](../reports/handoff_coverage.md) untuk batas scope pekerjaan yang sudah selesai.
+Tidak ada training GPU dalam validasi DEMO; hormati proses pengguna lain. Dataset lengkap, model dan `runs/` tetap lokal. [Dataset aktif](datasets.md) · [Hasil eksperimen](../reports/README.md).

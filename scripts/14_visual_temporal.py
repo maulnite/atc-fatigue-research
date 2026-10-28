@@ -12,7 +12,7 @@ def main():
     parser.add_argument("--mode", choices=["FULL", "DEMO"], required=True)
     args = parser.parse_args()
     if args.mode == "FULL":
-        registry = json.loads(Path("reports/notebook_v3_runs.json").read_text())["runs"]
+        registry = json.loads(Path("reports/research_runs.json").read_text())["runs"]
         path, metrics, _ = train_temporal(Path("runs/drozy_kss") / registry["drozy_kss"])
     else:
         path, metrics, _ = load_temporal()

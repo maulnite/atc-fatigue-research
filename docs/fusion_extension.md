@@ -22,7 +22,7 @@ PYTHONPATH=src .venv/bin/python scripts/run_coordinated_research.py \
   --packages late cnn --no-acquisition
 ```
 
-Default juga membuat aggregation, figures, dan laporan lokal dalam fusion run. `--training-only` melewati pembuatan laporan untuk debugging. Publication ke laporan/notebook yang direview menggunakan `--publish`, dengan baseline inventory dan prefix preservation. Gunakan run di atas untuk mereproduksi publikasi ini; jangan mengganti hasil completed dengan protokol baru. Checkpoints/joblib hanya dibaca dari run lokal tepercaya.
+Default juga membuat aggregation, figures, dan laporan lokal dalam fusion run. `--training-only` melewati pembuatan laporan untuk debugging. Publication ke laporan/notebook yang direview menggunakan `--publish`, dengan baseline inventory dan prefix preservation. Run di atas dapat dipakai untuk read-only stage replay. Setelah perpindahan ke notebook canonical, jangan memakai `--publish` untuk membuat ulang appendix historis: baseline publication lama sengaja tetap terikat pada snapshot semula. Output yang telah ditinjau sudah tersedia; gunakan `scripts/validate_notebooks.py` untuk memeriksa layout aktif. Jangan mengganti hasil completed dengan protokol baru. Checkpoints/joblib hanya dibaca dari run lokal tepercaya.
 
 ## Environment, aset, dan gates
 

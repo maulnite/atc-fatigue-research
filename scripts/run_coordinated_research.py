@@ -21,7 +21,7 @@ def initialize_inventory(root):
     inventory = {}
     import hashlib
 
-    for notebook in sorted(Path("notebooks/v3").glob("*.ipynb")):
+    for notebook in sorted(Path("notebooks").glob("*.ipynb")):
         shutil.copyfile(notebook, root / notebook.name)
         data = json.loads(notebook.read_text())
         inventory[str(notebook)] = {

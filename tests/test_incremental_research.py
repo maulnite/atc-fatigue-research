@@ -23,7 +23,7 @@ def test_private_export_removes_all_media_but_preserves_local_evidence(monkeypat
     with monkeypatch.context() as context:
         context.setattr(os, 'environ', dict(os.environ))
         context.chdir(root)
-        export = runpy.run_path(str(root / 'scripts/10_execute_notebook_v3.py'))['publication_copy']
+        export = runpy.run_path(str(root / 'scripts/execute_notebooks.py'))['publication_copy']
         sensitive = nbformat.v4.new_code_cell('plot_actual_audio()',metadata={'tags':['private-media']})
         sensitive.outputs = [nbformat.v4.new_output('display_data',data={'image/png':'PRIVATE',
                             'text/html':'<audio src="private">'})]
@@ -120,7 +120,7 @@ def test_all_three_notebook_sources_parse_before_expensive_execution():
     import ast
 
     root=Path(__file__).resolve().parents[1]
-    for path in sorted((root/'notebooks/v3').glob('*.ipynb')):
+    for path in sorted((root/'notebooks').glob('*.ipynb')):
         for cell in nbformat.read(path,4).cells:
             if cell.cell_type=='code':
                 ast.parse(cell.source,filename=path.name)

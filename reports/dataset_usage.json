@@ -1,0 +1,83 @@
+{
+  "utc": "2026-10-28T09:40:51.424418+00:00",
+  "scope": "All experiments in the three current notebooks, including MRL, DROZY and dataset audits",
+  "datasets": [
+    {
+      "dataset": "atcosim",
+      "status": "ACTIVE \u2014 RETAINED",
+      "notebooks": [
+        "01_audio_analysis.ipynb"
+      ],
+      "role": "ATC audio domain exploration and quality control; no fatigue targets",
+      "files": 102,
+      "bytes": 13703568
+    },
+    {
+      "dataset": "predi_covid",
+      "status": "ACTIVE \u2014 RETAINED",
+      "notebooks": [
+        "01_audio_analysis.ipynb"
+      ],
+      "role": "Clinical fatigue/unwell classification and radio-channel robustness",
+      "files": 207,
+      "bytes": 354438570
+    },
+    {
+      "dataset": "mrl_eye",
+      "status": "ACTIVE \u2014 RETAINED",
+      "notebooks": [
+        "02_visual_analysis.ipynb"
+      ],
+      "role": "Eye-state open/closed classification",
+      "files": 5287,
+      "bytes": 360567501
+    },
+    {
+      "dataset": "drozy",
+      "status": "ACTIVE \u2014 RETAINED",
+      "notebooks": [
+        "02_visual_analysis.ipynb"
+      ],
+      "role": "Timestamped eye features and test-level KSS sleepiness regression",
+      "files": 81,
+      "bytes": 3086868170
+    },
+    {
+      "dataset": "cogbeacon",
+      "status": "ACTIVE \u2014 RETAINED",
+      "notebooks": [
+        "02_visual_analysis.ipynb"
+      ],
+      "role": "Cognitive fatigue self-report/landmark descriptive audit",
+      "files": 68282,
+      "bytes": 98755121
+    },
+    {
+      "dataset": "uta_rldd",
+      "status": "ACTIVE \u2014 RETAINED",
+      "notebooks": [
+        "02_visual_analysis.ipynb"
+      ],
+      "role": "Drowsiness pretrained CNN pilot and full-data acquisition resume",
+      "files": 77,
+      "bytes": 96953082405
+    },
+    {
+      "dataset": "ravdess",
+      "status": "ACTIVE \u2014 RETAINED",
+      "notebooks": [
+        "01_audio_analysis.ipynb",
+        "03_multimodal_fusion.ipynb"
+      ],
+      "role": "Genuine paired emotion benchmarks, actor-independent classical/late/dual-stream fusion",
+      "files": 131,
+      "bytes": 600966896
+    }
+  ],
+  "raw_bytes_retained": 101468382231,
+  "unused_dataset_directories": [],
+  "dataset_directories_deleted": [],
+  "dataset_bytes_deleted": 0,
+  "completed_runs_deleted": 0,
+  "reason": "Every local raw dataset is used by the active notebooks; source archives support checksums, ingestion/audit and resume."
+}

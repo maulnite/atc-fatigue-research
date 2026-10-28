@@ -1,5 +1,7 @@
 # Laporan progres ATC Fatigue Research
 
+> Laporan historis 21 Oktober. Implementasi aktif kini berada pada [tiga notebook penelitian](../notebooks/README.md). Tautan lima demo di bawah menunjuk snapshot Git yang mempertahankan hasil saat laporan ini ditulis.
+
 **Tanggal:** 21 Oktober 2026 (UTC)  
 **Dasar laporan:** kode sampai commit `5ea7dd7`, artefak eksperimen lokal, hasil pengujian, dan notebook yang sudah dieksekusi.  
 **Repositori:** [maulnite/atc-fatigue-research](https://github.com/maulnite/atc-fatigue-research), berstatus private pada saat laporan disusun.
@@ -153,11 +155,11 @@ Kelima notebook telah dijalankan dengan kernel baru dan output disimpan di GitHu
 
 | Notebook | Isi |
 | :--- | :--- |
-| [00 — Project overview](../notebooks/00_project_overview.ipynb) | Ringkasan proyek dan status |
-| [01 — Audio ATC pipeline](../notebooks/01_audio_atc_pipeline.ipynb) | Waveform, fitur audio, dan QC |
-| [02 — Visual eye pipeline](../notebooks/02_visual_eye_pipeline.ipynb) | Landmark/EAR dan fitur temporal |
-| [03 — Benchmark results](../notebooks/03_benchmark_results.ipynb) | Metrik, confusion matrix, dan contoh prediksi |
-| [04 — Multimodal fusion demo](../notebooks/04_multimodal_fusion_demo.ipynb) | Perbandingan audio, visual, fusion, dan ablation |
+| [00 — Project overview](https://github.com/maulnite/atc-fatigue-research/blob/2c20e198549e6c692bf77b690bb251cc7baf4224/notebooks/00_project_overview.ipynb) | Ringkasan proyek dan status |
+| [01 — Audio ATC pipeline](https://github.com/maulnite/atc-fatigue-research/blob/2c20e198549e6c692bf77b690bb251cc7baf4224/notebooks/01_audio_atc_pipeline.ipynb) | Waveform, fitur audio, dan QC |
+| [02 — Visual eye pipeline](https://github.com/maulnite/atc-fatigue-research/blob/2c20e198549e6c692bf77b690bb251cc7baf4224/notebooks/02_visual_eye_pipeline.ipynb) | Landmark/EAR dan fitur temporal |
+| [03 — Benchmark results](https://github.com/maulnite/atc-fatigue-research/blob/2c20e198549e6c692bf77b690bb251cc7baf4224/notebooks/03_benchmark_results.ipynb) | Metrik, confusion matrix, dan contoh prediksi |
+| [04 — Multimodal fusion demo](https://github.com/maulnite/atc-fatigue-research/blob/2c20e198549e6c692bf77b690bb251cc7baf4224/notebooks/04_multimodal_fusion_demo.ipynb) | Perbandingan audio, visual, fusion, dan ablation |
 
 Tim yang memiliki akses repo private dapat membaca output tanpa mengunduh dataset atau menjalankan notebook. Eksekusi ulang tetap memerlukan environment dan artefak lokal sesuai [panduan reproduksi](../docs/getting-started.md).
 

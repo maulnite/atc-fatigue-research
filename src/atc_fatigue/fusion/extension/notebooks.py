@@ -351,7 +351,7 @@ def append_notebooks(coordinator):
         ("02_visual_analysis.ipynb", build_visual),
         ("03_multimodal_fusion.ipynb", build_fusion),
     ]:
-        path = Path("notebooks/v3") / name
+        path = Path("notebooks") / name
         original = json.loads((coordinator / name).read_text())
         current = json.loads(path.read_text())
         preserved(original, current)
@@ -415,7 +415,7 @@ def append_notebooks(coordinator):
             "execution": "FRESH private kernel; suffix only; zero errors",
             "source_hashes": [cell_hash(c) for c in cells],
         }
-    audio = Path("notebooks/v3/01_audio_analysis.ipynb")
+    audio = Path("notebooks/01_audio_analysis.ipynb")
     if digest(audio) != digest(coordinator / audio.name):
         raise ValueError("Protected audio notebook changed")
     atomic_json(coordinator / "notebook_append_validation.json", evidence)

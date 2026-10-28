@@ -1,14 +1,19 @@
-# Laporan penelitian
+# Hasil penelitian
 
-- [Notebook-first v3](notebook_v3_summary.md): tiga notebook utama, run FULL/DEMO, skor, visual, dan validasi 22 Oktober 2026.
-- [Laporan progres — 21 Oktober 2026](progress_report_2026-10-21.md): rangkuman pekerjaan, hasil nyata, demo, dan prioritas berikutnya untuk tim.
-- [Storage audit](storage_audit.md): filesystem, kapasitas, dan kuota yang belum diketahui.
-- [Environment audit](environment_audit.md): interpreter, CPU/GPU/RAM, dan resource use.
-- [Dataset audit](dataset_audit.md): sumber, akses, ukuran, label, lisensi, dan keputusan.
-- [Smoke test report](smoke_test_report.md): hasil dari saved run metrics.
-- [Handoff coverage](handoff_coverage.md): pemenuhan per bagian dokumen awal dan pekerjaan terbuka.
-- [Engineering audit](engineering_audit.md): profiling, QC audio, dan validasi teknis tambahan.
+Notebook utama berada langsung di [`notebooks/`](../notebooks/README.md). Halaman ini menunjuk hasil eksperimen yang dipakai saat ini; laporan historis menyimpan konteks dan provenance, bukan alternatif versi proyek yang harus dipilih.
 
-`metrics/`, `figures/`, dan `run_logs/` diabaikan Git. Aggregate figures yang telah ditinjau ditambahkan secara eksplisit. Notebook demo beserta output yang ditinjau tersedia di `notebooks/` sesuai permintaan pengguna; QC gambar mata, media mentah, dan backup/log lengkap tetap lokal.
+| Eksperimen | Laporan | Data terstruktur |
+|---|---|---|
+| RAVDESS Late/Dual-Stream Fusion | [Metode, skor dan interpretasi](fusion_extension_research.md) | [Metrics](fusion_extension_results.json), [prediksi](fusion_extension_predictions.csv), [per-actor](fusion_extension_actor_metrics.csv), [QA](fusion_extension_validation.json) |
+| UTA-RLDD pretrained video CNN | [Pilot dan full-data gate](uta_pretrained_benchmark.md) | [Hasil pilot](uta_pretrained_benchmark.json), [execution](uta_pretrained_execution.json), [QA](uta_pretrained_validation.json) |
+| DROZY temporal CNN/Ridge | [Hasil dan batasan](visual_temporal_research.md) | [Metrics/predictions](visual_temporal_results.json), [QA](visual_temporal_validation.json) |
+| Predi-COVID, ATCOSIM, MRL, DROZY dan baseline fusion | [Eksperimen pendukung dan provenance](research_history.md) | [Run registry](research_runs.json), [historical QA](historical_validation.json) |
+| Audit kandidat dataset | [Feasibility dan labels](../docs/visual_dataset_feasibility.md) | [Audit fatigue datasets](fatigue_dataset_audit.json) |
 
-Eye state, sleepiness, emotion, audio fatigue, dan benchmark fatigue multimodal ATC tetap dibedakan. Hasil sintetis tidak menjadi scientific performance.
+**RAVDESS emotion bukan fatigue ATC; UTA drowsiness bukan KSS.** UTA pilot tidak menggantikan full five-fold evaluation. Perbandingan model hanya bermakna pada target, recording population, dan split yang sama.
+
+[Media publik berizin](media_publication.json) · [Manifest perpindahan struktur](repository_layout.json) · [Ringkasan workflow eksperimen terakhir](coordinated_research_summary.json).
+
+[Konsolidasi repository dan QA](repository_cleanup.md) · [Validasi preservasi](repository_cleanup_validation.json) · [Inventori dataset aktif](dataset_usage.json).
+
+Full datasets, feature caches dan checkpoints tidak diunggah. Output notebook berisi tabel, grafik dan contoh media terbatas yang sudah ditinjau.

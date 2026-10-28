@@ -2,7 +2,7 @@
 
 Dokumen ini membedakan **aset yang benar-benar diperiksa**, informasi dalam paper,
 dan eksperimen yang belum dapat dijalankan. Pusat penelitian tetap
-[notebook visual v3](../notebooks/v3/02_visual_analysis.ipynb).
+[notebook visual v3](../notebooks/02_visual_analysis.ipynb).
 [Audit terstruktur](../reports/visual_dataset_feasibility.json) memuat setiap kandidat,
 definisi target, sumber primer, jumlah peserta/video yang dilaporkan, akses, lisensi,
 split feasibility dan confounds. Jumlah dalam dokumentasi bukan jumlah video lokal.

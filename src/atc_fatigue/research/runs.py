@@ -66,7 +66,7 @@ def safe_path(root: Path, relative: str) -> Path:
 
 def project_config() -> dict:
     """Read v3 settings after the notebook has resolved its project root."""
-    config = yaml.safe_load(Path("configs/notebook_v3.yaml").read_text())
+    config = yaml.safe_load(Path("configs/research.yaml").read_text())
     if config["allow_network_download"] or config["allow_gpu_training"]:
         raise ValueError("These notebooks require offline CPU execution")
     return config
@@ -141,7 +141,7 @@ class Run:
             "metrics_applicable": target is not None, "cached_or_fresh": "FRESH",
             "known_limitations": limitations, "source_code_checksums": source_hashes,
             "notebook_source_hash": notebook_source_hash(json.loads(
-                Path("notebooks/v3", notebook).read_text())),
+                Path("notebooks", notebook).read_text())),
             "execution_session": os.environ.get("ATC_NOTEBOOK_SESSION", "interactive"),
             "subject_ids": sorted(frame.subject_id.astype(str).unique()),
             "session_ids": sorted(frame.session_id.astype(str).unique()),
@@ -268,7 +268,7 @@ def metrics_base(run: Run, models: dict, sizes: dict, labels: dict, baseline: st
 def cached_run(slug: str, config: dict, *, run_id: str | None = None) -> tuple[Run, dict]:
     registry = Path(config["cached_run_registry"])
     if not registry.exists():
-        raise FileNotFoundError("Cache v3 belum ada. Jalankan tiga notebook dalam mode FULL dahulu; lihat notebooks/v3/README.md")
+        raise FileNotFoundError("Cache v3 belum ada. Jalankan tiga notebook dalam mode FULL dahulu; lihat notebooks/README.md")
     runs = json.loads(registry.read_text())["runs"]
     if slug not in runs and run_id is None:
         raise FileNotFoundError(f"Run {slug} belum tersedia dalam registry v3")

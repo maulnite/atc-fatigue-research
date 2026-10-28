@@ -121,7 +121,7 @@ def main():
         save_bytes(root / "ravdess_frame.jpg", encoded.tobytes())
     finally:
         capture.release()
-    audio_notebook = nbformat.read("notebooks/v3/01_audio_analysis.ipynb", 4)
+    audio_notebook = nbformat.read("notebooks/01_audio_analysis.ipynb", 4)
     audio_cell = next(
         cell for cell in audio_notebook.cells if "display(Audio(original_example" in cell.source
     )
@@ -206,7 +206,7 @@ def main():
                 "license": policy["sources"][dataset]["license"],
             }
         )
-    Path("reports/notebook_v3_media_publication.json").write_text(
+    Path("reports/media_publication.json").write_text(
         json.dumps(policy, ensure_ascii=False, indent=2) + "\n"
     )
     print(

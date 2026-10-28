@@ -1,6 +1,6 @@
 # Ekstensi visual temporal — 24 Oktober 2026
 
-[Notebook visual02](../notebooks/v3/02_visual_analysis.ipynb) diperluas langsung; notebook audio/fusion dan semua completed experiment assets sebelumnya tetap utuh. Penjelasan tensor/feature masks, CNN kecil, nested subject validation, seluruh seed dan error peserta kini terlihat di notebook. **Dua CNN telah dilatih pada data nyata dan belum memperbaiki Ridge EAR-only**: MAE seed42 Ridge1,3508, CNN60s1,8704, CNN1s1,7771 poinKSS. Semua memakai36test/14orang LOSO yang sama; KSS adalah sleepiness, bukan fatigue ATC.
+[Notebook visual02](../notebooks/02_visual_analysis.ipynb) diperluas langsung; notebook audio/fusion dan semua completed experiment assets sebelumnya tetap utuh. Penjelasan tensor/feature masks, CNN kecil, nested subject validation, seluruh seed dan error peserta kini terlihat di notebook. **Dua CNN telah dilatih pada data nyata dan belum memperbaiki Ridge EAR-only**: MAE seed42 Ridge1,3508, CNN60s1,8704, CNN1s1,7771 poinKSS. Semua memakai36test/14orang LOSO yang sama; KSS adalah sleepiness, bukan fatigue ATC.
 
 [Laporan lengkap](visual_temporal_research.md), [hasil machine-readable](visual_temporal_results.json), [prediksi](visual_temporal_predictions.csv), [audit dataset tambahan](visual_dataset_feasibility.json) dan [panduan reproduksi/akses](../docs/visual_dataset_feasibility.md) menjelaskan eksperimen dan blocker. UTA-RLDD/FatigueView belum dilatih; DriverFatigueDetection/LFD memerlukan akses penulis dan CCT dibatasi IRB. Adapter diuji menggunakan fixture engineering, bukan pengganti hasil penelitian. Tidak ada download video besar, GPU training atau perubahan environment shared.
 
@@ -18,7 +18,7 @@ Pemilihan tetap recording test pertama menurut sample ID, identik dengan demo se
 
 **Predi-COVID:** CC BY4.0; kredit Abir Elbéji et al.(2022),[sumber](https://doi.org/10.5281/zenodo.5937844).
 **RAVDESS:** CC BY-NC-SA4.0; kredit Steven R. Livingstone dan Frank A. Russo(2018),[sumber](https://doi.org/10.5281/zenodo.1188976).
-Source, perubahan, license per asset,checksum dan run ID tercatat dalam [manifest publikasi](notebook_v3_media_publication.json).
+Source, perubahan, license per asset,checksum dan run ID tercatat dalam [manifest publikasi](media_publication.json).
 Dua player Predi-COVID yang bytes-nya cocok whitelist boleh tertanam pada notebook audio. File WAV/MP4 menyediakan fallback download jika renderer GitHub menyembunyikan HTML player.
 
 Raw ATCOSIM tetap tidak dipublikasikan: [technical report](https://www2.spsc.tugraz.at/databases/ATCOSIM/DOC/atcosim_report.pdf) melarang redistribusi kepada pihak ketiga.
@@ -41,9 +41,9 @@ Tetap tepat tiga notebook utama. Bagian ini adalah hasil terkini; laporan sebelu
 
 ## Implemented and verified
 
-- **[01 — Audio](../notebooks/v3/01_audio_analysis.ipynb):** raw/processed ATCOSIM lokal, STFT/log-Mel/MFCC, kelompok 88 eGeMAPS + 26 MFCC, schema 114 aktual, contoh nilai raw/scaled, beberapa row `X_train`, bentuk `X_train/X_validation/X_test` dan `y`. Predi-COVID memakai target native fatigue/unwell dan participant split tetap. Tambahan radio study menjalankan actual extraction/training/evaluation, confusion, recall/precision, ROC/AP, feature shift serta error seluruh peserta.
-- **[02 — Visual](../notebooks/v3/02_visual_analysis.ipynb):** raw eye→resize→HOG lokal, input 756D actual dan prediksi benar/salah deterministik. Landmark 68→enam titik→EAR lokal, diagram EAR parametrik sintetis, events/coverage/zoom, window→test 10D, raw/scaled actual Ridge input, original KSS prediction/error serta ablation 14 LOSO. Panel landmark sebelum/sesudah memakai sumbu dan aspect ratio yang sama.
-- **[03 — Fusion](../notebooks/v3/03_multimodal_fusion.ipynb):** metadata genuine paired AV, durasi/offset/availability, 114 fitur audio + 3.528 HOG + 2 masks = 3.644 input, raw/scaled matrices, schema lengkap, deterministic 9-step prediction walkthrough dan minimal satu kegagalan fusion. Semua 32 test recording terlihat pada error map. Baseline, masking ablation dan LOAO lama tetap tersedia.
+- **[01 — Audio](../notebooks/01_audio_analysis.ipynb):** raw/processed ATCOSIM lokal, STFT/log-Mel/MFCC, kelompok 88 eGeMAPS + 26 MFCC, schema 114 aktual, contoh nilai raw/scaled, beberapa row `X_train`, bentuk `X_train/X_validation/X_test` dan `y`. Predi-COVID memakai target native fatigue/unwell dan participant split tetap. Tambahan radio study menjalankan actual extraction/training/evaluation, confusion, recall/precision, ROC/AP, feature shift serta error seluruh peserta.
+- **[02 — Visual](../notebooks/02_visual_analysis.ipynb):** raw eye→resize→HOG lokal, input 756D actual dan prediksi benar/salah deterministik. Landmark 68→enam titik→EAR lokal, diagram EAR parametrik sintetis, events/coverage/zoom, window→test 10D, raw/scaled actual Ridge input, original KSS prediction/error serta ablation 14 LOSO. Panel landmark sebelum/sesudah memakai sumbu dan aspect ratio yang sama.
+- **[03 — Fusion](../notebooks/03_multimodal_fusion.ipynb):** metadata genuine paired AV, durasi/offset/availability, 114 fitur audio + 3.528 HOG + 2 masks = 3.644 input, raw/scaled matrices, schema lengkap, deterministic 9-step prediction walkthrough dan minimal satu kegagalan fusion. Semua 32 test recording terlihat pada error map. Baseline, masking ablation dan LOAO lama tetap tersedia.
 - **Privasi:** player clean/radio dan media sumber hanya opt-in lokal. Semua cell privat dan embedded audio/video tanpa tag disanitasi pada salinan publik; evidence asli tetap lokal. DEMO publik memuat cache dan menghitung inference, tanpa membaca raw media atau mengklaim training/ekstraksi baru.
 - **Reproducibility:** run append-only, config/seed/environment/source hashes, split/source labels, checkpoint reload dan artifact integrity. Semua skor historis direproduksi; model/checkpoint/cache lama tidak ditimpa. Tidak ada download baru, GPU atau perubahan shared environment.
 
@@ -114,7 +114,7 @@ Ini uji **channel robustness pada populasi klinis**. Penyakit, perangkat, demogr
 masih menjadi confound. Tidak ada bukti transfer ke occupational fatigue operator atau kanal radio ATC yang sebenarnya.
 Tidak ada confidence interval yang memperlakukan recording dari orang sama sebagai independen.
 
-![Ketiga kondisi primer memakai 42 recording test / 24 peserta yang sama; augmentation tidak konsisten meningkatkan Macro F1 atau balanced accuracy.](figures/notebook_v3/radio_primary_comparison__20261023T105608840284Z_seed42_0d3b34.png)
+![Ketiga kondisi primer memakai 42 recording test / 24 peserta yang sama; augmentation tidak konsisten meningkatkan Macro F1 atau balanced accuracy.](figures/research/radio_primary_comparison__20261023T105608840284Z_seed42_0d3b34.png)
 
 **Interpretasi:** Ketiga kondisi primer memakai 42 recording test / 24 peserta yang sama; augmentation tidak konsisten meningkatkan Macro F1 atau balanced accuracy. Sumber run `20261023T105608840284Z_seed42_0d3b34`.
 
@@ -145,7 +145,7 @@ Model combined identik dengan benchmark Ridge sebelumnya: MAE 1,4544 versus Dumm
 Ridge tidak dibatasi ke 1–9; prediksi di luar rentang KSS tetap ditampilkan, tidak di-clip agar skor terlihat lebih baik.
 Variasi/error per subjek, missing handling dan penghitungan satu window dapat diperiksa pada notebook.
 
-![Menambahkan blink/closure tidak otomatis memperbaiki KSS prediction: EAR-only MAE 1,351, combined 1,454 poin; 14 LOSO folds identik.](figures/notebook_v3/drozy_feature_ablation__20261023T110208961056Z_seed42_d8ef0c.png)
+![Menambahkan blink/closure tidak otomatis memperbaiki KSS prediction: EAR-only MAE 1,351, combined 1,454 poin; 14 LOSO folds identik.](figures/research/drozy_feature_ablation__20261023T110208961056Z_seed42_d8ef0c.png)
 
 **Interpretasi:** Menambahkan blink/closure tidak otomatis memperbaiki KSS prediction: EAR-only MAE 1,351, combined 1,454 poin; 14 LOSO folds identik. Sumber run `20261023T110208961056Z_seed42_d8ef0c`.
 
@@ -172,7 +172,7 @@ Masking modality pada inference bukan training agar model robust terhadap modali
 Walkthrough deterministik dan seluruh error map memperlihatkan kesepakatan model dapat tetap salah.
 HOG 2 FPS bukan blink/PERCLOS. Tidak ada skor fatigue ATC dari emotion.
 
-![Actual transformed X_train menampilkan subset 16 kolom dari audio, visual dan fusion; imputation/scaling berasal dari 64 training clips saja.](figures/notebook_v3/fusion_actual_training_matrices__20261023T104859625424Z_seed42_cce30b.png)
+![Actual transformed X_train menampilkan subset 16 kolom dari audio, visual dan fusion; imputation/scaling berasal dari 64 training clips saja.](figures/research/fusion_actual_training_matrices__20261023T104859625424Z_seed42_cce30b.png)
 
 **Interpretasi:** Actual transformed X_train menampilkan subset 16 kolom dari audio, visual dan fusion; imputation/scaling berasal dari 64 training clips saja. Sumber run `20261023T104859625424Z_seed42_cce30b`.
 
@@ -206,9 +206,9 @@ Tidak ada binary fatigue classifier yang dipaksakan. Tidak ada download tambahan
 | predi_covid_radio | `20261023T105608840284Z_seed42_0d3b34` |
 | drozy_feature_ablation | `20261023T110208961056Z_seed42_d8ef0c` |
 
-[Registry](notebook_v3_runs.json) menyimpan histori lengkap. `runs/` dan full biometric caches/checkpoints tetap lokal.
-Perintah dan pengaturan media ada pada [README tiga notebook](../notebooks/v3/README.md).
-[Validation JSON](notebook_v3_validation.json) memuat hasil final source/metrics/checkpoint replay, privacy, execution matrix,
+[Registry](research_runs.json) menyimpan histori lengkap. `runs/` dan full biometric caches/checkpoints tetap lokal.
+Perintah dan pengaturan media ada pada [README tiga notebook](../notebooks/README.md).
+[Validation JSON](historical_validation.json) memuat hasil final source/metrics/checkpoint replay, privacy, execution matrix,
 preservation checks dan daftar grafik publik. Seluruh grafik tambahan diperiksa visual: font, sumbu, colorbar, legend, overlap dan kejujuran skala.
 
 Saat integrasi, fresh-kernel Run All menemukan satu cell PSD diletakkan sebelum konfigurasi Predi-COVID.
@@ -222,16 +222,16 @@ termasuk narasi sumber cache dan penyamaan sumbu geometri landmark.
 # Notebook-first v3 — enhancement incremental terverifikasi
 
 Pembaruan **22 Oktober 2026 (UTC)** pada branch `feat/notebook-first-v3`, untuk [PR #1](https://github.com/maulnite/atc-fatigue-research/pull/1).
-**Tetap tepat tiga notebook utama** pada `notebooks/v3/`. Tidak ada versi/folder baru, merge ke main, penghapusan hasil lama atau perubahan shared environment.
+**Tetap tepat tiga notebook utama** pada `notebooks/`. Tidak ada versi/folder baru, merge ke main, penghapusan hasil lama atau perubahan shared environment.
 Bagian awal ini adalah status enhancement terbaru; snapshot implementasi awal dipertahankan utuh setelah pemisah di bawah.
 
 ## Implemented and verified
 
 | Notebook yang diperbarui langsung | Cells / code | Grafik publik |
 | :--- | ---: | ---: |
-| [01_audio_analysis.ipynb](../notebooks/v3/01_audio_analysis.ipynb) | 42 / 26 | 14 |
-| [02_visual_analysis.ipynb](../notebooks/v3/02_visual_analysis.ipynb) | 48 / 33 | 21 |
-| [03_multimodal_fusion.ipynb](../notebooks/v3/03_multimodal_fusion.ipynb) | 39 / 24 | 15 |
+| [01_audio_analysis.ipynb](../notebooks/01_audio_analysis.ipynb) | 42 / 26 | 14 |
+| [02_visual_analysis.ipynb](../notebooks/02_visual_analysis.ipynb) | 48 / 33 | 21 |
+| [03_multimodal_fusion.ipynb](../notebooks/03_multimodal_fusion.ipynb) | 39 / 24 | 15 |
 
 Total **50 grafik publik + 4 grafik ATCOSIM asli lokal**, dengan tema audio biru, visual ungu, fusion teal dan baseline abu-abu.
 Seluruh 35 grafik sebelumnya tetap relevan dan dipertahankan; tambahan 15 grafik publik memperluas analisis.
@@ -249,7 +249,7 @@ Grafik memiliki *Yang terlihat / Artinya / Perlu diingat* dan jejak run. Diagram
   LOAO actor-independent delapan fold dengan 32 checkpoint, variasi/delta per aktor dan confusion matrix pooled.
   Benchmark historis serta inference masking ablation tetap dipertahankan.
 
-![DROZY: dua kandidat blink selesai paling awal sesuai aturan durasi; belum validasi fisiologis manual.](figures/notebook_v3/ear_event_zoom__20261022T133744544508Z_seed42_0e3eaa.png)
+![DROZY: dua kandidat blink selesai paling awal sesuai aturan durasi; belum validasi fisiologis manual.](figures/research/ear_event_zoom__20261022T133744544508Z_seed42_0e3eaa.png)
 
 **Interpretasi:** DROZY: dua kandidat blink selesai paling awal sesuai aturan durasi; belum validasi fisiologis manual. Sumber run `20261022T133744544508Z_seed42_0e3eaa`.
 
@@ -290,7 +290,7 @@ Confound belum teratasi: COVID/penyakit, demografi, bahasa, perangkat, hari, dan
 Bahasa per recording serta timestamp respons label terhadap recording tidak lengkap pada metadata yang digunakan.
 Lihat [audit dataset](fatigue_dataset_audit.json) dan [dokumentasi sumber](../docs/datasets.md).
 
-![Predi-COVID: Macro F1 perlu dibaca bersama balanced accuracy yang dekat 0,5; 42 recording /24 peserta test.](figures/notebook_v3/predi_model_comparison__20261022T133521652181Z_seed42_d98d66.png)
+![Predi-COVID: Macro F1 perlu dibaca bersama balanced accuracy yang dekat 0,5; 42 recording /24 peserta test.](figures/research/predi_model_comparison__20261022T133521652181Z_seed42_d98d66.png)
 
 **Interpretasi:** Predi-COVID: Macro F1 perlu dibaca bersama balanced accuracy yang dekat 0,5; 42 recording /24 peserta test. Sumber run `20261022T133521652181Z_seed42_d98d66`.
 
@@ -340,7 +340,7 @@ Skor historis dan LOAO menggunakan populasi/ukuran training berbeda; selisih ked
 Keunggulan fusion tidak boleh digeneralisasi dari split lama. HOG 2 FPS adalah appearance, target emotion,
 dan masking saat inference bukan training robust terhadap modality hilang. **Fatigue ATC tetap belum diukur.**
 
-![RAVDESS LOAO exploratory: seluruh delapan aktor ditampilkan, bukan contoh aktor terbaik.](figures/notebook_v3/loao_actor_variation__20261022T132032729881Z_seed42_20a3fa.png)
+![RAVDESS LOAO exploratory: seluruh delapan aktor ditampilkan, bukan contoh aktor terbaik.](figures/research/loao_actor_variation__20261022T132032729881Z_seed42_20a3fa.png)
 
 **Interpretasi:** RAVDESS LOAO exploratory: seluruh delapan aktor ditampilkan, bukan contoh aktor terbaik. Sumber run `20261022T132032729881Z_seed42_20a3fa`.
 
@@ -419,11 +419,11 @@ Validasi eksternal dan training missing-modality robustness merupakan studi baru
 ## Reproduksi dan publikasi
 
 ```bash
-.venv/bin/python scripts/10_execute_notebook_v3.py --mode FULL
-.venv/bin/python scripts/10_execute_notebook_v3.py --mode DEMO
+.venv/bin/python scripts/execute_notebooks.py --mode FULL
+.venv/bin/python scripts/execute_notebooks.py --mode DEMO
 # Hanya untuk sesi audio lokal berizin; runner menyanitasi salinan publik.
-.venv/bin/python scripts/10_execute_notebook_v3.py --mode DEMO --notebook 01_audio_analysis.ipynb --private-media
-.venv/bin/python scripts/11_validate_notebook_v3.py
+.venv/bin/python scripts/execute_notebooks.py --mode DEMO --notebook 01_audio_analysis.ipynb --private-media
+.venv/bin/python scripts/validate_notebooks.py
 .venv/bin/python -m pytest -q
 .venv/bin/ruff check src tests scripts
 .venv/bin/python -m pip check
@@ -432,8 +432,8 @@ Validasi eksternal dan training missing-modality robustness merupakan studi baru
 Gunakan `.venv` proyek dan siapkan dataset/model lokal secara sah; clone GitHub hanya membawa notebook/output aman.
 Tidak ada paket shared diganti, GPU dipakai, media/raw dataset/cache/model diunggah, atau run completed ditimpa.
 Tiap notebook dibatasi 4 thread CPU dan OpenCV/ffmpeg 2. Audit `/home` menunjukkan sekitar 5,2 TiB free,
-bukan kuota reservasi proyek. Detail [README v3](../notebooks/v3/README.md), [dataset](../docs/datasets.md),
-[registry](notebook_v3_runs.json) dan [validation JSON](notebook_v3_validation.json).
+bukan kuota reservasi proyek. Detail [README v3](../notebooks/README.md), [dataset](../docs/datasets.md),
+[registry](research_runs.json) dan [validation JSON](historical_validation.json).
 
 ---
 
@@ -455,15 +455,15 @@ Ketiga notebook memperlihatkan EDA, preprocessing, ekstraksi contoh asli, pemili
 
 | Notebook utama | Total cells / code cells | Grafik | Isi dan pertanyaan |
 | :--- | ---: | ---: | :--- |
-| [01 — Audio](../notebooks/v3/01_audio_analysis.ipynb) | 23 / 14 | 8 | Dapatkah suara ATC menjadi fitur numerik yang konsisten? Waveform/log-Mel/MFCC sintetis untuk mengajar; ekstraksi dan QC audio asli |
-| [02 — Visual](../notebooks/v3/02_visual_analysis.ipynb) | 41 / 29 | 18 | MRL: eye-state classification; DROZY: fitur mata temporal dan KSS test-level LOSO. Dua target/run terpisah |
-| [03 — Fusion dan sintesis](../notebooks/v3/03_multimodal_fusion.ipynb) | 28 / 17 | 9 | Paired AV RAVDESS → emotion classifiers → ablation/inference; rute presentasi 10–15 menit dan peta kesiapan riset |
+| [01 — Audio](../notebooks/01_audio_analysis.ipynb) | 23 / 14 | 8 | Dapatkah suara ATC menjadi fitur numerik yang konsisten? Waveform/log-Mel/MFCC sintetis untuk mengajar; ekstraksi dan QC audio asli |
+| [02 — Visual](../notebooks/02_visual_analysis.ipynb) | 41 / 29 | 18 | MRL: eye-state classification; DROZY: fitur mata temporal dan KSS test-level LOSO. Dua target/run terpisah |
+| [03 — Fusion dan sintesis](../notebooks/03_multimodal_fusion.ipynb) | 28 / 17 | 9 | Paired AV RAVDESS → emotion classifiers → ablation/inference; rute presentasi 10–15 menit dan peta kesiapan riset |
 
 Total **92 cells, 60 code cells, 35 grafik**, dengan penjelasan *Yang terlihat / Artinya / Perlu diingat*. Semua notebook memiliki satu H1, penjelasan istilah, sumber data, run card, batas klaim, dan petunjuk reproduksi. Output yang disimpan pada notebook utama berasal dari DEMO terakhir; salinan FULL asli disimpan lokal.
 
 ## 2. Run FULL yang menjadi sumber hasil akhir
 
-Keempat run berikut berstatus **completed**, memakai seed 42, CPU dengan thread terbatas, dan data lokal tanpa unduhan baru. [Registry](notebook_v3_runs.json) menunjuk sumber hasil ini secara eksplisit.
+Keempat run berikut berstatus **completed**, memakai seed 42, CPU dengan thread terbatas, dan data lokal tanpa unduhan baru. [Registry](research_runs.json) menunjuk sumber hasil ini secara eksplisit.
 
 | Eksperimen / target | Run ID terpilih | Waktu eksperimen UTC | Data dan unit |
 | :--- | :--- | :--- | :--- |
@@ -506,7 +506,7 @@ Split lama dipertahankan: **3.234 gambar / 23 subjek train**, **892 / 6 validati
 
 Recall tertutup **0,8172** pada 640 gambar; terbuka **0,7572** pada 519 gambar. Confusion matrix absolut/ternormalisasi, precision/recall/F1/support, contoh kesalahan dengan ID tampilan tersamarkan, dan variasi error antar subjek tersedia di notebook.
 
-![MRL: model eye state pada holdout](figures/notebook_v3/perbandingan_model_mrl__20261022T082130453246Z_seed42_6453bd.png)
+![MRL: model eye state pada holdout](figures/research/perbandingan_model_mrl__20261022T082130453246Z_seed42_6453bd.png)
 
 **Yang terlihat:** SVM mengungguli Dummy pada split subjek yang sama. **Artinya:** fitur HOG membawa informasi eye state pada subset ini. **Perlu diingat:** eye state bukan label fatigue dan sampling subset bukan prevalensi alami.
 
@@ -523,7 +523,7 @@ LOSO melatih 14 fold dengan subjek uji berbeda, train-only imputation/scaling, D
 
 EAR threshold 0,21, gap >150 ms, coverage ≥80%, dan closure teramati ≥500 ms merupakan definisi engineering. Sensitivitas 0,18/0,21/0,24 diperlihatkan tanpa memilih threshold berdasarkan skor KSS. PERCLOS operasional belum tervalidasi sebagai pengukuran baku kelopak 80% tertutup.
 
-![DROZY: prediksi KSS asli](figures/notebook_v3/aktual_vs_prediksi_kss__20261022T082144167968Z_seed42_60423d.png)
+![DROZY: prediksi KSS asli](figures/research/aktual_vs_prediksi_kss__20261022T082144167968Z_seed42_60423d.png)
 
 **Yang terlihat:** prediksi sebagian test jauh dari garis ideal, termasuk nilai prediksi di luar skala label. **Artinya:** MAE rata-rata belum menjelaskan seluruh kegagalan. **Perlu diingat:** ini sleepiness KSS pada korpus kecil dan whole-test inference offline, bukan peringatan fatigue real-time.
 
@@ -540,7 +540,7 @@ Split aktor lama dipertahankan: **64 klip / 4 aktor train**, **32 / 2 validation
 
 Inference ablation pada model fusion tetap: tanpa semua audio Macro F1 **0,2500**; tanpa semua video **0,2222**. Ini bukan training missing-modality robustness. Contoh inference dipilih dari test secara deterministik sebelum training; prediksi salah tetap ditampilkan.
 
-![RAVDESS: empat model emotion](figures/notebook_v3/perbandingan_model_emotion__20261022T081858104344Z_seed42_75d379.png)
+![RAVDESS: empat model emotion](figures/research/perbandingan_model_emotion__20261022T081858104344Z_seed42_75d379.png)
 
 **Yang terlihat:** fusion memiliki skor tertinggi pada split kecil ini. **Artinya:** proses perbandingan unimodal/fusion berjalan pada pasangan sah dan penyebut sama. **Perlu diingat:** train male-only dan validation/test female-only menurut metadata sumber; test hanya dua aktor/32 klip. Neutral dan sad memiliki recall nol pada empat sampel per kelas. Hasil belum membuktikan keunggulan umum, fairness, atau fatigue detection.
 
@@ -559,14 +559,14 @@ Semua berstatus **passed**, tanpa output error. Hash source cells dipertahankan 
 Perintah reproduksi:
 
 ```bash
-.venv/bin/python scripts/10_execute_notebook_v3.py --mode FULL
-.venv/bin/python scripts/10_execute_notebook_v3.py --mode DEMO
-.venv/bin/python scripts/11_validate_notebook_v3.py
+.venv/bin/python scripts/execute_notebooks.py --mode FULL
+.venv/bin/python scripts/execute_notebooks.py --mode DEMO
+.venv/bin/python scripts/validate_notebooks.py
 .venv/bin/python -m pytest -q
 .venv/bin/ruff check src tests scripts
 ```
 
-Run baru mencatat manifest, config, environment, schema/Parquet, split/fold, checkpoints dan checksum, prediksi, metrik, QC, grafik, log/warnings, status, serta integrity hashes. ATCOSIM tidak memiliki supervised split/model/prediksi. Keanggotaan MRL/RAVDESS membutuhkan manifest split canonical lokal; checkout GitHub saja belum menyediakan dataset atau model. Lihat [README v3](../notebooks/v3/README.md).
+Run baru mencatat manifest, config, environment, schema/Parquet, split/fold, checkpoints dan checksum, prediksi, metrik, QC, grafik, log/warnings, status, serta integrity hashes. ATCOSIM tidak memiliki supervised split/model/prediksi. Keanggotaan MRL/RAVDESS membutuhkan manifest split canonical lokal; checkout GitHub saja belum menyediakan dataset atau model. Lihat [README v3](../notebooks/README.md).
 
 ## 5. Validasi engineering dan visual
 
@@ -578,7 +578,7 @@ Run baru mencatat manifest, config, environment, schema/Parquet, split/fold, che
 - Output diperiksa untuk MIME, file gambar, error, absolute server path pada stream maupun display data, dan elemen audio/video/iframe/script. Warning opsional `tqdm` sempat mencantumkan path environment; salinan publik menyamarkan path tersebut, sedangkan evidence asli tetap lokal. Tidak ada media peserta atau executable HTML dalam output v3.
 - **318 berkas lama diperiksa:** 317 checksum tetap identik; satu perubahan yang disengaja adalah indeks `notebooks/README.md`. Kelima notebook lama, seluruh model lama, data/cache dan hasil canonical tetap utuh.
 
-Bukti agregat yang dapat ditinjau: [validation JSON](notebook_v3_validation.json). Bukti lebih rinci tetap lokal di `runs/qa/`, termasuk JUnit XML, review grafik, dan checksum perlindungan artefak.
+Bukti agregat yang dapat ditinjau: [validation JSON](historical_validation.json). Bukti lebih rinci tetap lokal di `runs/qa/`, termasuk JUnit XML, review grafik, dan checksum perlindungan artefak.
 
 ## 6. Audit resource, hak data, dan publikasi
 
@@ -601,15 +601,15 @@ Sumber/atribusi: [ATCOSIM](https://huggingface.co/datasets/Jzuluaga/atcosim_corp
 
 | File / kelompok | Tujuan |
 | :--- | :--- |
-| `notebooks/v3/01_audio_analysis.ipynb`, `02_visual_analysis.ipynb`, `03_multimodal_fusion.ipynb` | Tepat tiga execution surfaces riset dan presentasi |
-| `notebooks/v3/README.md`, indeks notebook, README, getting-started, roadmap | Urutan membaca, mode, persiapan data, kernel, dan status terbaru |
-| `configs/notebook_v3.yaml` | Path nyata, seed, batas resource, parameter tetap, frozen splits |
+| `notebooks/01_audio_analysis.ipynb`, `02_visual_analysis.ipynb`, `03_multimodal_fusion.ipynb` | Tepat tiga execution surfaces riset dan presentasi |
+| `notebooks/README.md`, indeks notebook, README, getting-started, roadmap | Urutan membaca, mode, persiapan data, kernel, dan status terbaru |
+| `configs/research.yaml` | Path nyata, seed, batas resource, parameter tetap, frozen splits |
 | `src/atc_fatigue/research/runs.py` | Append-only artifacts, target-aware metrics, integrity dan provenance |
 | `src/atc_fatigue/research/data.py` | Verifikasi input/split, agregasi KSS per test, paired extraction dan replay predictions |
 | `src/atc_fatigue/research/plots.py` | Tema grafik, caption, run cards dan helper visual yang dipakai bersama |
-| `scripts/10_execute_notebook_v3.py`, `11_validate_notebook_v3.py` | Fresh-kernel execution, perlindungan source, serta QA read-only |
-| `tests/test_notebook_v3.py` | Pengujian kontrak dan guardrails baru tanpa licensed data |
-| Laporan ini, `notebook_v3_runs.json`, `notebook_v3_validation.json`, 35 PNG | Ringkasan agregat yang dapat ditinjau tim dan ditelusuri ke run |
+| `scripts/execute_notebooks.py`, `validate_notebooks.py` | Fresh-kernel execution, perlindungan source, serta QA read-only |
+| `tests/test_notebooks.py` | Pengujian kontrak dan guardrails baru tanpa licensed data |
+| Laporan ini, `research_runs.json`, `historical_validation.json`, 35 PNG | Ringkasan agregat yang dapat ditinjau tim dan ditelusuri ke run |
 | `.gitignore` | Menjaga `runs/` tetap lokal |
 | Dua dokumen v3 dari pengguna | Acuan final yang dipertahankan bersama implementasi |
 
@@ -635,4 +635,4 @@ Semua sesi berikut berhasil; tahap review mengulang eksperimen ke direktori baru
 | `20261022T082127Z_568ce0` | FULL | Visual / 48,013 s — pelengkapan tabel per kelas |
 | `20261022T082249Z_6c998c` | DEMO | Audio 7,736 s; visual 11,097 s; fusion 10,462 s — sumber akhir pada bagian 2 |
 
-Run IDs lengkap seluruh FULL, termasuk run saat review, tersedia pada [registry dan history](notebook_v3_runs.json). Notebook eksekusi aktual serta status/durasi tiap notebook tersedia lokal pada direktori sesi tersebut. Tidak ada skor atau kurva training yang diisi manual.
+Run IDs lengkap seluruh FULL, termasuk run saat review, tersedia pada [registry dan history](research_runs.json). Notebook eksekusi aktual serta status/durasi tiap notebook tersedia lokal pada direktori sesi tersebut. Tidak ada skor atau kurva training yang diisi manual.
