@@ -20,6 +20,12 @@ Untuk tiap kandidat sustained closure yang dipilih (default: 3 terlama per video
 
 Satu event dapat terlihat salah walaupun EAR di bawah threshold karena kacamata, blur, head pose, atau salah posisi landmark. Reviewer harus memberi anotasi manual `valid/false positive/unclear` dan memeriksa event yang terlewat untuk menghitung sensitivity/precision yang sesungguhnya.
 
+## Banyak orang di frame dan wajah kecil (opsi script 23)
+
+- `--max-faces N` (default 1): deteksi hingga N wajah dan ambil wajah **terbesar** sebagai operator. Kolom `n_faces_detected` dan `face_width_px` dicatat per frame. `summary.csv` mencatat `multi_face_frame_rate`.
+- `--roi x,y,w,h` (piksel frame utuh): MediaPipe dijalankan pada area crop, lalu titik mata dikembalikan ke koordinat frame utuh sehingga galeri tetap tepat. Detektor wajah mengecilkan seluruh frame; pada video 1080p lebar, wajah operator bisa terlalu kecil untuk terdeteksi meski jelas terlihat. Crop memperbesar wajah relatif terhadap input detektor, tetapi **tidak menambah detail kelopak**.
+- Pilih ROI dari sampel frame di sepanjang video, pastikan area kerja operator tercakup, dan catat ROI di laporan (`roi_xywh` di `summary.csv`).
+
 ## Penyaring arah kepala (opsional)
 
 Melihat ke bawah (strip, keyboard, kertas) menurunkan kelopak sehingga EAR turun tanpa mata terpejam. Script 23 kini menyimpan `head_pitch_deg`, `head_yaw_deg` dan `head_roll_deg` per frame dari facial transformation matrix MediaPipe; `head_pitch_deg` naik ketika kepala menunduk (dicek pada video ATC 9 Nov 2026).

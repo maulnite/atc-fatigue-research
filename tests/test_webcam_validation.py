@@ -68,3 +68,32 @@ def test_head_pose_from_matrix_angles():
     rx[1:3, 1:3] = [[np.cos(a), -np.sin(a)], [np.sin(a), np.cos(a)]]
     assert head_pose_from_matrix(rx)["head_pitch_deg"] == pytest.approx(20.0)
     assert math.isnan(head_pose_from_matrix(np.zeros((3, 3)))["head_pitch_deg"])
+
+
+def test_largest_face_is_selected_as_operator():
+    from atc_fatigue.vision.mediapipe_landmarks import face_width_px, largest_face_index
+    small = [SimpleNamespace(x=x, y=0.5) for x in (0.10, 0.15)]   # background person
+    big = [SimpleNamespace(x=x, y=0.5) for x in (0.40, 0.70)]     # operator near camera
+    assert largest_face_index([small, big], 1920, 1080) == 1
+    assert largest_face_index([big, small], 1920, 1080) == 0
+    assert largest_face_index([], 1920, 1080) is None
+    assert face_width_px(big, 1000) == pytest.approx(300.0)
+
+
+def test_roi_parse_clamp_and_point_offset():
+    import numpy as np
+    from atc_fatigue.vision.mediapipe_landmarks import clamp_roi, offset_eye_geometry, parse_roi
+    assert parse_roi(None) is None and parse_roi("") is None
+    assert parse_roi("480,0,960,810") == (480, 0, 960, 810)
+    with pytest.raises(ValueError):
+        parse_roi("1,2,3")
+    with pytest.raises(ValueError):
+        parse_roi("0,0,0,10")
+    assert clamp_roi((1800, 1000, 400, 400), 1920, 1080) == (1800, 1000, 120, 80)
+    with pytest.raises(ValueError):
+        clamp_roi((2000, 0, 10, 10), 1920, 1080)
+    g = {"ear_mean": 0.3, "right_points": np.zeros((6, 2)), "left_points": np.ones((6, 2))}
+    out = offset_eye_geometry(g, 480, 10)
+    assert out["right_points"][0].tolist() == [480.0, 10.0]
+    assert out["left_points"][0].tolist() == [481.0, 11.0]
+    assert out["ear_mean"] == 0.3 and g["right_points"][0].tolist() == [0.0, 0.0]

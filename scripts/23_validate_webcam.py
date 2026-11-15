@@ -24,7 +24,8 @@ import cv2
 import numpy as np
 
 from atc_fatigue.vision.mediapipe_landmarks import (
-    create_landmarker, extract_eye_geometry, head_pose_from_matrix,
+    clamp_roi, create_landmarker, extract_eye_geometry, face_width_px, head_pose_from_matrix,
+    largest_face_index, offset_eye_geometry, parse_roi,
 )
 from atc_fatigue.vision.webcam_quality import make_summary, source_pts_is_trusted
 
@@ -43,8 +44,11 @@ def _to_float_or_none(value):
     return round(float(value), 6) if math.isfinite(float(value)) else None
 
 
-def _eye_preview(bgr, geometry, save_path: Path):
+def _eye_preview(bgr, geometry, save_path: Path, roi=None):
     img = bgr.copy()
+    if roi is not None:
+        x, y, w, h = roi
+        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 160, 0), 2)
     for side in ("right_points", "left_points"):
         pts = geometry[side]
         for x, y in pts:
@@ -55,7 +59,8 @@ def _eye_preview(bgr, geometry, save_path: Path):
 
 def validate_video(path: Path, outdir: Path, model_path: Path, sample_fps: float,
                    max_samples: int, annotate: bool, all_frames: bool = False,
-                   save_eye_landmarks: bool = False):
+                   save_eye_landmarks: bool = False, max_faces: int = 1,
+                   roi: tuple[int, int, int, int] | None = None):
     import mediapipe as mp
 
     cap = cv2.VideoCapture(str(path))
@@ -65,6 +70,10 @@ def validate_video(path: Path, outdir: Path, model_path: Path, sample_fps: float
     fps = float(cap.get(cv2.CAP_PROP_FPS))
     if not math.isfinite(fps) or fps <= 0:
         fps = 30.0  # fallback is flagged as approximate, not authoritative FPS
+    # Optional crop (x,y,w,h in full-frame pixels): the face detector downsizes the whole
+    # frame, so a small face in a wide 1080p view can be missed; cropping enlarges it.
+    roi = clamp_roi(roi, w, h)
+    rx, ry, rw, rh = roi if roi is not None else (0, 0, w, h)
     result_rows = []
     decoded = 0
     prev_pts = None
@@ -74,7 +83,7 @@ def validate_video(path: Path, outdir: Path, model_path: Path, sample_fps: float
     next_sample_ms = 0.0
     saved_preview = False
     start = time.monotonic()
-    with create_landmarker(model_path) as detector:
+    with create_landmarker(model_path, num_faces=max_faces) as detector:
         try:
             while True:
                 ok, frame = cap.read()
@@ -98,15 +107,25 @@ def validate_video(path: Path, outdir: Path, model_path: Path, sample_fps: float
                 # MediaPipe VIDEO mode requires strictly increasing input timestamps.
                 ts_for_model = max(int(round(pts)), last_model_timestamp + 1)
                 last_model_timestamp = ts_for_model
-                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                view = frame[ry:ry + rh, rx:rx + rw] if roi is not None else frame
+                rgb = cv2.cvtColor(view, cv2.COLOR_BGR2RGB)
                 img = mp.Image(image_format=mp.ImageFormat.SRGB, data=np.ascontiguousarray(rgb))
                 observation = detector.detect_for_video(img, ts_for_model)
                 found = bool(observation.face_landmarks)
+                n_faces = len(observation.face_landmarks or [])
+                # With several people visible, the operator is taken as the largest face.
+                idx = largest_face_index(observation.face_landmarks, rw, rh) if found else None
                 geometry = None
+                face_w = None
                 if found:
-                    geometry = extract_eye_geometry(observation.face_landmarks[0], w, h)
-                pose = (head_pose_from_matrix(observation.facial_transformation_matrixes[0])
-                        if found and observation.facial_transformation_matrixes else None)
+                    face = observation.face_landmarks[idx]
+                    geometry = extract_eye_geometry(face, rw, rh)
+                    if roi is not None:
+                        geometry = offset_eye_geometry(geometry, rx, ry)
+                    face_w = face_width_px(face, rw)
+                mats = observation.facial_transformation_matrixes
+                pose = (head_pose_from_matrix(mats[idx])
+                        if found and mats and len(mats) > idx else None)
                 usable = geometry is not None and math.isfinite(geometry["ear_mean"])
                 width = (min(geometry["eye_width_right_px"], geometry["eye_width_left_px"])
                          if geometry is not None else None)
@@ -119,6 +138,8 @@ def validate_video(path: Path, outdir: Path, model_path: Path, sample_fps: float
                     "detector_timestamp_ms": ts_for_model,
                     "source_pts_estimated": int(not source_pts_ok or n_pts_anomalies > 0),
                     "face_found": int(found),
+                    "n_faces_detected": n_faces,
+                    "face_width_px": _to_float_or_none(face_w) if face_w is not None else None,
                     "ear_usable": int(usable),
                     "ear_left": _to_float_or_none(geometry["ear_left"]) if geometry else None,
                     "ear_right": _to_float_or_none(geometry["ear_right"]) if geometry else None,
@@ -142,7 +163,7 @@ def validate_video(path: Path, outdir: Path, model_path: Path, sample_fps: float
                 result_rows.append(row)
                 if annotate and geometry and not saved_preview:
                     filename = f"preview_{path.parent.name}_{path.stem}.png"
-                    _eye_preview(frame, geometry, outdir / filename)
+                    _eye_preview(frame, geometry, outdir / filename, roi)
                     saved_preview = True
                 if max_samples > 0 and len(result_rows) >= max_samples:
                     break
@@ -155,6 +176,11 @@ def validate_video(path: Path, outdir: Path, model_path: Path, sample_fps: float
         seconds_elapsed=time.monotonic() - start,
         partial=max_samples > 0 and len(result_rows) >= max_samples,
     )
+    summary["max_faces"] = max_faces
+    summary["roi_xywh"] = ",".join(map(str, roi)) if roi is not None else ""
+    summary["multi_face_frame_rate"] = (
+        round(sum(r["n_faces_detected"] > 1 for r in result_rows) / len(result_rows), 4)
+        if result_rows else None)
     return result_rows, summary
 
 
@@ -197,7 +223,19 @@ def main():
         "--save-eye-landmarks", action="store_true",
         help="Write 6+6 eye pixel points per analyzed frame into frames.csv for exact gallery overlays",
     )
+    parser.add_argument(
+        "--max-faces", type=int, default=1,
+        help="Detect up to N faces and keep the largest (operator in front). Default 1.")
+    parser.add_argument(
+        "--roi", default=None,
+        help="Crop 'x,y,w,h' in full-frame pixels before detection; points are mapped back.")
     args = parser.parse_args()
+    if args.max_faces < 1:
+        parser.error("--max-faces must be >= 1")
+    try:
+        roi = parse_roi(args.roi)
+    except ValueError as exc:
+        parser.error(str(exc))
     if args.sample_fps <= 0 or args.max_samples < 0:
         parser.error("--sample-fps must be positive; --max-samples must be >= 0")
     if not args.model.is_file():
@@ -211,7 +249,7 @@ def main():
         print(f"[{i}/{len(videos)}] {video}", flush=True)
         rows, summary = validate_video(
             video, args.output, args.model, args.sample_fps, args.max_samples, args.annotate,
-            args.all_frames, args.save_eye_landmarks
+            args.all_frames, args.save_eye_landmarks, args.max_faces, roi
         )
         all_rows.extend(rows)
         summaries.append(summary)

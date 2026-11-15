@@ -47,6 +47,62 @@ def extract_eye_geometry(landmarks, width: int, height: int) -> dict:
     }
 
 
+def largest_face_index(face_landmarks_list, width: int, height: int) -> int | None:
+    """Index of the face with the widest landmark bounding box (closest to the camera).
+
+    Used when other people are visible behind the operator: the operator in front of
+    the camera is assumed to be the largest face. Returns None for an empty list.
+    """
+    best, best_w = None, -1.0
+    for i, face in enumerate(face_landmarks_list or []):
+        xs = [p.x * width for p in face]
+        if not xs:
+            continue
+        w = max(xs) - min(xs)
+        if w > best_w:
+            best, best_w = i, w
+    return best
+
+
+def face_width_px(landmarks, width: int) -> float:
+    """Horizontal extent of all face landmarks in pixels (a face-size QC value)."""
+    xs = [p.x * width for p in landmarks]
+    return float(max(xs) - min(xs)) if xs else float("nan")
+
+
+def parse_roi(text: str | None) -> tuple[int, int, int, int] | None:
+    """Parse 'x,y,w,h' (pixels in the full frame) into a tuple; None/'' means no crop."""
+    if text is None or not str(text).strip():
+        return None
+    parts = [int(round(float(v))) for v in str(text).split(",")]
+    if len(parts) != 4 or parts[0] < 0 or parts[1] < 0 or parts[2] <= 0 or parts[3] <= 0:
+        raise ValueError("ROI must be 'x,y,w,h' with x,y >= 0 and w,h > 0")
+    return tuple(parts)
+
+
+def clamp_roi(roi: tuple[int, int, int, int] | None, width: int, height: int):
+    """Clip an ROI to the frame; error if nothing of it remains inside."""
+    if roi is None:
+        return None
+    x, y, w, h = roi
+    x2, y2 = min(width, x + w), min(height, y + h)
+    if x >= width or y >= height or x2 <= x or y2 <= y:
+        raise ValueError(f"ROI {roi} lies outside the {width}x{height} frame")
+    return x, y, x2 - x, y2 - y
+
+
+def offset_eye_geometry(geometry: dict, dx: float, dy: float) -> dict:
+    """Shift eye points from ROI-crop pixels back to full-frame pixels.
+
+    EAR and eye widths are translation-invariant, so only the stored points change.
+    """
+    out = dict(geometry)
+    shift = np.array([dx, dy], dtype=float)
+    out["right_points"] = np.asarray(geometry["right_points"], dtype=float) + shift
+    out["left_points"] = np.asarray(geometry["left_points"], dtype=float) + shift
+    return out
+
+
 def head_pose_from_matrix(matrix) -> dict:
     """Head pitch/yaw/roll in degrees from MediaPipe's 4x4 facial transformation matrix.
 
@@ -68,11 +124,14 @@ def head_pose_from_matrix(matrix) -> dict:
             "head_roll_deg": float(roll)}
 
 
-def create_landmarker(model_path: str | Path):
+def create_landmarker(model_path: str | Path, num_faces: int = 1):
     """Instantiate a CPU-oriented MediaPipe VIDEO-mode Face Landmarker lazily.
 
     Also outputs the facial transformation matrix, used for head pose quality flags.
+    ``num_faces > 1`` lets the caller pick the operator among several people.
     """
+    if num_faces < 1:
+        raise ValueError("num_faces must be >= 1")
     from mediapipe.tasks import python as mp_python
     from mediapipe.tasks.python import vision
 
@@ -82,7 +141,7 @@ def create_landmarker(model_path: str | Path):
     options = vision.FaceLandmarkerOptions(
         base_options=mp_python.BaseOptions(model_asset_path=str(model_path.resolve())),
         running_mode=vision.RunningMode.VIDEO,
-        num_faces=1,
+        num_faces=num_faces,
         min_face_detection_confidence=0.5,
         min_face_presence_confidence=0.5,
         min_tracking_confidence=0.5,
