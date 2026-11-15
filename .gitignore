@@ -72,3 +72,5 @@ htmlcov/
 
 # Append-only notebook-first experiments remain local
 /runs/
+
+.venv-webcam/
