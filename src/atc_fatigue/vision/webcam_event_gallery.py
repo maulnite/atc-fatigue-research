@@ -177,7 +177,22 @@ def _text(img: np.ndarray, s: str, x: int, y: int, scale: float = 0.54,
                 thickness, cv2.LINE_AA)
 
 
-def _draw_panel(image: np.ndarray, row: dict, name: str, threshold: float) -> np.ndarray:
+def _head_text(row: dict, pitch_baseline: float | None) -> str:
+    """' | head +12.3 deg down' relative to the video's median pitch, or '' if unknown."""
+    if pitch_baseline is None:
+        return ""
+    try:
+        pitch = float(row.get("head_pitch_deg"))
+    except (TypeError, ValueError):
+        return ""
+    if not math.isfinite(pitch):
+        return ""
+    rel = pitch - pitch_baseline
+    return f" | head {rel:+.1f} deg {'down' if rel >= 0 else 'up'}"
+
+
+def _draw_panel(image: np.ndarray, row: dict, name: str, threshold: float,
+                pitch_baseline: float | None = None) -> np.ndarray:
     """A panel contains full-face landmark overlay + enlarged eye crop + metadata."""
     W, H = 470, 555
     panel = np.full((H, W, 3), (26, 31, 40), dtype=np.uint8)
@@ -190,7 +205,9 @@ def _draw_panel(image: np.ndarray, row: dict, name: str, threshold: float) -> np
         for x, y in p:
             cv2.circle(frame, (int(x), int(y)), 2, color, -1, cv2.LINE_AA)
     _text(panel, name, 14, 26, 0.65, (160, 230, 255), 2)
-    _text(panel, f'Frame #{int(row["frame_index_1based"])} | {float(row["source_pts_ms_or_estimate"])/1000:.3f}s', 14, 51, 0.46)
+    _text(panel, f'Frame #{int(row["frame_index_1based"])} | '
+          f'{float(row["source_pts_ms_or_estimate"])/1000:.3f}s{_head_text(row, pitch_baseline)}',
+          14, 51, 0.46)
     panel[65:415, :] = _fit_in_box(frame, W, 350)
     cv2.rectangle(panel, (0, 65), (W - 1, 414), (68, 75, 91), 1)
     crop = _eye_crop(frame, eyes)
@@ -208,8 +225,12 @@ def _draw_panel(image: np.ndarray, row: dict, name: str, threshold: float) -> np
 
 
 def render_contact_sheet(frames: pd.DataFrame, event: dict, video_path: Path,
-                         out_path: Path, threshold: float) -> None:
-    """Render selected original frames, preserving landmark geometry from extraction."""
+                         out_path: Path, threshold: float,
+                         pitch_baseline: float | None = None) -> None:
+    """Render selected original frames, preserving landmark geometry from extraction.
+
+    With ``pitch_baseline`` each panel also shows head pitch relative to that median.
+    """
     if "eye_points_px" not in frames:
         raise ValueError("eye_points_px missing; rerun script 23 with --save-eye-landmarks")
     selected = choose_event_frames(frames, event, threshold)
@@ -217,7 +238,8 @@ def render_contact_sheet(frames: pd.DataFrame, event: dict, video_path: Path,
         if not _eye_points(row):
             raise ValueError(f"Missing eye geometry for frame {row['frame_index_1based']}")
     images = read_frames_sequential(Path(video_path), [row for _, row in selected])
-    panels = [_draw_panel(images[int(row["frame_index_1based"])], row, name, threshold)
+    panels = [_draw_panel(images[int(row["frame_index_1based"])], row, name, threshold,
+                          pitch_baseline)
               for name, row in selected]
     height, width = 555, 470
     header = 91

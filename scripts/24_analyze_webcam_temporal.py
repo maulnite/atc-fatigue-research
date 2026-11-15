@@ -17,6 +17,9 @@ from atc_fatigue.vision.webcam_temporal_qc import analyze_trace, apply_head_pose
 from atc_fatigue.vision.webcam_event_gallery import (
     event_ear_statistics, render_contact_sheet, save_event_timeline,
 )
+from atc_fatigue.vision.webcam_pose_plots import (
+    head_pitch_baseline, relative_pitch, save_ear_pose_timeline, save_pitch_histograms,
+)
 
 
 def main():
@@ -63,6 +66,7 @@ def main():
     out = args.output or (args.run_dir / "temporal_qc")
     out.mkdir(parents=True, exist_ok=True)
     summary_rows, window_rows, event_rows, long_rows, gallery_rows = [], [], [], [], []
+    pitch_series = []
 
     for record in sources.to_dict("records"):
         source = str(record["video_path"])
@@ -81,6 +85,11 @@ def main():
             if len(vals) < 2 or not np.isfinite(vals).all() or not np.all(np.diff(vals) > 0):
                 why = "nonmonotonic_or_missing_timestamps"
         pose_info = {"pose_gate": "off"}
+        has_pose = "head_pitch_deg" in group.columns
+        pitch_base = head_pitch_baseline(group) if has_pose else None
+        if has_pose and not why:
+            usable = pd.to_numeric(group["ear_usable"], errors="coerce").fillna(0).to_numpy() == 1
+            pitch_series.append((f"{condition}/{camera}", relative_pitch(group, pitch_base)[usable]))
         if not why:
             try:
                 group, pose_info = apply_head_pose_gate(
@@ -116,6 +125,14 @@ def main():
                 event_rows.append(erow)
                 enriched.append(erow)
 
+            if has_pose and abs(threshold - args.gallery_threshold) < 1e-8:
+                save_ear_pose_timeline(
+                    group, enriched, threshold,
+                    out / "ear_pose_timeline" / f"ear_pose_{condition}_{camera}_thr{round(100*threshold):02d}.png",
+                    f"{condition}/{camera} | EAR and head pitch | candidates not validated",
+                    max_down_deg=args.max_head_down_deg,
+                    baseline=pose_info.get("pose_baseline_pitch_deg", pitch_base))
+
             if args.render_event_gallery and abs(threshold - args.gallery_threshold) < 1e-8:
                 timeline = out / "ear_timeline_events" / f"ear_events_{condition}_{camera}_thr{round(100*threshold):02d}.png"
                 save_event_timeline(group, enriched, threshold, timeline,
@@ -132,7 +149,8 @@ def main():
                     img = (out / "long_closure_previews"
                            / f'{condition}_{camera}_thr{round(100*threshold):02d}_{event["event_id"]}.png')
                     try:
-                        render_contact_sheet(group, event, Path(source), img, threshold)
+                        render_contact_sheet(group, event, Path(source), img, threshold,
+                                             pitch_baseline=pose_info.get("pose_baseline_pitch_deg", pitch_base))
                         event["preview_status"] = "saved"
                         event["preview_file"] = str(img)
                     except (OSError, ValueError, KeyError) as exc:
@@ -192,6 +210,10 @@ def main():
         "ear_depth_index": "max(0,min(1,(threshold-EAR)/threshold)): NOT eyelid percent closed",
         "validity": "Uncalibrated exploratory EAR-closure events. Manual review required; not fatigue ground truth.",
     }, indent=2), encoding="utf-8")
+
+    if pitch_series:
+        save_pitch_histograms(pitch_series, out / "head_pitch_histograms.png",
+                              limit_deg=args.max_head_down_deg or 10.0)
 
     import matplotlib.pyplot as plt
     for record in sources.to_dict("records"):

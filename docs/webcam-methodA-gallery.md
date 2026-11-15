@@ -26,6 +26,12 @@ Melihat ke bawah (strip, keyboard, kertas) menurunkan kelopak sehingga EAR turun
 
 Script 24 dapat diberi `--max-head-down-deg N` dan/atau `--max-head-yaw-deg N` (default mati). Frame dengan pitch lebih dari N derajat di bawah median pose orang itu sendiri, atau yaw menyimpang lebih dari N derajat, ditandai `pose_excluded=1` dan diperlakukan sebagai tidak dapat dinilai: tidak dihitung sebagai closure dan durasi tidak disambung melewatinya. Patokan median membuat posisi kamera (atas/bawah) tidak memengaruhi arah gate.
 
+Visual (dibuat otomatis bila `frames.csv` punya kolom pose, dengan atau tanpa gate):
+
+- `ear_pose_timeline/ear_pose_<kondisi>_<kamera>_thr21.png`: panel atas EAR + kandidat sustained closure (oranye), panel bawah pitch relatif terhadap median (+ = menunduk) dengan garis batas; frame yang dikecualikan gate diarsir abu-abu di kedua panel.
+- `head_pitch_histograms.png`: distribusi pitch relatif per video dan persentase frame di atas batas (default 10°).
+- Panel galeri mencantumkan `head +X deg down/up` relatif terhadap median.
+
 Batasan: melirik ke bawah dengan mata saja, tanpa menunduk, tidak tertangkap. Batas derajat belum dikalibrasi; laporkan sensitivitasnya (porsi waktu yang dikecualikan vs jumlah kandidat) dan jangan memilih batas berdasarkan hasil yang diinginkan.
 
 ## Batasan
