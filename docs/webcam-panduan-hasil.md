@@ -57,6 +57,7 @@ reports/webcam_head_pose_gate_comparison.csv
 | [scripts/23_validate_webcam.py](../scripts/23_validate_webcam.py) | Buka video → MediaPipe di tiap frame → hitung EAR, titik mata, sudut kepala → tulis `frames.csv` dan `summary.csv`. | Sekali per video atau folder video. Lambat. |
 | [scripts/24_analyze_webcam_temporal.py](../scripts/24_analyze_webcam_temporal.py) | Dari `frames.csv`: cari kedipan dan mata tertutup lama, buat grafik dan galeri. Opsi `--max-head-down-deg 10` mengaktifkan penyaring. | Setiap kali mau mencoba pengaturan lain. Cepat. |
 | [scripts/25_compare_head_pose_gate.py](../scripts/25_compare_head_pose_gate.py) | Gabungkan hasil tanpa vs dengan penyaring jadi satu tabel. | Setelah script 24 dijalankan dua kali. |
+| [scripts/26_render_annotated_clip.py](../scripts/26_render_annotated_clip.py) | Klip WebM 10–15 detik dengan anotasi per frame: titik mata, zoom mata, EAR, sudut kepala, status (tertutup / menunduk / tidak terdeteksi), event dengan & tanpa penyaring, grafik berjalan. | Untuk review visual atau presentasi; `--start` dan `--duration` dalam detik. |
 
 ### Modul (isi logikanya, di `src/atc_fatigue/vision/`)
 
@@ -68,6 +69,7 @@ reports/webcam_head_pose_gate_comparison.csv
 | [webcam_temporal_qc.py](../src/atc_fatigue/vision/webcam_temporal_qc.py) | Inti analisis: mencari kedipan dan mata tertutup lama (`analyze_trace`) serta penyaring kepala (`apply_head_pose_gate`). |
 | [webcam_event_gallery.py](../src/atc_fatigue/vision/webcam_event_gallery.py) | Membuat galeri 6 frame per event. Frame dibaca berurutan supaya tidak salah waktu. |
 | [webcam_pose_plots.py](../src/atc_fatigue/vision/webcam_pose_plots.py) | Grafik EAR + sudut kepala dan histogram menunduk. |
+| [webcam_annotated_clip.py](../src/atc_fatigue/vision/webcam_annotated_clip.py) | Label per frame (kedip / tertutup lama, dengan & tanpa penyaring) dan render klip beranotasi. |
 
 Test ada di `tests/test_webcam_*.py` (27 test). Jalankan dengan:
 
