@@ -20,6 +20,7 @@ import numpy as np
 import pandas as pd
 
 from atc_fatigue.vision.webcam_event_gallery import PTS_MATCH_TOLERANCE_MS
+from atc_fatigue.vision.webcam_method_b import closure_percent, ear_at_closure
 from atc_fatigue.vision.webcam_pose_plots import head_pitch_baseline
 from atc_fatigue.vision.webcam_temporal_qc import analyze_trace, apply_head_pose_gate
 
@@ -101,11 +102,13 @@ def _chip(img, text, x, y, fill, scale=0.5):
     return x + w + 22
 
 
-def _trace_panel(width, height, t, ear, rel, idx, threshold, max_down, excluded, sustained):
-    """Two stacked mini-plots (EAR above, relative pitch below) with a time cursor."""
+def _trace_panel(width, height, t, top, rel, idx, max_down, excluded, sustained):
+    """Two stacked mini-plots (``top`` = (label, values, (lo, hi), ref) above, relative
+    pitch below) with a time cursor."""
     p = np.full((height, width, 3), PANEL, np.uint8)
     left, right = 70, width - 20
-    rows = [(10, height // 2 - 8, "EAR", ear, (0.0, max(0.45, np.nanmax(ear) if np.isfinite(ear).any() else 0.45)), threshold),
+    top_name, top_vals, top_range, top_ref = top
+    rows = [(10, height // 2 - 8, top_name, top_vals, top_range, top_ref),
             (height // 2 + 8, height - 22, "kepala (deg)", rel, (-20.0, 25.0), max_down)]
     t0, t1 = t[0], t[-1] if t[-1] > t[0] else t[0] + 1
 
@@ -143,12 +146,25 @@ def _trace_panel(width, height, t, ear, rel, idx, threshold, max_down, excluded,
 def render_annotated_clip(frames: pd.DataFrame, video_path: Path, out_path: Path, *,
                           start_s: float, duration_s: float, threshold: float = 0.21,
                           max_down_deg: float | None = 10.0, roi: tuple | None = None,
-                          title: str = "", out_width: int = 1280, **trace_kwargs) -> dict:
+                          title: str = "", out_width: int = 1280, method: str = "A",
+                          refs: dict | None = None, closure_level: float = 80.0,
+                          **trace_kwargs) -> dict:
     """Write a WebM (VP8) clip of ``duration_s`` seconds from ``start_s`` with overlays.
+
+    ``method="A"``: fixed EAR ``threshold``. ``method="B"``: per-person threshold at
+    ``closure_level`` % closure from ``refs`` (open/closed EAR, see webcam_method_b);
+    the clip then shows closure % and the top trace is closure % with the level line.
 
     Frames are decoded sequentially from the start (same counting as script 23) and,
     when the stored PTS is a real source PTS, checked against frames.csv.
     """
+    method = method.upper()
+    if method == "B":
+        if not refs or refs.get("status") != "estimated":
+            raise ValueError("Method B needs estimated open/closed references")
+        threshold = ear_at_closure(refs["open_ref"], refs["closed_ref"], closure_level)
+    elif method != "A":
+        raise ValueError("method must be 'A' or 'B'")
     labels = frame_labels(frames, threshold, max_down_deg, **trace_kwargs)
     t_all = pd.to_numeric(labels["source_pts_ms_or_estimate"], errors="coerce").to_numpy(float)
     win = (t_all >= start_s * 1000) & (t_all < (start_s + duration_s) * 1000)
@@ -160,6 +176,10 @@ def render_annotated_clip(frames: pd.DataFrame, video_path: Path, out_path: Path
     ear = pd.to_numeric(clip["ear_mean"], errors="coerce").to_numpy(float)
     ear[pd.to_numeric(clip["ear_usable"], errors="coerce").fillna(0).to_numpy() != 1] = np.nan
     rel = pd.to_numeric(clip["rel_pitch_deg"], errors="coerce").to_numpy(float)
+    closure = (closure_percent(np.where(np.isfinite(ear), ear, np.nan), refs["open_ref"], refs["closed_ref"])
+               if method == "B" else None)
+    if closure is not None:
+        closure[~np.isfinite(ear)] = np.nan
     excluded = clip["pose_excluded"].to_numpy() == 1
     sustained = clip["in_sustained"].to_numpy(bool)
 
@@ -226,9 +246,15 @@ def render_annotated_clip(frames: pd.DataFrame, video_path: Path, out_path: Path
             e, r = ear[i], rel[i]
             ear_txt = f"EAR {e:.3f}" if np.isfinite(e) else "EAR -"
             pitch_txt = f"kepala {r:+.1f} deg" if np.isfinite(r) else "kepala -"
-            _put(canvas, f"t={t[i]/1000:7.2f}s  {ear_txt}  (batas {threshold:.2f})  {pitch_txt}"
-                 + (f"  (batas menunduk +{max_down_deg:g})" if max_down_deg is not None else ""),
-                 12, y, 0.55)
+            if method == "B":
+                c = closure[i]
+                cl_txt = f"tertutup {c:3.0f}%" if np.isfinite(c) else "tertutup -"
+                line = (f"t={t[i]/1000:7.2f}s  {ear_txt}  {cl_txt} (batas {closure_level:g}% = EAR "
+                        f"{threshold:.3f})  {pitch_txt}")
+            else:
+                line = f"t={t[i]/1000:7.2f}s  {ear_txt}  (batas {threshold:.2f})  {pitch_txt}"
+            _put(canvas, line + (f"  (batas menunduk +{max_down_deg:g})" if max_down_deg is not None else ""),
+                 12, y, 0.52)
             x = 12
             y2 = y + 30
             if int(row.get("face_found", 0)) != 1:
@@ -236,9 +262,11 @@ def render_annotated_clip(frames: pd.DataFrame, video_path: Path, out_path: Path
             elif excluded[i]:
                 x = _chip(canvas, "MENUNDUK > batas: tidak dinilai", x, y2, (110, 110, 110))
             elif np.isfinite(e) and e < threshold:
-                x = _chip(canvas, "EAR di bawah batas", x, y2, ORANGE)
+                x = _chip(canvas, f">= {closure_level:g}% tertutup" if method == "B" else "EAR di bawah batas",
+                          x, y2, ORANGE)
             elif np.isfinite(e):
-                x = _chip(canvas, "EAR di atas batas", x, y2, OK_GREEN)
+                x = _chip(canvas, f"< {closure_level:g}% tertutup" if method == "B" else "EAR di atas batas",
+                          x, y2, OK_GREEN)
             if row["in_blink"]:
                 x = _chip(canvas, "kandidat KEDIP", x, y2, BLUE)
             if row["in_sustained"]:
@@ -248,7 +276,9 @@ def render_annotated_clip(frames: pd.DataFrame, video_path: Path, out_path: Path
                     x = _chip(canvas, "tertutup lama (dengan penyaring)", x, y2, ORANGE)
                 elif row["in_sustained"]:
                     x = _chip(canvas, "-> hilang setelah penyaring", x, y2, (110, 110, 110))
-            panel = _trace_panel(out_width, footer - 60, t, ear, rel, i, threshold,
+            top = (("tertutup %", closure, (0.0, 100.0), closure_level) if method == "B" else
+                   ("EAR", ear, (0.0, max(0.45, np.nanmax(ear) if np.isfinite(ear).any() else 0.45)), threshold))
+            panel = _trace_panel(out_width, footer - 60, t, top, rel, i,
                                  max_down_deg, excluded, sustained)
             canvas[header + oh + 60:] = panel
             writer.write(canvas)

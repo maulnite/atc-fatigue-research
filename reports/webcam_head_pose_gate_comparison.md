@@ -34,6 +34,22 @@ Exploratory engineering QC with Method A (fixed EAR thresholds). These are **not
 | ATC `10_51_07` (ROI) | 59.8% | 28 px | 15.4% | 19.0 → 21.2 | 17 → 7 | 0.194 → 0.048 |
 | Pilot, 16 videos | 99.6–100% | 16–28 px | 0.0–3.6% | small change | 0–15 → 0–15 | ≤0.128 → ≤0.128 |
 
+### Duration tiers at threshold 0.21 (no gate → gate)
+
+Counts of completed sustained-closure candidates per tier, plus the median share of blinks lasting 300–500 ms per video. The tier boundaries are exploratory reference points:
+- **1 s** is the lower bound of Euro NCAP SD-202 v1.2 microsleep (the manufacturer declares 1–2 s).
+- **3 s** is the Euro NCAP sleep threshold.
+- **300–500 ms** long blinks follow Caffier et al. 2003.
+
+| Set | 0.5–1 s | 1–3 s | ≥ 3 s | Long-blink share (median) |
+|---|---|---|---|---|
+| ATC `11_13_04` | 29 → 13 | 37 → 2 | 10 → 3 | 0.18 → 0.16 |
+| ATC `10_51_07` | 3 → 2 | 9 → 5 | 5 → 0 | 0.09 → 0.10 |
+| ATC `10_37_35` | 4 → 3 | 5 → 4 | 1 → 1 | 0.19 → 0.19 |
+| Pilot (16 videos) | 37 → 31 | 15 → 12 | 2 → 2 | 0.08 → 0.07 |
+
+Without the gate, controllers who were working had up to 10 "≥ 3 s closures" per video, which would meet the Euro NCAP sleep definition. These were looking-down episodes. A longer duration threshold does not remove such artefacts; pose/gaze handling is what reduces them.
+
 ## Observations
 
 1. **Looking down is the dominant false positive in real ATC work.** It showed up in all three controllers. In the longest pre-gate galleries the controller looks down at the desk or strips (writing) and the eyes are not closed.

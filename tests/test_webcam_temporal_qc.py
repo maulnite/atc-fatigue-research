@@ -115,3 +115,23 @@ def test_yaw_gate_and_missing_columns():
     assert info["pose_excluded_frames"] == 4
     with pytest.raises(ValueError, match="head_pitch_deg"):
         apply_head_pose_gate(make_trace([0, 50], [0.3, 0.3]), max_down_deg=10)
+
+
+def test_duration_tiers_count_each_band():
+    from atc_fatigue.vision.webcam_temporal_qc import duration_tiers
+    out = duration_tiers([100, 250, 300, 450, 500], [600, 999, 1000, 2999, 3000, 9000])
+    assert out["long_blinks_300_500ms"] == 3
+    assert out["long_blink_fraction"] == pytest.approx(0.6)
+    assert (out["closures_0p5_1s"], out["closures_1_3s"], out["closures_ge_3s"]) == (2, 2, 2)
+    empty = duration_tiers([], [])
+    assert empty["long_blink_fraction"] is None and empty["closures_ge_3s"] == 0
+
+
+def test_trace_summary_reports_tiers():
+    # one 1.5 s closure and one 350 ms blink
+    t = list(range(0, 4001, 50))
+    ears = [0.1 if (500 <= x < 2000) or (3000 <= x < 3350) else 0.3 for x in t]
+    s, windows, _ = analyze_trace(make_trace(t, ears), threshold=0.21)
+    assert s["closures_1_3s"] == 1 and s["closures_0p5_1s"] == 0
+    assert s["long_blinks_300_500ms"] == 1
+    assert sum(w["closures_1_3s"] for w in windows) == 1

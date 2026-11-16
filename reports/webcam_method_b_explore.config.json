@@ -1,0 +1,12 @@
+{
+  "method": "B (EXPLORATORY): closure % between open EAR (early 5 min, neutral head) and an ESTIMATED closed EAR (percentile of neutral-head blink troughs); PERCLOS80",
+  "closed_percentiles": [
+    5,
+    10,
+    25
+  ],
+  "drop_fraction": 0.4,
+  "max_head_down_deg": 10.0,
+  "method_a_threshold": 0.21,
+  "validity": "No instructed eye-closure segment; references are estimates. Not calibrated PERCLOS80, not fatigue."
+}

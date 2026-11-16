@@ -1,5 +1,7 @@
 # Patch Metode A — EAR-threshold long-closure gallery
 
+> Struktur folder hasil sudah diperbarui (ekstraksi, Metode A, Metode B dipisah). Lihat `docs/webcam-panduan-hasil.md` bagian 4.
+
 Dibuat untuk checkout lokal `maulnite/atc-fatigue-research`, branch `feat/webcam-mediapipe-validation`. Tidak melakukan push atau mengubah tiga notebook utama.
 
 ## Patch mengganti / menambah
@@ -39,7 +41,7 @@ Expand-Archive -LiteralPath "<path-ke-ATC_Webcam_MethodA_Gallery_Patch.zip>" `
 .\.venv-webcam\Scripts\python.exe scripts/23_validate_webcam.py `
   --input "data/raw/webcam_pilot" `
   --model "models/mediapipe/face_landmarker.task" `
-  --output "runs/webcam_validation/pilot_fullframe_methodA" `
+  --output "runs/webcam_validation/00_ekstraksi_mediapipe/pilot_webcam" `
   --all-frames --save-eye-landmarks --annotate
 ```
 
@@ -47,7 +49,8 @@ Expand-Archive -LiteralPath "<path-ke-ATC_Webcam_MethodA_Gallery_Patch.zip>" `
 
 ```powershell
 .\.venv-webcam\Scripts\python.exe scripts/24_analyze_webcam_temporal.py `
-  --run-dir "runs/webcam_validation/pilot_fullframe_methodA" `
+  --run-dir "runs/webcam_validation/00_ekstraksi_mediapipe/pilot_webcam" `
+  --output "runs/webcam_validation/01_metode_A_threshold_tetap/pilot_webcam/tanpa_penyaring" `
   --thresholds 0.18 0.21 0.24 `
   --max-gap-ms 150 `
   --sustained-min-ms 500 `
@@ -61,7 +64,7 @@ Expand-Archive -LiteralPath "<path-ke-ATC_Webcam_MethodA_Gallery_Patch.zip>" `
 
 ## Output
 
-Di `runs/webcam_validation/pilot_fullframe_methodA/temporal_qc/`:
+Di `runs/webcam_validation/01_metode_A_threshold_tetap/pilot_webcam/tanpa_penyaring/`:
 
 - `temporal_summary.csv`, `temporal_windows.csv`, `closure_event_candidates.csv` — output temporal sebelumnya.
 - `long_closure_events.csv` — semua event closure panjang untuk ketiga threshold, termasuk `mean_closed_ear`, `min_closed_ear`, `mean_ear_depth_index`, `preview_status`.

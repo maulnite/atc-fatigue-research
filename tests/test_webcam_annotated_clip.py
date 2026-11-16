@@ -48,3 +48,23 @@ def test_clip_is_written(tmp_path):
         pytest.skip("VP8 writer unavailable")
     assert counts["frames"] == 30
     assert out.stat().st_size > 0
+
+
+def test_method_b_clip_uses_person_threshold(tmp_path):
+    video = tmp_path / "v.avi"
+    w = cv2.VideoWriter(str(video), cv2.VideoWriter_fourcc(*"MJPG"), 20, (320, 240))
+    if not w.isOpened():
+        pytest.skip("MJPEG writer unavailable")
+    for k in range(41):
+        w.write(np.full((240, 320, 3), 5 * k, np.uint8))
+    w.release()
+    refs = {"status": "estimated", "open_ref": 0.30, "closed_ref": 0.05}
+    try:
+        counts = render_annotated_clip(_frames(), video, tmp_path / "b.webm", start_s=0.2,
+                                       duration_s=1.5, out_width=640, method="B", refs=refs)
+    except OSError:
+        pytest.skip("VP8 writer unavailable")
+    assert counts["frames"] == 30
+    with pytest.raises(ValueError, match="Method B"):
+        render_annotated_clip(_frames(), video, tmp_path / "x.webm", start_s=0.2, duration_s=1.0,
+                              method="B", refs={"status": "insufficient_troughs"})

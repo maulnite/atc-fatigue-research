@@ -24,6 +24,30 @@ def _overlap(a: float, b: float, start: float, end: float) -> float:
     return max(0.0, min(b, end) - max(a, start))
 
 
+# Duration tiers reported alongside the 500 ms blink/sustained boundary. Exploratory
+# reference points, not validated cut-offs for this population:
+# - long blinks 300-500 ms (Caffier et al. 2003 tracked long-closure-duration blinks);
+# - >= 1 s: lower bound of Euro NCAP SD-202 v1.2 microsleep (manufacturer declares 1-2 s);
+# - >= 3 s: Euro NCAP sleep threshold.
+LONG_BLINK_MIN_MS = 300.0
+MICROSLEEP_LIKE_MIN_MS = 1000.0
+SLEEP_LIKE_MIN_MS = 3000.0
+
+
+def duration_tiers(blink_durations_ms, sustained_durations_ms) -> dict:
+    """Counts of completed closure candidates per duration tier (see constants above)."""
+    b = np.asarray(list(blink_durations_ms), dtype=float)
+    d = np.asarray(list(sustained_durations_ms), dtype=float)
+    long_blinks = int(np.sum(b >= LONG_BLINK_MIN_MS))
+    return {
+        "long_blinks_300_500ms": long_blinks,
+        "long_blink_fraction": round(long_blinks / len(b), 6) if len(b) else None,
+        "closures_0p5_1s": int(np.sum(d < MICROSLEEP_LIKE_MIN_MS)),
+        "closures_1_3s": int(np.sum((d >= MICROSLEEP_LIKE_MIN_MS) & (d < SLEEP_LIKE_MIN_MS))),
+        "closures_ge_3s": int(np.sum(d >= SLEEP_LIKE_MIN_MS)),
+    }
+
+
 def apply_head_pose_gate(frame_rows: pd.DataFrame, *, max_down_deg: float | None = None,
                          max_abs_yaw_deg: float | None = None) -> tuple[pd.DataFrame, dict]:
     """Mark frames with large head-down tilt or head turn as NOT assessable for EAR.
@@ -174,6 +198,7 @@ def analyze_trace(frame_rows: pd.DataFrame, *, threshold: float, max_gap_ms: flo
         "sustained_closure_candidates": len(sustained),
         "perclos_like_fraction": round(total_sustained_ms/total_valid_ms, 6)
         if total_valid_ms else None,
+        **duration_tiers([e.duration_ms for e in blinks], [e.duration_ms for e in sustained]),
         "max_ear_gap_ms": round(float(np.max(np.diff(times))), 3),
         "invalid_ear_frame_fraction": round(1 - float(valid.mean()), 6),
         "caution": "Exploratory threshold events only; requires manual eyelid annotations",
@@ -187,6 +212,7 @@ def analyze_trace(frame_rows: pd.DataFrame, *, threshold: float, max_gap_ms: flo
                         for a,b,closed in intervals if closed for e in sustained
                         if _overlap(a,b,e.start_ms,e.end_ms) > 0)
         window_blinks = [e for e in blinks if window_start < e.end_ms <= window_end]
+        window_sustained = [e for e in sustained if window_start < e.end_ms <= window_end]
         windows.append({
             "window_start_ms": round(window_start, 2),
             "window_end_ms": round(window_end, 2),
@@ -197,6 +223,8 @@ def analyze_trace(frame_rows: pd.DataFrame, *, threshold: float, max_gap_ms: flo
             "blink_rate_per_valid_min": round(len(window_blinks)*60000/coverage, 5)
             if coverage else None,
             "perclos_like_fraction": round(closed_ms/coverage, 6) if coverage else None,
+            **duration_tiers([e.duration_ms for e in window_blinks],
+                             [e.duration_ms for e in window_sustained]),
         })
         window_start = window_end
     evrows = [{"start_ms": round(e.start_ms, 2), "end_ms": round(e.end_ms, 2),
